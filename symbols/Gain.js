@@ -10,9 +10,9 @@ export default class Gain extends HTMLElement {
                 :host {
                     display: inline-block;
                     padding: .5rem;
-                    background-color: #FFAB91;
-                    --line-color: #9FA8DA;
-                    --line-width: 2px;
+                    background-color: var(--machine-color);
+
+                    --machine-color: #FFAB91
                 }
             </style>
             <div></div>

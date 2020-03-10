@@ -1,22 +1,20 @@
-const template = document.createElement('template');
-template.innerHTML = `
-    <style>
-        svg {
-            background-color: var(--oscilloscope-background, transparent);
-        }
-        rect {
-            fill: var(--oscilloscope-stroke, black);
-        }
-    </style>
-    <svg  viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg" width="300" height="50"></svg>
-`;
-
 export default class Frequencyscope extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
 
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.innerHTML = `
+            <style>
+                svg {
+                    background-color: var(--frequencyscope-background, transparent);
+                }
+                rect {
+                    fill: var(--frequencyscope-stroke, black);
+                }
+            </style>
+            <svg  viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg" width="300" height="50">
+            </svg>
+        `;
     }
 
     set data(data) {

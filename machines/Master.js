@@ -1,33 +1,39 @@
 import '../elements/Oscilloscope.js';
 import '../elements/Frequencyscope.js';
 
-const template = document.createElement('template');
-template.innerHTML = `
-    <style>
-        :host {
-            display: inline-block;
-            background-color: #90CAF9;
-            padding: 1rem;
-
-            --oscilloscope-background: #37474F;
-            --oscilloscope-stroke: #90CAF9;
-            --oscilloscope-width: 4px;
-        }
-        h4 {
-            margin: 0;
-        }
-    </style>
-    <h4>Master</h4>
-    <elements-oscilloscope></elements-oscilloscope>
-    <elements-frequencyscope></elements-frequencyscope>
-`;
-
 export default class Master extends HTMLElement {
     constructor() {
         super();
 
         this.attachShadow({mode: 'open'});
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: inline-block;
+                    background-color: var(--machine-color);
+                    padding: 1rem;
+
+                    --machine-color: #90CAF9;
+
+                    --oscilloscope-background: var(--screen-background-color);
+                    --oscilloscope-stroke: var(--machine-color);
+                    --oscilloscope-width: var(--screen-line-width);
+
+                    --oscilloscope-marker-width: var(--screen-marker-line-width);
+                    --oscilloscope-marker-stroke: var(--machine-color);
+                    --oscilloscope-marker-dash: 2;
+
+                    --frequencyscope-background: var(--screen-background-color);
+                    --frequencyscope-stroke: var(--machine-color);
+                }
+                h4 {
+                    margin: 0;
+                }
+            </style>
+            <h4>Master</h4>
+            <elements-oscilloscope></elements-oscilloscope>
+            <elements-frequencyscope></elements-frequencyscope>
+        `;
     }
 
     set frequencyData(data) {

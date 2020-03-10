@@ -3,36 +3,36 @@ template.innerHTML = `
             <style>
                 :host {
                     display: inline-block;
-                    background-color: #BCAAA4;
+                    background-color: var(--machine-color);
                     padding: 1rem;
 
-                    --oscilloscope-background: #37474F;
-                    --oscilloscope-stroke: #BCAAA4;
-                    --oscilloscope-width: 4px;
+                    --machine-color: #BCAAA4;
                 }
                 h4 {
                     margin: 0;
                 }
                 svg {
-                    background-color: #37474F;
-                    --oscilloscope-stroke: #BCAAA4;
-                    --oscilloscope-width: 4px;
+                    background-color: var(--screen-background-color);
                 }
                 polyline {
-                    stroke: #BCAAA4;
+                    stroke: var(--machine-color);
+                    stroke-width: var(--screen-line-width);
                     fill: none;
-                    stroke-width: 4px
                 }
 
                 line {
-                    stroke: #BCAAA4;
+                    stroke: var(--machine-color);
+                    stroke-width: var(--screen-marker-line-width);
                     fill: none;
-                    stroke-width: 1px;
                 }
                 text {
-
-                    fill: #BCAAA4;
+                    fill: var(--machine-color);
                     font: 10px sans-serif;
+                }
+
+                ul {
+                    padding: 0;
+                    list-style: none;
                 }
             </style>
             <h4>Filter</h4>
@@ -49,12 +49,12 @@ template.innerHTML = `
                     <li>
                         <label>frequency</label>
                         <input type="range" data-frequency-range min="10" max="2000" />
-                        <span data-frequency-value></span>
+                        <output data-frequency-value></output>
                     </li>
                     <li>
                         <label>q</label>
                         <input type="range" data-q-range min="0.0001" max="50" />
-                        <span data-q-value></span>
+                        <output data-q-value></output>
                     </li>
                 </ul>
             </div>

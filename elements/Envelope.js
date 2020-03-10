@@ -1,4 +1,3 @@
-
 export default class Envelope extends HTMLElement {
     constructor() {
         super();
@@ -10,18 +9,18 @@ export default class Envelope extends HTMLElement {
                     display: inline-block;
                 }
                 svg {
-                    background-color: var(--screen-background-color, #0e0e1d);
+                    background-color: var(--envelope-background, #0e0e1d);
                 }
                 path {
-                    stroke-width: var(--line-width, 1px);
-                    stroke: var(--line-color, #faebd7);
+                    stroke-width: var(--envelope-stroke-width, 1px);
+                    stroke: var(--envelope-stroke, #faebd7);
                     fill: none;
                 }
                 line {
-                    stroke-width: 1px /*var(--line-width, 1px)*/;
-                    stroke: var(--line-color, #faebd7);
+                    stroke-width: var(--envelope-marker-stroke-width, 1px);
+                    stroke: var(--envelope-marker-stroke, #faebd7);
                     fill: none;
-                    stroke-dasharray: 2;
+                    stroke-dasharray: var(--envelope-marker-dash, 2);
                 }
             </style>
             <svg  viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" width="400" height="100">

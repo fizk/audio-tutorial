@@ -5,32 +5,44 @@ template.innerHTML = `
             <style>
                 :host {
                     display: inline-block;
-                    background-color: #1DE9B6;
+                    background-color: var(--machine-color);
                     padding: 1rem;
 
-                    --oscilloscope-background: #37474F;
-                    --oscilloscope-stroke: #1DE9B6;
-                    --oscilloscope-width: 4px;
+                    --machine-color: #1DE9B6;
+
+                    --oscilloscope-background: var(--screen-background-color);
+                    --oscilloscope-stroke: var(--machine-color);
+                    --oscilloscope-width: var(--screen-line-width);
+
+                    --oscilloscope-marker-width: var(--screen-marker-line-width);
+                    --oscilloscope-marker-stroke: var(--machine-color);
+                    --oscilloscope-marker-dash: 2;
                 }
                 h4 {
                     margin: 0;
                 }
+                ul {
+                    padding: 0;
+                    list-style: none;
+                }
             </style>
             <h4>Oscillator</h4>
-            <div data-waves-container>
-                <lable>type</label>
-                <select data-type>
-                    <option value="sine">sine</option>
-                    <option value="square">square</option>
-                    <option value="sawtooth">sawtooth</option>
-                    <option value="triangle">triangle</option>
-                </select>
-            </div>
-            <div>
-                <label>frequency</label>
-                <input type="range" data-frequency-range min="0" max="880" />
-                <span data-frequency-value></span>
-            </div>
+            <ul>
+                <li data-waves-container>
+                    <lable>type</label>
+                    <select data-type>
+                        <option value="sine">sine</option>
+                        <option value="square">square</option>
+                        <option value="sawtooth">sawtooth</option>
+                        <option value="triangle">triangle</option>
+                    </select>
+                </li>
+                <li>
+                    <label>frequency</label>
+                    <input type="range" data-frequency-range min="0" max="880" />
+                    <output data-frequency-value></output>
+                </li>
+            </ul>
             <elements-oscilloscope></elements-oscilloscope>
 
 `;

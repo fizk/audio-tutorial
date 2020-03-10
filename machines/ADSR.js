@@ -11,11 +11,16 @@ export default class ADSR extends HTMLElement {
                 :host {
                     display: inline-block;
                     padding: 1rem;
-                    background-color: #9FA8DA;
+                    background-color: var(--machine-color);
 
+                    --machine-color: #9FA8DA;
 
-                    --line-color: #9FA8DA;
-                    --line-width: 4px;
+                    --envelope-background: var(--screen-background-color);
+                    --envelope-stroke-width: var(--screen-line-width);
+                    --envelope-stroke: var(--machine-color);
+                    --envelope-marker-stroke-width: var(--screen-marker-line-width);
+                    --envelope-marker-stroke: var(--machine-color);
+                    --envelope-marker-dash: 2;
                 }
                 h4 {
                     margin: 0;

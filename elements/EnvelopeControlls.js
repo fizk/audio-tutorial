@@ -1,17 +1,33 @@
 const template = document.createElement('template');
 template.innerHTML = `
-    <p>
-        A <input data-range-a type="range" min="0" max="100" value="100" /><span data-value-a></span>
-    </p>
-    <p>
-        D <input data-range-d type="range" min="0" max="100" value="100" /><span data-value-d></span>
-    </p>
-    <p>
-        S <input data-range-s type="range" min="0" max="100" value="50" /><span data-value-s></span>
-    </p>
-    <p>
-        R <input data-range-r type="range" min="0" max="100" value="100" /><span data-value-r></span>
-    </p>
+    <style>
+        ul {
+            padding: 0;
+            list-style: none;
+        }
+    </style>
+    <ul>
+        <li>
+            <label>A</label>
+            <input data-range-a type="range" min="0" max="100" value="100" />
+            <output data-value-a></output>
+        </li>
+        <li>
+            <label>D</label>
+            <input data-range-d type="range" min="0" max="100" value="100" />
+            <output data-value-d></output>
+        </li>
+        <li>
+            <label>S</label>
+            <input data-range-s type="range" min="0" max="100" value="50" />
+            <output data-value-s></output>
+        </li>
+        <li>
+            <label>R</label>
+            <input data-range-r type="range" min="0" max="100" value="100" />
+            <output data-value-r></output>
+        </li>
+    </ul>
 `;
 export default class EnvelopeControlls extends HTMLElement {
     constructor() {

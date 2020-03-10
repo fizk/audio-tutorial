@@ -1,35 +1,35 @@
-const template = document.createElement('template');
-template.innerHTML = `
-    <style>
-        svg {
-            background-color: var(--oscilloscope-background, transparent);
-        }
-        polyline {
-            fill: none;
-            stroke: var(--oscilloscope-stroke, black);
-            stroke-width: var(--oscilloscope-width, 1px);
-        }
-    </style>
-    <svg  viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg" width="300" height="50">
-        <polyline />
-    </svg>
-`;
-
 export default class Oscilloscope extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
-
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.innerHTML = `
+            <style>
+                svg {
+                    background-color: var(--oscilloscope-background, transparent);
+                }
+                polyline {
+                    fill: none;
+                    stroke: var(--oscilloscope-stroke, black);
+                    stroke-width: var(--oscilloscope-width, 1px);
+                }
+                line {
+                    stroke-width: var(--oscilloscope-marker-width, 1px);
+                    stroke: var(--oscilloscope-marker-stroke, #faebd7);
+                    stroke-dasharray: var(--oscilloscope-marker-dash, 2);
+                }
+            </style>
+            <svg  viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg" width="300" height="50">
+                <line x1="0" y1="25" x2="300" y2="25" />
+                <g transform="translate(0 0)">
+                    <polyline />
+                </g>
+            </svg>
+        `;
     }
 
     set data(data) {
         const pointsString = this.dataToPoints(data);
         this.setAttribute('points', pointsString);
-    }
-
-    connectedCallback() {
-
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

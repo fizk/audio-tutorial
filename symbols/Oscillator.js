@@ -10,9 +10,9 @@ export default class Oscillator extends HTMLElement {
                 :host {
                     display: inline-block;
                     padding: .5rem;
-                    background-color: #1DE9B6;
-                    --line-color: #9FA8DA;
-                    --line-width: 2px;
+                    background-color: var(--machine-color);
+
+                    --machine-color: #1DE9B6
                 }
             </style>
             <div></div>

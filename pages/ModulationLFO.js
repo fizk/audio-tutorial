@@ -4,106 +4,7 @@ import '../machines/LFO.js';
 import '../machines/Oscillator.js';
 import '../machines/Master.js';
 import '../machines/Keyboard.js';
-
-const template = document.createElement('template');
-template.innerHTML = `
-            <style>
-                :host {
-                    display: block;
-                }
-                article {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    grid-template-areas:
-                        "header header"
-                        "main aside"
-                        "footer footer"
-                }
-                header{
-                    grid-area: header;
-                }
-                main{
-                    grid-area: main;
-                }
-                aside{
-                    grid-area: aside;
-                }
-                footer{
-                    grid-area: footer;
-                }
-            </style>
-            <article>
-                <header>
-                    <h2>LFO (low frequency oscillator)</h2>
-                </header>
-                <main>
-                    <p>
-                        A module called <strong>LFO</strong> does just that. There are just two caviets.
-                    </p>
-                    <p>
-                        If we have a oscillator set at 440Hz to change the volume of an oscillator, it would move so fast
-                        that we wouldn't hear a difference. It only becomes interesting when the frequency is
-                        capped between 0Hz and 20Hz. That's is where the <strong>L</strong> in the LFO comes
-                        from: LOW frequency.
-                    </p>
-                    <p>
-                        Remember that a oscillator produces numbers between -1 and 1. If we move the volume
-                        knob up and down only by two units, the change is doing to be so small that we will not
-                        hear the difference. I will need a Gain module to amplify the signal coming from the
-                        oscillator.
-                    </p>
-                    <p>
-                        Lets take an oscillator module with its frequency range capped between 0 and 20 and
-                        connect it to a Gain module. Let's wrapp that all together in a new module called LFO
-                    </p>
-                    <p>
-                        Let's change the labeling a little as well. Rather than saying that the LFO has a frequency
-                        slider (the one that is changing the frequency of the oscillator), let's change it to
-                        <strong>rate</strong>, since we are more interested in the speed (or rate) of the oscillator,
-                        rather than its frequency.
-                    </p>
-                </main>
-                <aside>
-                    <svg width="283px" height="312px" viewBox="0 0 283 312" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <rect id="path-1" x="75" y="183" width="283" height="304" rx="16"></rect>
-                            <filter x="-0.7%" y="-0.7%" width="101.4%" height="101.3%" filterUnits="objectBoundingBox" id="filter-2">
-                                <feGaussianBlur stdDeviation="1.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
-                                <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
-                                <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
-                                <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
-                            </filter>
-                        </defs>
-                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g id="Desktop" transform="translate(-75.000000, -183.000000)">
-                                <g id="Rectangle">
-                                    <use fill="#E8E8E8" fill-rule="evenodd" xlink:href="#path-1"></use>
-                                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                                </g>
-                                <rect id="Rectangle" fill="#F08DAE" x="133" y="244" width="154" height="181"></rect>
-                                <line x1="209.5" y1="330.5" x2="209.5" y2="368.5" id="Line" stroke="#979797" stroke-width="2" fill="#D8D8D8" stroke-linecap="square"></line>
-                                <line x1="209" y1="407" x2="209.5" y2="445.5" id="Line" stroke="#979797" stroke-width="2" fill="#D8D8D8" stroke-linecap="square"></line>
-                                <rect id="Rectangle" fill="#FAA88E" x="155" y="363" width="108" height="44"></rect>
-                                <rect id="Rectangle" fill="#1CE0B0" x="155" y="286" width="108" height="44"></rect>
-                                <text id="Oscillator" font-size="16" font-weight="normal" fill="#4A4A4A">
-                                    <tspan x="161" y="307">Oscillator</tspan>
-                                </text>
-                                <text id="LFO" font-size="16" font-weight="normal" fill="#4A4A4A">
-                                    <tspan x="143" y="267">LFO</tspan>
-                                </text>
-                                <text id="Gain" font-size="16" font-weight="normal" fill="#4A4A4A">
-                                    <tspan x="161" y="382">Gain</tspan>
-                                </text>
-                            </g>
-                        </g>
-                    </svg>
-                </aside>
-                <footer>
-                    <a href="/modulation">Modulation</a>
-                    <a href="/modulation/am">AM synth</a>
-                </footer>
-            </article>
-`;
+import '../elements/Article.js';
 
 export default class ModulationLFO extends HTMLElement {
 
@@ -111,7 +12,84 @@ export default class ModulationLFO extends HTMLElement {
         super();
 
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.innerHTML = `
+            <style>
+                .diagram {
+                    background-color: var(--screen-background-color);
+                    width: 50%;
+                }
+                .diagram__selection {
+                    fill: var(--screen-selection);
+                    stroke: none;
+                }
+                .diagram__path {
+                    fill: none;
+                    stroke-width: var(--screen-line-width);
+                    stroke: var(--screen-line-color);
+                }
+                .diagram__text {
+                    fill: var(--screen-line-color);
+                    stroke: none;
+                }
+                .diagram__path--fill {
+                    fill: var(--screen-line-color);
+                    stroke-width: var(--screen-line-width);
+                    stroke: none;
+                }
+            </style>
+            <element-article>
+                <h2 slot="header">LFO (low frequency oscillator)</h2>
+                <p>
+                    The first of these modulation units we will be looking at is the <strong>LFO</strong>,
+                    or the Low Frequency Oscillator. It is composed out of a modulator and a gain.
+                </p>
+                <p>
+                    The human ear has a hard time keeping track of changes that happen faster that 20 times
+                    per second. After that we start to group them together. The LFO has therefor its modulator's
+                    frequency domain of <code>[0, 20]</code>Hz
+                </p>
+                <p>
+                    It has prevoipusly been stated that the domain of an Oscillator is <code>[-1, 1]</code>. For our
+                    LFO to work (for readons we will see shortly), we need to do a little bit of pre-processing of
+                    or Oscillator/modulator before it reaches the Gain, we need to shift the domain to
+                    <code>[0, 1]</code>.
+                </p>
+                <p>
+                    Let's wrapp this into a nice bundle and have a little play with it.
+                </p>
+                <svg viewBox="0 0 252 281" xmlns="http://www.w3.org/2000/svg" slot="aside" class="diagram">
+                    <g fill="none" fill-rule="evenodd">
+                        <path class="diagram__path" d="M29 31h197v71H29z" />
+                        <path class="diagram__path" d="M158 67c3.3333-6.6667
+                            6.6667-10 10-10 3.3333 0 6.6667 3.3333 10 10 3.3333
+                            6.6667 6.6667 10 10 10 3.3333 0 6.6667-3.3333 10-10" />
+                        <text class="diagram__text" transform="translate(27 29)">
+                            <tspan x="21" y="43">Modulator</tspan>
+                        </text>
+                        <path class="diagram__path" d="M29 185h197v71H29z" />
+                        <g transform="translate(150 213)">
+                            <path d="M.5 8.5h20M36.5 8.5h20" class="diagram__path" />
+                            <circle cx="28" cy="8" r="6" class="diagram__path" />
+                        </g>
+                        <text class="diagram__text" transform="translate(27 183)">
+                            <tspan x="21" y="43">Gain</tspan>
+                        </text>
+                        <path class="diagram__path--fill" d="M122 101v59h10l-12 24-12-24h10v-59h4z" />
+                        <text font-size="10" class="diagram__text">
+                            <tspan x="150" y="90">0</tspan>
+                        </text>
+                        <text font-size="10" class="diagram__text">
+                            <tspan x="197" y="90">20</tspan>
+                        </text>
+                        <text font-size="16" class="diagram__text">
+                            <tspan x="140" y="143">[0, 1]</tspan>
+                        </text>
+                    </g>
+                </svg>
+                <a href="/modulation" slot="footer" rel="prev">Modulation</a>
+                <a href="/modulation/am" slot="footer" rel="next">Amplitude modulation</a>
+            </element-article>
+        `;
     }
 }
 

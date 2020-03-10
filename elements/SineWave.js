@@ -5,6 +5,8 @@ template.innerHTML = `
                 display: inline-block;
             }
             svg {
+                width: 100%;
+                height: auto;
                 background-color: var(--screen-background-color, #0e0e1d);
             }
             polyline {

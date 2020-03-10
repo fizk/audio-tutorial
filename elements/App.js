@@ -1,19 +1,24 @@
 import { Resolver, Router } from 'https://unpkg.com/@vaadin/router@1.6.0/dist/vaadin-router.js';
 
 import '../pages/Home.js';
-import "../pages/SineWave.js";
-import "../pages/SineWaveBasics.js";
-import "../pages/SineWaveHertz.js";
-import '../pages/SineWaveGain.js';
-import '../pages/TheOscillator.js';
-import "../pages/TheOscillatorTheremin.js";
+import '../pages/Wave.js'
+import '../pages/WaveNumberSequence.js'
+import '../pages/WaveMeasure.js'
+import '../pages/WaveGainAmplitude.js'
+import '../pages/WaveEpilogue.js'
+import '../pages/Oscillator.js';
+import "../pages/OscillatorTheremin.js";
+import "../pages/OscillatorEpilogue.js";
+import '../pages/Envelope.js';
+import '../pages/EnvelopeAdsr.js';
+import '../pages/EnvelopeEpilogue.js';
 import '../pages/Modulation.js';
 import "../pages/ModulationLFO.js";
 import "../pages/ModulationAM.js";
-import "../pages/ModulationFM.js";
-import "../pages/ModulationPlay.js";
-import '../pages/Envelope.js';
-import '../pages/EnvelopeAmplitude.js';
+import "../pages/ModulationUndefined.js";
+import "../pages/ModulationAmSynth.js";
+import "../pages/ModulationFMSynth.js";
+import "../pages/ModulationEpilogue.js";
 import '../pages/AdditiveSynthesis.js';
 import '../pages/AdditiveSynthesisBuilder.js';
 import '../pages/AdditiveSynthesisHarmonics.js';
@@ -27,12 +32,22 @@ const template = document.createElement('template');
 template.innerHTML = `
     <style>
         :host {
+            --line-width: 4px;
+            --line-color: #faebd7;
+
+            --link-color: #efc06a;
+
             --whole-tone-fill-color: white;
             --whole-tone-stroke-color: #b8c2c7;
             --half-tone-color: #37474F;
             --half-tone-stroke-color: none;
 
             --screen-background-color: #37474F;
+            --screen-line-color: #e2d4c2;
+            --screen-line-width: 4px;
+            --screen-marker-line-color: #e2d4c2;
+            --screen-marker-line-width: 1px;
+            --screen-selection: rgba(177, 74, 74, .3996);
 
         }
         :host {
@@ -65,6 +80,7 @@ template.innerHTML = `
             padding: 1rem;
             grid-area: main;
             overflow: scroll;
+            position: relative
         }
 
         .main-menu {
@@ -77,14 +93,27 @@ template.innerHTML = `
         }
         .main-menu__link {
             text-decoration: none;
-            padding: 1rem;
+            padding: 0.8rem 1rem;
             display: block;
             color: #2d2f30;
         }
         .main-menu__item--active {
             transform: translate(1rem, 0);
         }
-
+        .users-leaving {
+            animation: .2s leave ease-in;
+        }
+        .users-entering {
+            animation: .2s enter ease-in;
+        }
+        @keyframes leave {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100%); }
+        }
+        @keyframes enter {
+            from { transform: translateY(100%) }
+            to { transform: translateY(0) }
+        }
     </style>
     <header>header</header>
     <nav>
@@ -93,16 +122,16 @@ template.innerHTML = `
                 <a href="/" class="main-menu__link">Home</a>
             </li>
             <li class="main-menu__item">
-                <a href="/sinewave" class="main-menu__link">The Sine wave</a>
+                <a href="/wave" class="main-menu__link">Wave</a>
             </li>
             <li class="main-menu__item">
-                <a href="/oscillator" class="main-menu__link">The Oscillator</a>
+                <a href="/oscillator" class="main-menu__link">Oscillator</a>
+            </li>
+            <li class="main-menu__item">
+                <a href="/envelope" class="main-menu__link">Envelope</a>
             </li>
             <li class="main-menu__item">
                 <a href="/modulation" class="main-menu__link">Modulation</a>
-            </li>
-            <li class="main-menu__item">
-                <a href="/envelope" class="main-menu__link">The Envelope</a>
             </li>
             <li class="main-menu__item">
                 <a href="/additive-synthesis" class="main-menu__link">Additive Synthesis</a>
@@ -144,61 +173,46 @@ export default class App extends HTMLElement {
                 component: 'page-home'
             },
             {
-                path: '/sinewave',
+                path: '/wave',
                 action: this.setNav,
+                animate: {
+                    enter: 'users-entering',
+                    leave: 'users-leaving'
+                },
                 children: [
                     {
                         path: '/',
-                        component: 'page-sine-wave',
-                    },
-                    {
-                        path: '/basics-sine',
-                        component: 'page-sine-wave-basics'
+                        component: 'page-wave',
                     },{
-                        path: '/hertz',
-                        component: 'page-sine-wave-hertz'
+                        path: '/sequence-of-numbers',
+                        component: 'page-wave-number-sequence'
+                    },{
+                        path: '/measure-the-wave',
+                        component: 'page-wave-measure'
                     }, {
-                        path: '/gain',
-                        component: 'page-sine-wave-gain'
+                        path: '/gain-and-amplitude',
+                        component: 'page-wave-gain-amplitude'
+                    }, {
+                        path: '/epilogue',
+                        component: 'page-wave-epilogue'
                     }
                 ]
-            },
-            {
+            },{
                 path: '/oscillator',
                 action: this.setNav,
                 children: [
                     {
                         path: '/',
-                        component: 'page-the-oscillator',
+                        component: 'page-oscillator',
                     },{
                         path: '/theremin',
-                        component: 'page-the-oscillator-theremin'
+                        component: 'page-oscillator-theremin'
+                    }, {
+                        path: '/epilogue',
+                        component: 'page-oscillator-epilogue'
                     }
                 ]
-            },
-            {
-                path: '/modulation',
-                action: this.setNav,
-                children: [
-                    {
-                        path: '/',
-                        component: 'page-modulation',
-                    }, {
-                        path: '/am',
-                        component: 'page-modulation-am'
-                    }, {
-                        path: '/fm',
-                        component: 'page-modulation-fm'
-                    }, {
-                        path: '/lfo',
-                        component: 'page-modulation-lfo'
-                    }, {
-                        path: '/play',
-                        component: 'page-modulation-play'
-                    }
-                ]
-            },
-            {
+            }, {
                 path: '/envelope',
                 action: this.setNav,
                 children: [
@@ -206,12 +220,41 @@ export default class App extends HTMLElement {
                         path: '/',
                         component: 'page-envelope',
                     }, {
-                        path: '/amplitude',
-                        component: 'page-envelope-amplitude'
+                        path: '/adsr',
+                        component: 'page-envelope-adsr'
+                    }, {
+                        path: '/epilogue',
+                        component: 'page-envelope-epilogue'
                     }
                 ]
-            },
-            {
+            }, {
+                path: '/modulation',
+                action: this.setNav,
+                children: [
+                    {
+                        path: '/',
+                        component: 'page-modulation',
+                    }, {
+                        path: '/lfo',
+                        component: 'page-modulation-lfo'
+                    }, {
+                        path: '/am',
+                        component: 'page-modulation-am'
+                    }, {
+                        path: '/undefined',
+                        component: 'page-modulation-undefined'
+                    }, {
+                        path: '/am-synth',
+                        component: 'page-modulation-am-synth'
+                    }, {
+                        path: '/fm-synth',
+                        component: 'page-modulation-fm-synth'
+                    },{
+                        path: '/epilogue',
+                        component: 'page-modulation-epilogue'
+                    }
+                ]
+            }, {
                 path: '/additive-synthesis',
                 action: this.setNav,
                 children: [
@@ -241,8 +284,7 @@ export default class App extends HTMLElement {
                         component: 'page-additive-synthesis-conclusion',
                     }
                 ]
-            },
-            {
+            }, {
                 path: '/subtractive-synthesis',
                 action: this.setNav,
                 component: 'page-subtractive-synthesis'

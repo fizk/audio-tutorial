@@ -2,26 +2,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="https://fonts.googleapis.com/css?family=Raleway:400,700&display=swap" rel="stylesheet"> -->
-    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:300,600&display=swap" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,600&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
-            --line-width: 3px;
-            /* font-family: 'Raleway', sans-serif; */
-            /* font-family: 'Poppins' ; */
-            font-family: 'Nunito' ;
+            font-family: 'Nunito', sans-serif ;
             font-weight: 300;
             background-color: #f4f5f7;
             color: #2d2f30;
+            line-height: 1.25;
         }
+        element-app:not(:defined) {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .loading-graphic {
+            width: 25%;
+        }
+        .loading-graphic .cls-1 {
+            fill: #858789;
+        }
+
+        .loading-graphic .cls-2 {
+            fill: #b6b6b7;
+        }
+
+        .loading-graphic .cls-3 {
+            fill: #e5e585;
+        }
+
+        .loading-graphic .cls-4 {
+            fill: #68686b;
+        }
+        .loading-graphic .cls-3 {
+            transform-origin: bottom;
+            animation-name: upanddown;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+        .loading-graphic .bar-1 {
+            animation-delay: -.5s;
+        }
+        .loading-graphic .bar-2 {
+            animation-delay: -.6s;
+        }
+        .loading-graphic .bar-3 {
+            animation-delay: -.3s;
+        }
+        .loading-graphic .bar-4 {
+            animation-delay: -.4s;
+        }
+        .loading-graphic .bar-5 {
+            animation-delay: -.2s;
+        }
+        .loading-graphic .bar-6 {
+            animation-delay: -.8s;
+        }
+        .loading-graphic .bar-7 {
+            animation-delay: -.7s;
+        }
+
+        @keyframes upanddown {
+            0% {
+                transform: scaleY(1);
+            }
+            100% {
+                transform: scaleY(2);
+            }
+        }
+
     </style>
     <script type="module" src="/elements/App.js"></script>
-    <title>Synth Tutorial</title>
+    <title>Audio Synthesis</title>
 </head>
 <body>
-    <element-app></element-app>
+    <element-app>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 335.94 106" class="loading-graphic">
+            <rect class="cls-1" width="16" height="106" />
+            <rect class="cls-2" x="5" y="7" width="10" height="96" />
+            <rect class="cls-1" x="29" width="16" height="106" />
+            <rect class="cls-2" x="34" y="7" width="10" height="96" />
+            <rect class="cls-1" x="58" width="16" height="106" />
+            <rect class="cls-2" x="63" y="7" width="10" height="96" />
+            <rect class="cls-1" x="87" width="16" height="106" />
+            <rect class="cls-2" x="92" y="7" width="10" height="96" />
+            <rect class="cls-1" x="116" width="16" height="106" />
+            <rect class="cls-2" x="121" y="7" width="10" height="96" />
+            <rect class="cls-1" x="145" width="16" height="106" />
+            <rect class="cls-2" x="150" y="7" width="10" height="96" />
+            <rect class="cls-1" x="174" width="16" height="106" />
+            <rect class="cls-2" x="179" y="7" width="10" height="96" />
+            <rect class="cls-3 bar-1" x="61" y="63" width="10" height="40" />
+            <rect class="cls-3 bar-2" x="32" y="63" width="10" height="40" />
+            <rect class="cls-3 bar-3" x="90" y="63" width="10" height="40" />
+            <rect class="cls-3 bar-4" x="119" y="63" width="10" height="40" />
+            <rect class="cls-3 bar-5" x="148" y="63" width="10" height="40" />
+            <rect class="cls-3 bar-6" x="3" y="63" width="10" height="40" />
+            <rect class="cls-3 bar-7" x="177" y="63" width="10" height="40" />
+            <g>
+                <path class="cls-4"
+                    d="M270,90.5l-.36-3.1h-.15a9.21,9.21,0,0,1-7.54,3.66c-5,0-7.54-3.51-7.54-7.07,0-6,5.3-9.22,14.82-9.17v-.51c0-2-.56-5.7-5.6-5.7a12.26,12.26,0,0,0-6.41,1.83l-1-3a15.22,15.22,0,0,1,8.09-2.19c7.54,0,9.37,5.14,9.37,10.08V84.6a34.14,34.14,0,0,0,.41,5.9Zm-.67-12.57c-4.88-.11-10.43.76-10.43,5.55a4,4,0,0,0,4.22,4.27,6.12,6.12,0,0,0,6-4.12,4.78,4.78,0,0,0,.25-1.43Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M301.47,83.78c0,2.55.06,4.79.21,6.72h-4l-.26-4h-.1a9.27,9.27,0,0,1-8.15,4.58c-3.87,0-8.5-2.13-8.5-10.79V65.86h4.48V79.51c0,4.68,1.43,7.84,5.5,7.84a6.49,6.49,0,0,0,5.91-4.08A6.62,6.62,0,0,0,297,81V65.86h4.48Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M330.19,54.35V84.14c0,2.19.05,4.68.21,6.36h-4l-.2-4.27h-.1a9.12,9.12,0,0,1-8.4,4.83c-6,0-10.54-5-10.54-12.52-.05-8.2,5-13.24,11.05-13.24,3.76,0,6.31,1.78,7.43,3.77h.1V54.35Zm-4.48,21.54a8,8,0,0,0-.2-1.88,6.59,6.59,0,0,0-6.47-5.2c-4.63,0-7.38,4.08-7.38,9.52,0,5,2.44,9.12,7.28,9.12a6.75,6.75,0,0,0,6.57-5.35,7.89,7.89,0,0,0,.2-1.93Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M342.62,58.93a2.78,2.78,0,0,1-5.55,0,2.73,2.73,0,0,1,2.8-2.8A2.66,2.66,0,0,1,342.62,58.93Zm-5,31.57V65.86h4.48V90.5Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M371.85,78c0,9.11-6.32,13.08-12.27,13.08-6.68,0-11.82-4.88-11.82-12.67,0-8.25,5.4-13.09,12.22-13.09C367.06,65.3,371.85,70.44,371.85,78Zm-19.56.25c0,5.4,3.11,9.47,7.49,9.47s7.48-4,7.48-9.57c0-4.18-2.08-9.47-7.38-9.47S352.29,73.55,352.29,78.23Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M254.55,112.61a7.42,7.42,0,0,0,3.74,1.12c2,0,3-1,3-2.31s-.8-2.09-2.9-2.86c-2.79-1-4.11-2.55-4.11-4.41,0-2.51,2-4.57,5.37-4.57a7.74,7.74,0,0,1,3.83,1l-.71,2a6.12,6.12,0,0,0-3.18-.9c-1.68,0-2.61,1-2.61,2.13s.93,1.86,3,2.64c2.7,1,4.08,2.38,4.08,4.69,0,2.73-2.12,4.66-5.82,4.66a8.79,8.79,0,0,1-4.37-1.06Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M268.7,99.93l3.41,9.2c.36,1,.75,2.26,1,3.19h.07c.29-.93.61-2.12,1-3.25l3.09-9.14h3L276,111c-2,5.34-3.41,8.08-5.34,9.75a7.73,7.73,0,0,1-3.48,1.83l-.7-2.38a7.33,7.33,0,0,0,2.47-1.38,8.61,8.61,0,0,0,2.38-3.15,2.06,2.06,0,0,0,.23-.68,2.55,2.55,0,0,0-.2-.74l-5.75-14.35Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M282.82,104.15c0-1.61,0-2.93-.13-4.22h2.51l.16,2.58h.07a5.72,5.72,0,0,1,5.15-2.93c2.15,0,5.5,1.29,5.5,6.63v9.29h-2.84v-9c0-2.51-.93-4.6-3.6-4.6a4,4,0,0,0-3.79,2.89,4.07,4.07,0,0,0-.2,1.32v9.36h-2.83Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M304,95.46v4.47H308v2.16H304v8.4c0,1.93.55,3,2.13,3a6.66,6.66,0,0,0,1.64-.19l.13,2.12a7.1,7.1,0,0,1-2.51.38,3.94,3.94,0,0,1-3.06-1.18c-.8-.84-1.09-2.22-1.09-4.06v-8.49h-2.42V99.93h2.42V96.2Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M311.19,92.67H314v9.71h.06a5.25,5.25,0,0,1,2-2,5.75,5.75,0,0,1,2.89-.81c2.1,0,5.44,1.29,5.44,6.66v9.26h-2.83v-8.94c0-2.51-.93-4.63-3.6-4.63a4.08,4.08,0,0,0-3.8,2.83,3.44,3.44,0,0,0-.19,1.35v9.39h-2.83Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M330.61,108.23c.07,3.83,2.51,5.41,5.34,5.41a10.21,10.21,0,0,0,4.31-.81l.49,2a12.68,12.68,0,0,1-5.18,1c-4.8,0-7.66-3.15-7.66-7.84s2.77-8.4,7.3-8.4c5.08,0,6.44,4.47,6.44,7.34a11,11,0,0,1-.1,1.31Zm8.3-2c0-1.8-.74-4.6-3.92-4.6-2.87,0-4.12,2.64-4.34,4.6Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M344.76,112.61a7.41,7.41,0,0,0,3.73,1.12c2.06,0,3-1,3-2.31s-.81-2.09-2.9-2.86c-2.8-1-4.11-2.55-4.11-4.41,0-2.51,2-4.57,5.37-4.57a7.74,7.74,0,0,1,3.83,1l-.71,2a6.13,6.13,0,0,0-3.19-.9c-1.67,0-2.6,1-2.6,2.13s.93,1.86,3,2.64c2.7,1,4.08,2.38,4.08,4.69,0,2.73-2.12,4.66-5.82,4.66a8.79,8.79,0,0,1-4.37-1.06Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M361,95.56a1.76,1.76,0,0,1-3.51,0,1.72,1.72,0,0,1,1.77-1.77A1.68,1.68,0,0,1,361,95.56Zm-3.16,19.94V99.93h2.84V115.5Z"
+                    transform="translate(-38.58 -35.42)" />
+                <path class="cls-4"
+                    d="M365,112.61a7.42,7.42,0,0,0,3.74,1.12c2.05,0,3-1,3-2.31s-.81-2.09-2.9-2.86c-2.79-1-4.11-2.55-4.11-4.41,0-2.51,2-4.57,5.37-4.57a7.74,7.74,0,0,1,3.83,1l-.71,2a6.13,6.13,0,0,0-3.19-.9c-1.67,0-2.6,1-2.6,2.13s.93,1.86,3,2.64c2.7,1,4.08,2.38,4.08,4.69,0,2.73-2.12,4.66-5.82,4.66a8.79,8.79,0,0,1-4.37-1.06Z"
+                    transform="translate(-38.58 -35.42)" />
+            </g>
+        </svg>
+    </element-app>
 </body>
 </html>

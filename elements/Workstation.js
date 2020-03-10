@@ -9,7 +9,10 @@ template.innerHTML = `
             border-radius: 1rem;
         }
 
-        div {padding: 1rem;}
+        div {
+            padding: 1rem;
+            position: relative;
+        }
     </style>
 
     <div>

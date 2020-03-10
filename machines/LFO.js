@@ -6,37 +6,45 @@ template.innerHTML = `
                 :host {
                     display: inline-block;
                     padding: 1rem;
-                    background-color: #F48FB1;
+                    background-color: var(--machine-color);
 
-                    --oscilloscope-background: #37474F;
-                    --oscilloscope-stroke: #F48FB1;
-                    --oscilloscope-width: 4px;
+                    --machine-color: #F48FB1;
+
+                    --oscilloscope-background: var(--screen-background-color);
+                    --oscilloscope-stroke: var(--machine-color);
+                    --oscilloscope-width: var(--screen-line-width);
                 }
                 h4 {
                     margin: 0;
                 }
+                ul {
+                    padding: 0;
+                    list-style: none;
+                }
             </style>
             <h4>LFO</h4>
-            <div data-waves-container>
-                <lable>type</label>
-                <select data-type>
-                    <option value="sine">sine</option>
-                    <option value="square">square</option>
-                    <option value="sawtooth">sawtooth</option>
-                    <option value="triangle">triangle</option>
-                    <option value="noice">noice</option>
-                </select>
-            </div>
-            <div>
-                <label>rate</label>
-                <input data-frequency-range type="range" min="0" max="20" />
-                <span data-frequency-value></span>
-            </div>
-            <div>
-                <label>amount</label>
-                <input data-amount-range type="range" min="0" step=".1" max="1" />
-                <span data-amount-value></span>
-            </div>
+            <ul>
+                <li data-waves-container>
+                    <lable>type</label>
+                    <select data-type>
+                        <option value="sine">sine</option>
+                        <option value="square">square</option>
+                        <option value="sawtooth">sawtooth</option>
+                        <option value="triangle">triangle</option>
+                        <option value="noice">noice</option>
+                    </select>
+                </li>
+                <li>
+                    <label>rate</label>
+                    <input data-frequency-range type="range" min="0" max="20" />
+                    <output data-frequency-value></output>
+                </li>
+                <li>
+                    <label>amount</label>
+                    <input data-amount-range type="range" min="0" step=".1" max="1" />
+                    <output data-amount-value></output>
+                </li>
+            </ul>
             <elements-oscilloscope></elements-oscilloscope>
 
 `;

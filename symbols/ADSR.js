@@ -10,9 +10,16 @@ export default class ADSR extends HTMLElement {
                 :host {
                     display: inline-block;
                     padding: .5rem;
-                    background-color: #9FA8DA;
-                    --line-color: #9FA8DA;
-                    --line-width: 2px;
+                    background-color: var(--machine-color);
+
+                    --machine-color: #9FA8DA;
+
+                    --envelope-background: var(--screen-background-color);
+                    --envelope-stroke-width: 2px;
+                    --envelope-stroke: var(--machine-color);
+                    --envelope-marker-stroke-width: var(--screen-marker-line-width);
+                    --envelope-marker-stroke: var(--machine-color);
+                    --envelope-marker-dash: 2;
                 }
             </style>
             <element-envelope data-envelope width="100" height="25"></element-envelope>

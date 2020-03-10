@@ -1,72 +1,10 @@
-import '../elements/SineCombination.js';
 import '../elements/Workstation.js';
 import '../elements/SineWave.js';
 import '../machines/Master.js';
 import '../machines/Keyboard.js';
 import '../machines/Toggle.js';
+import '../elements/Article.js';
 
-const template = document.createElement('template');
-template.innerHTML = `
-            <style>
-                :host {
-                    display: block;
-                }
-                article {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    grid-template-areas:
-                        "header header"
-                        "main aside"
-                        "footer footer"
-                }
-                header{
-                    grid-area: header;
-                }
-                main{
-                    grid-area: main;
-                }
-                aside{
-                    grid-area: aside;
-                }
-                footer{
-                    grid-area: footer;
-                }
-            </style>
-            <article>
-                <header>
-                    <h2>Inharmonicity</h2>
-                </header>
-                <main>
-                    <p>
-                        We can also mix together sinewaves that do not have mathametical signicant
-                        frequency ratio.
-                    </p>
-                    <p>
-                        In this example, we have two sinewave oscillators, both set to frequency 440Hz.
-                        The first one is then detuned 50 cent down and the other 50 cent up. As you move
-                        the slider, you increase or decrease this number. Slider with value <code>0</code>
-                        will just play two sinewaves of 440Hz. Setting the slider to 100 will play two sinewave
-                        osccilators whole tone apart
-                    </p>
-                </main>
-                <aside>
-                    <element-workstation data-example-1>
-                        <machine-toggle data-toggle-example-1></machine-toggle>
-                        <ul>
-                            <li>
-                                <input type="range" min="0" max="100" value="50" />
-                                <output>50</output>
-                            </li>
-                        </ul>
-                        <machine-master data-master-example-1 />
-                    </element-workstation>
-                </aside>
-                <footer>
-                    <a href="/additive-synthesis/adsr">adsr</a>
-                    <a href="/additive-synthesis/conclusion">conclusion</a>
-                </footer>
-            </article>
-`;
 export default class AdditiveSynthesisPhasing extends HTMLElement {
 
     masterElement;
@@ -79,7 +17,36 @@ export default class AdditiveSynthesisPhasing extends HTMLElement {
         super();
 
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.innerHTML = `
+            <element-article>
+                <h2 slot="header">Inharmonicity</h2>
+                <p>
+                    We can also mix together sinewaves that do not have mathametical signicant
+                    frequency ratio.
+                </p>
+                <p>
+                    In this example, we have two sinewave oscillators, both set to frequency 440Hz.
+                    The first one is then detuned 50 cent down and the other 50 cent up. As you move
+                    the slider, you increase or decrease this number. Slider with value <code>0</code>
+                    will just play two sinewaves of 440Hz. Setting the slider to 100 will play two sinewave
+                    osccilators whole tone apart
+                </p>
+
+                <element-workstation data-example-1 slot="aside">
+                    <machine-toggle data-toggle-example-1></machine-toggle>
+                    <ul>
+                        <li>
+                            <input type="range" min="0" max="100" value="50" />
+                            <output>50</output>
+                        </li>
+                    </ul>
+                    <machine-master data-master-example-1 />
+                </element-workstation>
+
+                <a href="/additive-synthesis/adsr" slot="footer" rel="prev">adsr</a>
+                <a href="/additive-synthesis/conclusion" slot="footer" rel="next">conclusion</a>
+            </element-article>
+        `;
 
         this.draw = this.draw.bind(this);
         this.toggleExampleOne = this.toggleExampleOne.bind(this);
