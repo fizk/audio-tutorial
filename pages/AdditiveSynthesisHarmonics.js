@@ -10,13 +10,17 @@ export default class AdditiveSynthesisHarmonics extends HTMLElement {
             <element-article>
                 <h2 slot="header">Harmonics</h2>
                 <p>
-                    Have a play with the amplitude 9 oscilltors all wired to the master. Each oscillator's frequency
-                    is the two times the previous one (440, 880, 1320, 1760). There are some presets there as well
-                    where you can approximate square, sawtooth and triangular wave.
+                    But how does this sound? Here are 9 harmonically related oscillators routed through a Gain before they go into the Master.
+                    The harmonic relation goes 440Hz, 880Hz, 1320Hz, 1760Hz...
+                    Have a play with the sliders which control the amplitude to produce different sound.
+                    Additionally there are presets at the top to produce each of the significant wave-type.
+                </p>
+                <p>
+                    Notice how the Master's frequency-scope now has many peeks depending on the wave-type you are producing.
                 </p>
                 <pad-harmonic-synth slot="aside"></pad-harmonic-synth>
                 <a href="/additive-synthesis/builder" slot="footer" rel="prev">Wave Builder</a>
-                <a href="/additive-synthesis/octaves" slot="footer" rel="next">octaves</a>
+                <a href="/additive-synthesis/adsr" slot="footer" rel="next">ADSR</a>
             </element-article>
         `;
     }

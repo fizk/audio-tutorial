@@ -8,25 +8,34 @@ export default class WaveMeasure extends HTMLElement {
         this.attachShadow({mode: 'open'});
         this.shadowRoot.innerHTML = `
             <style>
-
-                figure {
-                    margin: 0;
-                    text-align: center;
-                }
-                figcaption {
-                    padding: 1rem;
-                    font-size: 0.8rem;
-                }
-
-                sine-wave {
-                    width: 100%;
+                @import "../styles/figure.css";
+                :host {
+                    --screen-background-color: var(--color-indigo-1);
+                    --screen-line-color: var(--color-gray-3);
                 }
 
                 table {
                     margin: auto;
                 }
+                thead th {
+                    font-weight: 600;
+                    text-align: center;
+                    vertical-align: bottom;
+                }
                 td {
                     text-align: right;
+                }
+                th {
+                    text-align: left;
+                    font-weight: 300;
+                }
+                th, td {
+                    padding: 0.41rem 0.64rem;
+                }
+                th span {
+                    font-size: 0.8rem;
+                    vertical-align: super;
+                    margin-left: -2px;
                 }
             </style>
             <element-article>
@@ -52,7 +61,7 @@ export default class WaveMeasure extends HTMLElement {
                <figure class="right">
                     <sine-wave frequency="220"></sine-wave>
                     <figcaption>
-                    Wave of 220Hz produces low pitch sound, and is of low frequency.
+                        Wave of 220Hz produces low pitch sound, and is of low frequency.
                     </figcaption>
                 </figure>
                 <p>
@@ -74,63 +83,65 @@ export default class WaveMeasure extends HTMLElement {
                 </p>
                 <figure slot="aside">
                     <table>
-                        <tbody>
+                        <thead>
                         <tr>
                             <th>Note</th>
-                            <th>Just Scale</th>
-                            <th>Equal Temperament</th>
+                            <th>Just<br />Scale</th>
+                            <th>Equal<br />Temperament</th>
                             <th>Difference</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         <tr>
-                            <td>C4</td> <td>261.63</td> <td>261.63</td>
+                            <th>C</th> <td>261.63</td> <td>261.63</td>
                             <td>0.00</td>
                         </tr>
                         <tr>
-                            <td>C4#</td> <td>272.54</td>  <td>277.18</td>
+                            <th>C<span>♯</span></th> <td>272.54</td>  <td>277.18</td>
                             <td>+4.64</td>
                         </tr>
                         <tr>
-                            <td>D4</td> <td>294.33</td> <td>293.66</td>
+                            <th>D</th> <td>294.33</td> <td>293.66</td>
                             <td>-0.67</td>
                         </tr>
                         <tr>
-                            <td>E4b</td> <td>313.96</td> <td>311.13</td>
+                            <th>E<span>♭</span></th> <td>313.96</td> <td>311.13</td>
                             <td>-2.84</td>
                         </tr>
                         <tr>
-                            <td>E4</td> <td>327.03</td> <td>329.63</td>
+                            <th>E</th> <td>327.03</td> <td>329.63</td>
                             <td>+2.60</td>
                         </tr>
                         <tr>
-                            <td>F4</td> <td>348.83</td> <td>349.23</td>
+                            <th>F</th> <td>348.83</td> <td>349.23</td>
                             <td>+0.40</td>
                         </tr>
                         <tr>
-                            <td>F4#</td> <td>367.92</td> <td>369.99</td>
+                            <th>F<span>♯</span></th> <td>367.92</td> <td>369.99</td>
                             <td>+2.07</td>
                         </tr>
                         <tr>
-                            <td>G4</td> <td>392.44</td> <td>392.00</td>
+                            <th>G</th> <td>392.44</td> <td>392.00</td>
                             <td>-0.44</td>
                         </tr>
                         <tr>
-                            <td>A4b</td> <td>418.60</td> <td>415.30</td>
+                            <th>A<span>♭</span></th> <td>418.60</td> <td>415.30</td>
                             <td>-3.30</td>
                         </tr>
                         <tr>
-                            <td>A4</td> <td>436.05</td> <td>440.00</td>
+                            <th>A</th> <td>436.05</td> <td>440.00</td>
                             <td>+3.94</td>
                         </tr>
                         <tr>
-                            <td>B4b</td> <td>470.93</td> <td>466.16</td>
+                            <th>B<span>♭</span></th> <td>470.93</td> <td>466.16</td>
                             <td>-4.77</td>
                         </tr>
                         <tr>
-                            <td>B4</td> <td>490.55</td> <td>493.88</td>
+                            <th>B</th> <td>490.55</td> <td>493.88</td>
                             <td>+3.33</td>
                         </tr>
                         <tr>
-                            <td>C5</td> <td>523.25</td> <td>523.25</td>
+                            <th>C</th> <td>523.25</td> <td>523.25</td>
                             <td>0.00</td>
                         </tr>
                     </tbody></table>

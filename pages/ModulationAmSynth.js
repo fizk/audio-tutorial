@@ -19,17 +19,8 @@ export default class ModulationAmSynth extends HTMLElement {
                 </p>
                 <p>
                     The keyboard is also connected to the Undefined unit. The frequency that is picked by the keyboard is therefor
-                    also sent there. The Undefined unit has a <strong>index</strong> slider. It will determine the multiplication factor
-                    applied to the Oscillator inside the Undefined unit. For example: if we on the keyboard, strike <strong>A<sub>4</sub></strong>,
-                    which is 440Hz, and we have the index inside our Undefined unit set to <code>2</code>, the modulation frequency
-                    will be 880Hz. So, the carrier is 440Hz, the modulator is 880Hz.
-                </p>
-                <p>
-                    Next the Oscillator inside the Undefined unit will go through a pre-processor unit that will shift the domain to be
-                    <code>[0, 1]</code>. After that, it will go to a Gain inside the Undefined unit. That Gain is controlled by the
-                    <strong>amount</strong> slider. It will control how much of the amplitude modulation will be applied. For example: if the
-                    amount is set to <code>0.5</code> the domain coming out of the Undefined unit will be <code>[0, 0.5]</code>, meaning
-                    that half of the amplitude modulation will be applied to the final outcome.
+                    also sent there. The Undefined unit has a <strong>index</strong> slider. It will control how much the carrier frequency
+                    will be multiplied by.
                 </p>
                 <p>
                     Finally, the Undefined unit is connected to the Gain unit that is to be modulated.
@@ -40,7 +31,10 @@ export default class ModulationAmSynth extends HTMLElement {
                 </p>
                 <p>
                     One might think that the result would be an fast tremolo effect, but something else happens. We get an interesting
-                    <a href="https://en.wikipedia.org/wiki/Timbre">timbre</a>.
+                    <a href="https://en.wikipedia.org/wiki/Timbre">timbre</a>.  One thing to notice though. When the <strong>index</strong>
+                    maintains a relationship with the carrier: say, <code>0.5</code> for half the carrier frequency or <strong>2</strong>
+                    for twice the carrier frequency we get a harmonic sound. But if there is no relation, say <strong>index</strong> is at
+                    <code>2.7</code> we get inharmonicity.
                 </p>
                 <button data-preset-1 slot="aside">Preset 1</button>
                 <button data-preset-2 slot="aside">Preset 2</button>

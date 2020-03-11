@@ -22,10 +22,8 @@ import "../pages/ModulationEpilogue.js";
 import '../pages/AdditiveSynthesis.js';
 import '../pages/AdditiveSynthesisBuilder.js';
 import '../pages/AdditiveSynthesisHarmonics.js';
-import '../pages/AdditiveSynthesisOctaves.js';
-import '../pages/AdditiveSynthesisPhasing.js';
 import '../pages/AdditiveSynthesisADSR.js';
-import '../pages/AdditiveSynthesisConclusion.js';
+import '../pages/AdditiveSynthesisEpilogue.js';
 import '../pages/SubtractiveSynthesis.js';
 
 const template = document.createElement('template');
@@ -35,7 +33,7 @@ template.innerHTML = `
             --line-width: 4px;
             --line-color: #faebd7;
 
-            --link-color: #efc06a;
+            --link-color: var(--color-orange-3);
 
             --whole-tone-fill-color: white;
             --whole-tone-stroke-color: #b8c2c7;
@@ -48,6 +46,27 @@ template.innerHTML = `
             --screen-marker-line-color: #e2d4c2;
             --screen-marker-line-width: 1px;
             --screen-selection: rgba(177, 74, 74, .3996);
+
+            --color-red-1: #EF9A9A;
+            --color-pink-1: #F48FB1;
+            --color-purple-1: #CE93D8;
+            --color-purple-2: #B39DDB;
+            --color-indigo-1: #9FA8DA;
+            --color-blue-1: #90CAF9;
+            --color-blue-2: #81D4FA;
+            --color-cyan-1: #80DEEA;
+            --color-green-1: #80CBC4;
+            --color-green-2: #A5D6A7;
+            --color-green-3: #C5E1A5;
+            --color-lime-1: #E6EE9C;
+            --color-yellow-1: #FFF59D;
+            --color-orange-1: #FFE082;
+            --color-orange-2: #FFCC80;
+            --color-orange-3: #FFAB91;
+            --color-brown-1: #BCAAA4;
+            --color-gray-1: #CFD8DC;
+            --color-gray-2: #607D8B;
+            --color-gray-3: #263238;
 
         }
         :host {
@@ -268,20 +287,11 @@ export default class App extends HTMLElement {
                         path: '/harmonics',
                         component: 'page-additive-synthesis-harmonics'
                     }, {
-                        path: '/octaves',
-                        component: 'page-additive-synthesis-octaves'
-                    }, {
-                        path: '/octaves',
-                        component: 'page-additive-synthesis-octaves'
-                    }, {
                         path: '/adsr',
                         component: 'page-additive-synthesis-adsr',
                     }, {
-                        path: '/phasing',
-                        component: 'page-additive-synthesis-phasing',
-                    }, {
-                        path: '/conclusion',
-                        component: 'page-additive-synthesis-conclusion',
+                        path: '/epilogue',
+                        component: 'page-additive-synthesis-epilogue',
                     }
                 ]
             }, {

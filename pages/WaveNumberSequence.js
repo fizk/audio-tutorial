@@ -8,14 +8,8 @@ export default class WaveNumberSequence extends HTMLElement {
         this.attachShadow({mode: 'open'});
         this.shadowRoot.innerHTML = `
             <style>
-                figure {
-                    margin: 0
-                }
-                figcaption {
-                    text-align: center;
-                    padding: 1rem 0;
-                    font-size: 0.8rem;
-                }
+                @import "../styles/figure.css";
+
                 input {
                     vertical-align: middle;
                 }

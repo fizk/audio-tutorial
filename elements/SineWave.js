@@ -10,14 +10,14 @@ template.innerHTML = `
                 background-color: var(--screen-background-color, #0e0e1d);
             }
             polyline {
-                stroke-width: var(--line-width, 1px);
-                stroke: var(--line-color, #faebd7);
+                stroke-width: var(--screen-line-width, 1px);
+                stroke: var(--screen-line-color, #faebd7);
                 fill: none;
                 stroke-dasharray: var(--resolution, 0);
             }
             line {
-                stroke-width: 1px /*var(--line-width, 1px)*/;
-                stroke: var(--line-color, #faebd7);
+                stroke-width: var(--screen-marker-line-width, 1px);
+                stroke: var(--screen-marker-line-color, #faebd7);
                 stroke-dasharray: 2;
             }
     </style>

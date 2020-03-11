@@ -7,20 +7,8 @@ export default class EnvelopeEpilogue extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
-                .resources li {
-                    margin: 0.512rem 0;
-                }
-                .resources a {
-                    text-decoration: none;
-                    display: inline-block;
-                    border-bottom: 2px solid #a7a7e2;
-                }
-
-                figcaption {
-                    text-align: center;
-                    font-size: 0.8rem;
-                    padding: 0.8rem;
-                }
+                @import "../styles/figure.css";
+                @import "../styles/resources.css";
 
                 .diagram {
                     background-color: var(--screen-background-color);
@@ -43,7 +31,7 @@ export default class EnvelopeEpilogue extends HTMLElement {
                 <h2 slot="header">Envelope's Epilogue</h2>
                 <p>
                     Often ADSR envelopes are explained in the context of bowed instruments like cellos, violins etc... and are
-                    connected to a Gain module to receptacle the movement of a bow going across strings. That is indeed what we did
+                    connected to a Gain module to replicate the movement of a bow going across strings. That is indeed what we did
                     in the previous example. This is however far from the only use-case for an ADSR, not only can we control
                     volume and pitch but we can also control filters and many other modules using ADSR. Any time we want control
                     of any type of source over time, the ADSR is a good candidate for that.

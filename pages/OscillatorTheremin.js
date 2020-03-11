@@ -11,6 +11,7 @@ export default class OscillatorTheremin extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
+                @import "../styles/figure.css";
                 :host {
                     --theremin-background: var(--screen-background-color);
                     --theremin-object: var(--screen-line-color);
@@ -18,6 +19,7 @@ export default class OscillatorTheremin extends HTMLElement {
                 blockquote {
                     font-style: italic;
                 }
+
                 figure {
                     float: left;
                     width: 50%;
@@ -27,10 +29,7 @@ export default class OscillatorTheremin extends HTMLElement {
                     width: 100%;
                     height: auto;
                 }
-                figcaption {
-                    padding: 1rem;
-                    font-size: 0.64rem;
-                }
+
             </style>
             <element-article>
                 <h2 slot="header">Theremin</h2>

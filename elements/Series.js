@@ -1,20 +1,21 @@
 const template = document.createElement('template');
 template.innerHTML = `
-    <div class="row" data-partials>
-        <div class="col col-control">
+    <tr data-partials>
+        <td>
             <input type="range" min="0" max="1" step="0.01" /><span></span>
-        </div>
-        <div class="col col-display">
+        </td>
+        <td>
             <svg  viewBox="0 0 400 50" xmlns="http://www.w3.org/2000/svg" width="400" height="50">
+                <line x1="0" y1="25" x2="400" y2="25" />
                 <g transform="translate(0, 25)">
                     <polyline fill="none" stroke="black" />
                 </g>
             </svg>
-        </div>
-    </div>
+        </td>
+    </tr>
 `;
 export default class Series extends HTMLElement {
-    AMPLITUDE_FUNCTIONS = {
+    amplitudeFunctions = {
         // In a pure sine wave we only play the fundamental frequency.
         sine: (index) => index === 0 ? 1 : 0,
         // In a sawtooth wave we play all frequencies with descending amplitudes.
@@ -38,11 +39,19 @@ export default class Series extends HTMLElement {
                 .row{
                     display: grid;
                     grid-template-columns: auto 1fr;
+                    grid-gap: 0.8rem;
                 }
                 .col {}
                 .col-control { align-self: center }
                 svg {
                     background-color: var(--screen-background-color, black);
+                    width: 100%;
+                    height: auto;
+                }
+                line {
+                    stroke-width: var(--screen-marker-line-width, 1px);
+                    stroke: var(--line-color, #faebd7);
+                    stroke-dasharray: 2;
                 }
                 polyline {
                     stroke-width: var(--line-width, 1px);
@@ -51,18 +60,20 @@ export default class Series extends HTMLElement {
                     stroke-dasharray: var(--resolution, 0);
                 }
             </style>
-            <div class="row" data-sum>
-                <div class="col">
 
-                </div>
-                <div class="col">
-                    <svg  viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" width="400" height="100">
-                        <g transform="translate(0, 50)">
-                            <polyline fill="none" stroke="black" />
-                        </g>
-                    </svg>
-                </div>
-            </div>
+            <table>
+                <tr data-sum>
+                    <td>master</td>
+                    <td>
+                        <svg viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" width="400" height="100">
+                            <line x1="0" y1="50" x2="400" y2="50" />
+                            <g transform="translate(0, 50)">
+                                <polyline fill="none" stroke="black" />
+                            </g>
+                        </svg>
+                    </td>
+                </tr>
+            </table>
         `;
         this.update = this.update.bind(this);
     }
@@ -78,9 +89,9 @@ export default class Series extends HTMLElement {
 
 
 
-        const partials = Array.from({ length: 9 }).map((_, a) => {
-            const frequency = 440 * (a + 1);
-            const amplitude = this.AMPLITUDE_FUNCTIONS.sine(a)//1 / (a + 2);
+        const partials = Array.from({ length: 12 }).map((_, a) => {
+            const frequency = 220 * (a + 1);
+            const amplitude = this.amplitudeFunctions.sine(a)//1 / (a + 2);
             const row = template.content.cloneNode(true);
             const wave = this.createWave(frequency, amplitude);
             row.querySelector('span').innerHTML = amplitude.toFixed(3);
@@ -88,7 +99,7 @@ export default class Series extends HTMLElement {
 
             row.querySelector('input').addEventListener('input', this.update)
             row.querySelector('polyline').setAttributeNS(null, 'points', this.createPoints(wave));
-            this.shadowRoot.appendChild(row);
+            this.shadowRoot.querySelector('table').appendChild(row);
 
             return wave;
         });
@@ -107,7 +118,7 @@ export default class Series extends HTMLElement {
         switch (name) {
             case 'type':
                 if (['sine', 'saw', 'square', 'tri'].indexOf(newValue) >= 0) {
-                    this.preset(this.AMPLITUDE_FUNCTIONS[newValue]);
+                    this.preset(this.amplitudeFunctions[newValue]);
                 }
                 break;
         }

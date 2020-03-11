@@ -9,25 +9,45 @@ export default class AdditiveSynthesisBuilder extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <element-article>
                 <h2 slot="header">Wave builder</h2>
-                <h3>Sine</h3>
+                <blockquote>
+                    Baron Jean Baptiste Joseph Fourier (1768−1830) introduced the idea that any periodic function can be
+                    represented by a series of sines and cosines which are harmonically
+                    related<sup><a href="https://www.math24.net/fourier-series-definition-typical-examples/" target="_blank">[1]</a></sup>.
+                </blockquote>
                 <p>
-                    fundimental frequency only
+                    To the right is a series of 12 harmonically related sine-waves, (Each of harmonics is <em>two times</em> the previous one)
+                    each with an amplitude slider. The top wave is the Fourier-sum of all the harmonics. Have a play with the slider and see what
+                    strange shape you can produce.
                 </p>
-                <h3>Sawtooth</h3>
                 <p>
-                    all harmonics with desending amplitude.
-                    <code>amp := 1 / harmonic</code>
+                    There are a few configurations that are more harmonic than others. You can produce them by clicking on of the preset buttons at the
+                    top of the wave-builder.
                 </p>
-                <h3>Square</h3>
-                <p>
-                    odd harmonics only with desending amplitude
-                    <code>amp := (if odd) 1 / harmonic (else) 0</code>
-                </p>
-                <h3>Triangular</h3>
-                <p>
-                    odd harmonics only with desending amplitude squared
-                    <code>amp := (if odd) 1 / harmonic<sup>2</sup> (else) 0</code>
-                </p>
+                <dl>
+                    <dt>Sine</dt>
+                    <dd>
+                        <p>The sine-wave contains only the fundamental. It is the purest wave and is used to build other wave types.</p>
+                    </dd>
+
+                    <dt>Sawtooth</dt>
+                    <dd>
+                        <p>The sawtooth-wave contains all the harmonics with amplitude: one divided by the harmonics' frequency.</p>
+                        <pre>amp := 1 / harmonic</pre>
+                    </dd>
+
+                    <dt>Square</dt>
+                    <dd>
+                        <p>The square-wave contains only the odd harmonics with amplitude: one divided by the harmonics' frequency.</p>
+                        <pre>amp := (if odd) 1 / harmonic (else) 0</pre>
+                    </dd>
+
+
+                    <dt>Triangular</dt>
+                    <dd>
+                        <p>The square-wave contains only the odd harmonics with amplitude: one divided by the harmonics' frequency squared.</p>
+                        <pre>amp := (if odd) 1 / harmonic<sup>2</sup> (else) 0</pre>
+                    </dd>
+                </dl>
 
                 <button data-preset-sine slot="aside">sine</button>
                 <button data-preset-sawtooth slot="aside">sawtooth</button>

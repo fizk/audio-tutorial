@@ -8,14 +8,7 @@ export default class WaveEpilogue extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
-                .resources li {
-                    margin: 0.512rem 0;
-                }
-                .resources a {
-                    text-decoration: none;
-                    display: inline-block;
-                    border-bottom: 2px solid #a7a7e2;
-                }
+                @import "../styles/resources.css";
             </style>
             <element-article>
                 <h2 slot="header">Wave's Epilogue</h2>
