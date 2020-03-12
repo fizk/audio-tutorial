@@ -1,14 +1,17 @@
 import '../elements/SineWave.js';
 import '../elements/Article.js';
+import validator, { record } from '../database/db.js';
 
 export default class WaveMeasure extends HTMLElement {
+    properties = {};
+
     constructor() {
         super();
 
         this.attachShadow({mode: 'open'});
         this.shadowRoot.innerHTML = `
+            <link rel="stylesheet" href="../styles/figure.css" />
             <style>
-                @import "../styles/figure.css";
                 :host {
                     --screen-background-color: var(--color-indigo-1);
                     --screen-line-color: var(--color-gray-3);
@@ -158,6 +161,34 @@ export default class WaveMeasure extends HTMLElement {
                 <a href="/wave/gain-and-amplitude" rel="next" slot="footer">Gain and Amplitude</a>
             </element-article>
         `;
+    }
+
+    onAfterEnter(location) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+            object: {},
+        };
+    }
+
+    async onBeforeLeave(location, commands, router) {
+        try {
+            const result = await record({
+                ...this.properties,
+                to: Date.now(),
+            }, validator(location.route.parent.children.length - 1));
+
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
+
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 

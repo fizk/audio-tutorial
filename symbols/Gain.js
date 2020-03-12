@@ -1,5 +1,3 @@
-import '../elements/Envelope.js';
-
 export default class Gain extends HTMLElement {
     constructor() {
         super();

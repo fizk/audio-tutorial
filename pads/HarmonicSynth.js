@@ -12,17 +12,28 @@ export default class HarmonicSynth extends HTMLElement {
     masterMachines;
     masterGain;
 
+    amplitudeFunctions = {
+        // In a pure sine wave we only play the fundamental frequency.
+        sine: (index) => index === 0 ? 1 : 0,
+        // In a sawtooth wave we play all frequencies with descending amplitudes.
+        saw: (index) => 1 / (index + 1),
+        // In a square wave we only play odd harmonics with descending amplitudes.
+        // (Here we check if the number is even, not odd, because 0 is the fundamental.)
+        square: (index) => index % 2 === 0 ? 1 / (index + 1) : 0,
+        // 1/Harmonic Number Squared
+        //The ratio 1/harmonic number squared means that the first harmonic has an amplitude of 1/1,
+        // or 1; that the third harmonic will have an amplitude of 1/9 (one ninth the strength of the fundamental);
+        // the fifth harmonic will have an amplitude of 1/25 (one twenty-fifth the strength of the fundamental), and so on.
+        tri: (index) => (index % 2 === 0) ? 1 / Math.pow(2, index) : 0,
+    }
+
     constructor() {
         super();
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-            <element-workstation data-example-0>
-                <machine-toggle data-toggle-example-0></machine-toggle>
-                <button data-preset-example-0-sine>sine</button>
-                <button data-preset-example-0-square>square</button>
-                <button data-preset-example-0-saw>saw</button>
-                <button data-preset-example-0-tri>tri</button>
+            <element-workstation>
+                <machine-toggle></machine-toggle>
                 <ul>
                     <li><input type="range" min="0" step=".001" max="1" /><span></span></li>
                     <li><input type="range" min="0" step=".001" max="1" /><span></span></li>
@@ -34,25 +45,27 @@ export default class HarmonicSynth extends HTMLElement {
                     <li><input type="range" min="0" step=".001" max="1" /><span></span></li>
                     <li><input type="range" min="0" step=".001" max="1" /><span></span></li>
                 </ul>
-                <machine-master data-master-example-0 />
+                <machine-master></machine-master>
             </element-workstation>
-
         `;
 
-        this.draw = this.draw.bind(this);
-        this.toggleExampleZero = this.toggleExampleZero.bind(this);
-
+        this.animation = this.animation.bind(this);
+        this.handleToggle = this.handleToggle.bind(this);
         this.togglePreset = this.togglePreset.bind(this);
+    }
 
+    static get observedAttributes() { return ['type']; }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case 'type':
+                ['sine', 'saw', 'square', 'tri'].indexOf(newValue) >= 0 && this.togglePreset(newValue);
+                break;
+        }
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector('[data-toggle-example-0]').addEventListener('toggle', this.toggleExampleZero);
-
-        this.shadowRoot.querySelector('[data-preset-example-0-sine').addEventListener('click', () => this.togglePreset('sine'));
-        this.shadowRoot.querySelector('[data-preset-example-0-square').addEventListener('click', () => this.togglePreset('square'));
-        this.shadowRoot.querySelector('[data-preset-example-0-saw').addEventListener('click', () => this.togglePreset('saw'));
-        this.shadowRoot.querySelector('[data-preset-example-0-tri').addEventListener('click', () => this.togglePreset('tri'));
+        this.shadowRoot.querySelector('machine-toggle').addEventListener('toggle', this.handleToggle);
     }
 
     disconnectedCallback() {
@@ -62,37 +75,21 @@ export default class HarmonicSynth extends HTMLElement {
         });
     }
 
-
     togglePreset(type) {
-        const workstationElement = this.shadowRoot.querySelector('[data-example-0]');
+        const workstationElement = this.shadowRoot.querySelector('element-workstation');
         const listElements = workstationElement.querySelectorAll('li');
-        const AMPLITUDE_FUNCTIONS = {
-            // In a pure sine wave we only play the fundamental frequency.
-            sine: (index) => index === 0 ? 1 : 0,
-            // In a sawtooth wave we play all frequencies with descending amplitudes.
-            saw: (index) => 1 / (index + 1),
-            // In a square wave we only play odd harmonics with descending amplitudes.
-            // (Here we check if the number is even, not odd, because 0 is the fundamental.)
-            square: (index) => index % 2 === 0 ? 1 / (index + 1) : 0,
-            // 1/Harmonic Number Squared
-            //The ratio 1/harmonic number squared means that the first harmonic has an amplitude of 1/1,
-            // or 1; that the third harmonic will have an amplitude of 1/9 (one ninth the strength of the fundamental);
-            // the fifth harmonic will have an amplitude of 1/25 (one twenty-fifth the strength of the fundamental), and so on.
-            tri: (index) => (index % 2 === 0) ? 1 / Math.pow(2, index) : 0,
-
-        };
         this.masterMachines && this.masterMachines.forEach((item, i) => {
-            const amplitude = AMPLITUDE_FUNCTIONS[type](i);
+            const amplitude = this.amplitudeFunctions[type](i);
             listElements[i].querySelector('input').value = amplitude
             listElements[i].querySelector('span').innerHTML = amplitude.toFixed(2);
             item.gain.gain.value = amplitude;
         });
     }
 
-    toggleExampleZero(event) {
+    handleToggle(event) {
         if (event.detail) {
 
-            const workstationElement = this.shadowRoot.querySelector('[data-example-0]');
+            const workstationElement = this.shadowRoot.querySelector('element-workstation');
             const listElements = workstationElement.querySelectorAll('li');
 
             this.masterContext = new AudioContext();
@@ -105,7 +102,16 @@ export default class HarmonicSynth extends HTMLElement {
                 listElements[i].querySelector('span').innerHTML = i === 0 ? 1 : 0;
 
 
-                listElements[i].querySelector('input').addEventListener('input', (event) => gain.gain.value = Number(event.target.value))
+                listElements[i].querySelector('input').addEventListener('input', (event) => {
+                    gain.gain.value = Number(event.target.value);
+                    this.dispatchEvent(new CustomEvent('change', {
+                        composed: true,
+                        detail: {
+                            value: Number(event.target.value),
+                            position: i,
+                        },
+                    }));
+                })
 
                 osc.connect(gain);
                 return {
@@ -125,8 +131,8 @@ export default class HarmonicSynth extends HTMLElement {
                 item.osc.start(this.masterContext.currentTime);
             });
 
-            this.masterElement = this.shadowRoot.querySelector('[data-master-example-0]');
-            this.draw();
+            this.masterElement = this.shadowRoot.querySelector('machine-master');
+            this.animation();
         } else {
             cancelAnimationFrame(this.animationFrame);
             this.masterMachines.forEach(item => {
@@ -135,7 +141,7 @@ export default class HarmonicSynth extends HTMLElement {
         }
     }
 
-    draw() {
+    animation() {
         this.masterAnalyze.fftSize = 2048;
         const masterMonitorDataArray = new Uint8Array(this.masterAnalyze.frequencyBinCount);
         this.masterAnalyze.getByteTimeDomainData(masterMonitorDataArray);
@@ -149,7 +155,7 @@ export default class HarmonicSynth extends HTMLElement {
         this.masterElement.frequencyData = masterMonitorDataArray;
         this.masterElement.byteData = amMasterMonitorByteArray;
 
-        this.animationFrame = requestAnimationFrame(this.draw);
+        this.animationFrame = requestAnimationFrame(this.animation);
     }
 
     transposeNote(noteOffset, baseFrequency = 440) {

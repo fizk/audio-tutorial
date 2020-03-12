@@ -1,7 +1,10 @@
 import '../elements/Article.js';
 import '../pads/AmplitudeModulation.js';
+import validator, { record } from '../database/db.js';
 
 export default class ModulationAM extends HTMLElement {
+    properties = {};
+
     constructor() {
         super();
 
@@ -40,11 +43,65 @@ export default class ModulationAM extends HTMLElement {
                     In Preset 2, have a look at the correlation between the LFO frequency and the Master frequency. See
                     how the Master frequency pulses up and down in accordance with the LFO's sine wave.
                 </p>
+                <div slot="aside">
+                    <button data-am-preset-1>Preset 1</button>
+                    <button data-am-preset-2>Preset 2</button>
+                </div>
                 <pad-amplitude-modulation slot="aside"></pad-amplitude-modulation>
                 <a href="/modulation/lfo" slot="footer" rel="prev">LFO</a>
                 <a href="/modulation/undefined" slot="footer" rel="next">undefined</a>
             </element-article>
         `;
+    }
+
+    connectedCallback() {
+        this.addEventListener('amount-change', () => this.properties.object.tweek = true);
+        this.addEventListener('frequency-change', () => this.properties.object.tweek = true);
+        this.addEventListener('toggle', () => this.properties.object.toggle = true);
+
+        const synthElement = this.shadowRoot.querySelector('pad-amplitude-modulation');
+
+        // Presets
+        this.shadowRoot.querySelector('[data-am-preset-1]').addEventListener('click', () => {
+            synthElement.setAttribute('carrier-frequency', '440');
+            synthElement.setAttribute('modulator-frequency', '10');
+            synthElement.setAttribute('modulator-amount', '0.5');
+            this.properties.object.preset = true;
+        });
+        this.shadowRoot.querySelector('[data-am-preset-2]').addEventListener('click', () => {
+            synthElement.setAttribute('carrier-frequency', '227');
+            synthElement.setAttribute('modulator-frequency', '1');
+            synthElement.setAttribute('modulator-amount', '0.5');
+            this.properties.object.preset = true;
+        });
+    }
+
+    onAfterEnter(location) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+            object: { toggle: false, tweek: false, preset: false },
+        };
+    }
+
+    async onBeforeLeave(location, commands, router) {
+        try {
+            const result = await record({
+                ...this.properties,
+                to: Date.now(),
+            }, validator(location.route.parent.children.length - 1));
+
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
+
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 

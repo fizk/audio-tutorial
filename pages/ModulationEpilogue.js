@@ -1,14 +1,15 @@
 import '../elements/Article.js';
+import validator, { conclude } from '../database/db.js';
 
 export default class ModulationEpilogue extends HTMLElement {
+    properties = {};
+
     constructor() {
         super();
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-            <style>
-                @import "../styles/resources.css";
-            </style>
+            <link rel="stylesheet" href="../styles/resources.css" />
             <element-article>
                 <h2 slot="header">Modulation's Epilogue</h2>
 
@@ -23,6 +24,30 @@ export default class ModulationEpilogue extends HTMLElement {
                 <a href="/additive-synthesis" slot="footer" rel="next">Additive Synthesis</a>
             </element-article>
         `;
+    }
+
+    async onAfterEnter(location, commands, router) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+        };
+        try {
+            const result = await conclude(
+                validator(location.route.parent.children.length - 1),
+                this.properties.relm
+            );
+
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
+
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 

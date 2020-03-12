@@ -14,7 +14,7 @@ template.innerHTML = `
         </td>
     </tr>
 `;
-export default class Series extends HTMLElement {
+export default class WaveBuilder extends HTMLElement {
     amplitudeFunctions = {
         // In a pure sine wave we only play the fundamental frequency.
         sine: (index) => index === 0 ? 1 : 0,
@@ -170,6 +170,10 @@ export default class Series extends HTMLElement {
         const points = this.createPoints(sum);
 
         this.shadowRoot.querySelector('[data-sum] polyline').setAttributeNS(null, 'points', points);
+
+        this.dispatchEvent(new CustomEvent('change', {
+            composed: true
+        }));
     }
 
     preset(f) {
@@ -194,4 +198,4 @@ export default class Series extends HTMLElement {
     }
 }
 
-window.customElements.define('element-series', Series);
+window.customElements.define('element-wave-builder', WaveBuilder);

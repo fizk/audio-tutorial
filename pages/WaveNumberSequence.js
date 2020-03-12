@@ -1,15 +1,17 @@
 import "../elements/SineWaveSequence.js";
 import '../elements/Article.js';
+import validator, { record } from '../database/db.js';
 
 export default class WaveNumberSequence extends HTMLElement {
+    properties = {};
+
     constructor() {
         super();
 
         this.attachShadow({mode: 'open'});
         this.shadowRoot.innerHTML = `
+            <link rel="stylesheet" href="../styles/figure.css" />
             <style>
-                @import "../styles/figure.css";
-
                 input {
                     vertical-align: middle;
                 }
@@ -66,7 +68,38 @@ export default class WaveNumberSequence extends HTMLElement {
         const rangeElement = this.shadowRoot.querySelector('[data-motion-range]');
         const sineWaveSequence = this.shadowRoot.querySelector('element-sine-wave-sequence');
 
-        rangeElement.addEventListener('input', (event) => sineWaveSequence.setAttribute('frequency', event.target.value));
+        rangeElement.addEventListener('input', (event) => {
+            sineWaveSequence.setAttribute('frequency', event.target.value);
+            this.properties.object.speed = true;
+        });
+    }
+
+    onAfterEnter(location) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+            object: {speed: false}
+        };
+    }
+
+    async onBeforeLeave(location, commands, router) {
+        try {
+            const result = await record({
+                ...this.properties,
+                to: Date.now(),
+            }, validator(location.route.parent.children.length - 1));
+
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
+
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 

@@ -3,15 +3,18 @@ import '../machines/Master.js';
 import '../machines/Theremin.js';
 import '../elements/Article.js';
 import '../pads/Theremin.js'
+import validator, { record } from '../database/db.js';
 
 export default class OscillatorTheremin extends HTMLElement {
+    properties = {};
+
     constructor() {
         super();
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
+            <link rel="stylesheet" href="../styles/figure.css" />
             <style>
-                @import "../styles/figure.css";
                 :host {
                     --theremin-background: var(--screen-background-color);
                     --theremin-object: var(--screen-line-color);
@@ -63,6 +66,38 @@ export default class OscillatorTheremin extends HTMLElement {
                 <a href="/oscillator/epilogue" slot="footer" rel="next">Epilogue</a>
             </element-article>
         `;
+    }
+
+    connectedCallback() {
+        this.addEventListener('start', () => this.properties.object.toggle = true);
+    }
+
+    onAfterEnter(location) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+            object: { toggle: false },
+        };
+    }
+
+    async onBeforeLeave(location, commands, router) {
+        try {
+            const result = await record({
+                ...this.properties,
+                to: Date.now(),
+            }, validator(location.route.parent.children.length - 1));
+
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
+
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 

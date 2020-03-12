@@ -1,7 +1,10 @@
 import '../elements/Article.js';
 import '../pads/AmplitudeSynth.js';
+import validator, { record } from '../database/db.js';
 
 export default class ModulationAmSynth extends HTMLElement {
+    properties = {};
+
     constructor() {
         super();
 
@@ -36,10 +39,14 @@ export default class ModulationAmSynth extends HTMLElement {
                     for twice the carrier frequency we get a harmonic sound. But if there is no relation, say <strong>index</strong> is at
                     <code>2.7</code> we get inharmonicity.
                 </p>
-                <button data-preset-1 slot="aside">Preset 1</button>
-                <button data-preset-2 slot="aside">Preset 2</button>
-                <button data-preset-3 slot="aside">Preset 3</button>
+
+                <div slot="aside">
+                    <button data-preset-1 >Preset 1</button>
+                    <button data-preset-2>Preset 2</button>
+                    <button data-preset-3>Preset 3</button>
+                </div>
                 <pad-amplitude-synth slot="aside"></pad-amplitude-synth>
+
                 <p slot="aside">
                     The reason this is happening, while not complicated, involves a little bit of math and a little
                     bit of theory <a href="https://www.soundonsound.com/techniques/amplitude-modulation"><sup>[1]</sup></a>.
@@ -55,21 +62,57 @@ export default class ModulationAmSynth extends HTMLElement {
     }
 
     connectedCallback () {
+        this.addEventListener('index-change', () => this.properties.object.tweek = true);
+        this.addEventListener('amount-change', () => this.properties.object.tweek = true);
+        this.addEventListener('frequency-change', () => this.properties.object.tweek = true);
+        this.addEventListener('start', () => this.properties.object.toggle = true);
+
         this.shadowRoot.querySelector('[data-preset-1]').addEventListener('click', () => {
             const synthElement = this.shadowRoot.querySelector('pad-amplitude-synth');
             synthElement.setAttribute('index', '0.5');
             synthElement.setAttribute('amount', '0.5');
+            this.properties.object.preset = true;
         });
         this.shadowRoot.querySelector('[data-preset-2]').addEventListener('click', () => {
             const synthElement = this.shadowRoot.querySelector('pad-amplitude-synth');
             synthElement.setAttribute('index', '4');
             synthElement.setAttribute('amount', '0.5');
+            this.properties.object.preset = true;
         });
         this.shadowRoot.querySelector('[data-preset-3]').addEventListener('click', () => {
             const synthElement = this.shadowRoot.querySelector('pad-amplitude-synth');
             synthElement.setAttribute('index', '2.3');
             synthElement.setAttribute('amount', '1');
+            this.properties.object.preset = true;
         });
+    }
+
+    onAfterEnter(location) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+            object: { tweek: false, toggle: false, preset: false }
+        };
+    }
+
+    async onBeforeLeave(location, commands, router) {
+        try {
+            const result = await record({
+                ...this.properties,
+                to: Date.now(),
+            }, validator(location.route.parent.children.length - 1));
+
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
+
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 

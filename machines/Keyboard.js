@@ -131,13 +131,15 @@ export default class Keyboard extends HTMLElement {
 
     onMouseDown(event) {
         this.dispatchEvent(new CustomEvent('start', {
-            detail: this.noteToFrequency(event.target.getAttribute('id'))
+            detail: this.noteToFrequency(event.target.getAttribute('id')),
+            composed: true,
         }));
     }
 
     onMouseUp() {
         this.dispatchEvent(new CustomEvent('stop', {
-            detail: undefined
+            detail: undefined,
+            composed: true,
         }));
     }
 
@@ -154,6 +156,8 @@ export default class Keyboard extends HTMLElement {
             event.preventDefault();
             this.dispatchEvent(new CustomEvent('start', {
                 detail: this.noteToFrequency(event.code),
+                bubbles: true,
+                composed: true,
             }));
             this.isKeyDown = true;
         }
@@ -167,7 +171,9 @@ export default class Keyboard extends HTMLElement {
         this.isKeyDown = false;
 
         this.dispatchEvent(new CustomEvent('stop', {
-            detail: undefined
+            detail: undefined,
+            bubbles: true,
+            composed: true,
         }));
     }
 

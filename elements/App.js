@@ -1,5 +1,5 @@
 import { Resolver, Router } from 'https://unpkg.com/@vaadin/router@1.6.0/dist/vaadin-router.js';
-
+import { getScore} from '../database/db.js';
 import '../pages/Home.js';
 import '../pages/Wave.js'
 import '../pages/WaveNumberSequence.js'
@@ -25,6 +25,7 @@ import '../pages/AdditiveSynthesisHarmonics.js';
 import '../pages/AdditiveSynthesisADSR.js';
 import '../pages/AdditiveSynthesisEpilogue.js';
 import '../pages/SubtractiveSynthesis.js';
+import '../elements/ScoreBoard.js';
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -120,22 +121,23 @@ template.innerHTML = `
             transform: translate(1rem, 0);
         }
         .users-leaving {
-            animation: .2s leave ease-in;
+            animation: .7s leave cubic-bezier(1,.02,.55,.87);
         }
         .users-entering {
-            animation: .2s enter ease-in;
+            animation: .7s enter cubic-bezier(1,.02,.55,.87);
         }
         @keyframes leave {
-            from { transform: translateY(0); }
-            to { transform: translateY(-100%); }
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-100%); opacity: 0; }
         }
         @keyframes enter {
-            from { transform: translateY(100%) }
-            to { transform: translateY(0) }
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0):  opacity: 1; }
         }
     </style>
     <header>header</header>
     <nav>
+        <div data-score></div>
         <ul class="main-menu" data-main-menu>
             <li class="main-menu__item">
                 <a href="/" class="main-menu__link">Home</a>
@@ -161,6 +163,7 @@ template.innerHTML = `
         </ul>
     </nav>
     <main></main>
+    <!--element-score-board></element-score-board-->
 `;
 
 export default class App extends HTMLElement {
@@ -170,6 +173,7 @@ export default class App extends HTMLElement {
         this.shadowRoot.appendChild(template.content.cloneNode(true));
 
         this.setNav = this.setNav.bind(this);
+        this.updateScore = this.updateScore.bind(this);
     }
 
     setNav(context, commands) {
@@ -183,15 +187,36 @@ export default class App extends HTMLElement {
         });
     }
 
+    updateScore(event) {
+        getScore().then(result => {
+            const navElement = this.shadowRoot.querySelector('[data-score]');
+            const total = result.reduce((previous, next) => previous + next.score, 0);
+            if (total) {
+                navElement.innerHTML = total;
+            }
+
+
+            if (event && !localStorage.getItem('score-board-splash')) {
+                const scoreBoardElement = document.createElement('element-score-board');
+                scoreBoardElement.setAttribute('score', total);
+                this.shadowRoot.appendChild(scoreBoardElement);
+
+                localStorage.setItem('score-board-splash', 'true');
+            }
+        });
+    }
+
     connectedCallback() {
+        this.addEventListener('update-score', this.updateScore);
+        this.updateScore();
+
         const router = new Router(this.shadowRoot.querySelector('main'));
         router.setRoutes([
             {
                 path: '/',
                 action: this.setNav,
                 component: 'page-home'
-            },
-            {
+            },{
                 path: '/wave',
                 action: this.setNav,
                 animate: {

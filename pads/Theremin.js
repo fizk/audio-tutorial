@@ -59,6 +59,11 @@ export default class OscillatorTheremin extends HTMLElement {
         this.osc.start(this.context.currentTime);
 
         this.animate();
+
+        this.dispatchEvent(new CustomEvent('interact-toggle', {
+            bubbles: true,
+            composed: true,
+        }));
     }
 
     handleStop() {

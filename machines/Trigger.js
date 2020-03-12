@@ -32,11 +32,17 @@ export default class Trigger extends HTMLElement {
     }
 
     handleMouseDown(event) {
-        this.dispatchEvent(new CustomEvent('start'));
+        this.dispatchEvent(new CustomEvent('start', {
+            bubbles: true,
+            composed: true,
+        }));
     }
 
     handleMouseUp(event) {
-        this.dispatchEvent(new CustomEvent('stop'));
+        this.dispatchEvent(new CustomEvent('stop', {
+            bubbles: true,
+            composed: true,
+        }));
     }
 
     handleKeyDown(event) {
@@ -46,14 +52,20 @@ export default class Trigger extends HTMLElement {
                 return;
             }
             this.isPressed = true;
-            this.dispatchEvent(new CustomEvent('start'));
+            this.dispatchEvent(new CustomEvent('start', {
+                bubbles: true,
+                composed: true,
+            }));
         }
     }
 
     handleKeyUp() {
         if (this.isPressed) {
             this.isPressed = false;
-            this.dispatchEvent(new CustomEvent('stop'));
+            this.dispatchEvent(new CustomEvent('stop', {
+                bubbles: true,
+                composed: true,
+            }));
         }
     }
 }

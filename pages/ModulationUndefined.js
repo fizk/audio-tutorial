@@ -1,6 +1,9 @@
 import '../elements/Article.js'
+import validator, { record } from '../database/db.js';
 
 export default class ModulationUndefined extends HTMLElement {
+    properties = {};
+
     constructor() {
         super();
 
@@ -80,6 +83,34 @@ export default class ModulationUndefined extends HTMLElement {
                 <a href="/modulation/am-synth" rel="next" slot="footer">AM Synth</a>
             </element-article>
         `;
+    }
+
+    onAfterEnter(location) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+            object: {},
+        };
+    }
+
+    async onBeforeLeave(location, commands, router) {
+        try {
+            const result = await record({
+                ...this.properties,
+                to: Date.now(),
+            }, validator(location.route.parent.children.length - 1));
+
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
+
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 

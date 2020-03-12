@@ -3,7 +3,6 @@ import '../machines/Gain.js';
 import '../machines/LFO.js';
 import '../machines/Oscillator.js';
 import '../machines/Master.js';
-import '../machines/Keyboard.js';
 import '../machines/Toggle.js';
 import '../symbols/Gain.js';
 import '../elements/Article.js';
@@ -27,8 +26,6 @@ export default class AmplitudeModulation extends HTMLElement {
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-            <button data-am-preset-1 slot="aside">Preset 1</button>
-            <button data-am-preset-2 slot="aside">Preset 2</button>
             <element-workstation data-worstation-am slot="aside">
                 <machine-toggle></machine-toggle>
                 <machine-oscillator frequency="440"></machine-oscillator>
@@ -40,6 +37,28 @@ export default class AmplitudeModulation extends HTMLElement {
 
         this.animate = this.animate.bind(this);
         this.toggleSound = this.toggleSound.bind(this);
+    }
+
+    static get observedAttributes() { return ['carrier-frequency', 'modulator-frequency', 'modulator-amount']; }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        const lfoElement = this.shadowRoot.querySelector('machine-lfo');
+        const oscElement = this.shadowRoot.querySelector('machine-oscillator');
+
+        switch (name) {
+            case 'carrier-frequency':
+                oscElement.setAttribute('frequency', newValue);
+                this.carrier && (this.carrier.frequency.value = Number(newValue));
+                break;
+            case 'modulator-frequency':
+                lfoElement.setAttribute('frequency', newValue);
+                this.modulator && (this.modulator.frequency.value = Number(newValue));
+                break;
+            case 'modulator-amount':
+                lfoElement.setAttribute('amount', newValue);
+                this.lfoGain && (this.lfoGain.gain.value = Number(newValue));
+                break;
+        }
     }
 
     connectedCallback() {
@@ -59,28 +78,6 @@ export default class AmplitudeModulation extends HTMLElement {
         // Carries
         oscElement.addEventListener('frequency-change', (event) => {
             this.carrier && (this.carrier.frequency.linearRampToValueAtTime(event.detail, this.context.currentTime + 0.1));
-        });
-
-        // Presets
-        this.shadowRoot.querySelector('[data-am-preset-1]').addEventListener('click', () => {
-            oscElement.setAttribute('frequency', '440');
-            this.carrier && (this.carrier.frequency.value = 440);
-
-            lfoElement.setAttribute('frequency', '10');
-            this.modulator && (this.modulator.frequency.value = 10);
-
-            lfoElement.setAttribute('amount', '0.5');
-            this.lfoGain && (this.lfoGain.gain.value = 0.5);
-        });
-        this.shadowRoot.querySelector('[data-am-preset-2]').addEventListener('click', () => {
-            oscElement.setAttribute('frequency', '227');
-            this.carrier && (this.carrier.frequency.value = 227);
-
-            lfoElement.setAttribute('frequency', '1');
-            this.modulator && (this.modulator.frequency.value = 1);
-
-            lfoElement.setAttribute('amount', '0.5');
-            this.lfoGain && (this.lfoGain.gain.value = 0.5);
         });
     }
 

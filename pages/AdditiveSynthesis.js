@@ -1,13 +1,16 @@
 import '../elements/Article.js';
+import validator, { record } from '../database/db.js';
 
 export default class AdditiveSynthesis extends HTMLElement {
+    properties = {};
+
     constructor() {
         super();
 
         this.attachShadow({mode: 'open'});
         this.shadowRoot.innerHTML = `
+            <link rel="stylesheet" href="../styles/figure.css" />
             <style>
-                @import "../styles/figure.css";
                 svg {
                     width: 100%;
                     height: auto;
@@ -92,6 +95,34 @@ export default class AdditiveSynthesis extends HTMLElement {
                 <a href="/additive-synthesis/builder" slot="footer" rel="next">Wave Builder</a>
             </element-article>
         `;
+    }
+
+    onAfterEnter(location) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+            object: {},
+        };
+    }
+
+    async onBeforeLeave(location, commands, router) {
+        try {
+            const result = await record({
+                ...this.properties,
+                to: Date.now(),
+            }, validator(location.route.parent.children.length - 1));
+
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
+
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 

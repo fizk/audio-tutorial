@@ -26,9 +26,6 @@ export default class EnvelopeSynth extends HTMLElement {
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-            <button data-button-preset-bell slot="aside">Bell</button>
-            <button data-button-preset-strings slot="aside">String</button>
-            <button data-button-preset-reset slot="aside">Reset</button>
             <element-workstation slot="aside">
                 <machine-keyboard keys></machine-keyboard>
                 <symbol-gain></symbol-gain>
@@ -37,33 +34,30 @@ export default class EnvelopeSynth extends HTMLElement {
         `;
     }
 
-    connectedCallback() {
-        const keyboardElement = this.shadowRoot.querySelector('machine-keyboard');
+    static get observedAttributes() { return ['a', 'd', 's', 'r']; }
+
+    attributeChangedCallback(name, oldValue, newValue) {
         const envelopeElement = this.shadowRoot.querySelector('machine-adsr');
 
-        // Keyboard events
-        keyboardElement.addEventListener('start', this.startKeyboardNote);
-        keyboardElement.addEventListener('stop', this.stopKeyboardNote);
+        switch (name) {
+            case 'a':
+                envelopeElement.setAttribute('a', newValue);
+                break;
+            case 'd':
+                envelopeElement.setAttribute('d', newValue);
+                break;
+            case 's':
+                envelopeElement.setAttribute('s', newValue);
+                break;
+            case 'r':
+                envelopeElement.setAttribute('r', newValue);
+                break;
+        }
+    }
 
-        //presets
-        this.shadowRoot.querySelector('[data-button-preset-bell]').addEventListener('click', () => {
-            envelopeElement.setAttribute('a', '1');
-            envelopeElement.setAttribute('d', '10');
-            envelopeElement.setAttribute('s', '20');
-            envelopeElement.setAttribute('r', '100');
-        });
-        this.shadowRoot.querySelector('[data-button-preset-strings]').addEventListener('click', () => {
-            envelopeElement.setAttribute('a', '100');
-            envelopeElement.setAttribute('d', '90');
-            envelopeElement.setAttribute('s', '90');
-            envelopeElement.setAttribute('r', '50');
-        });
-        this.shadowRoot.querySelector('[data-button-preset-reset]').addEventListener('click', () => {
-            envelopeElement.setAttribute('a', '100');
-            envelopeElement.setAttribute('d', '100');
-            envelopeElement.setAttribute('s', '50');
-            envelopeElement.setAttribute('r', '100');
-        });
+    connectedCallback() {
+        this.addEventListener('start', this.startKeyboardNote);
+        this.addEventListener('stop', this.stopKeyboardNote);
     }
 
     disconnectedCallback() {

@@ -25,9 +25,6 @@ export default class AdditiveAdsrSynth extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <element-workstation slot="aside">
-                <button data-preset-1>1</button>
-                <button data-preset-2>2</button>
-                <button data-preset-3>3</button>
                 <machine-keyboard keys></machine-keyboard>
                 <div>
                     <symbol-oscillator></symbol-oscillator>
@@ -54,21 +51,19 @@ export default class AdditiveAdsrSynth extends HTMLElement {
             </element-workstation>
         `;
 
-        this.draw = this.draw.bind(this);
+        this.animation = this.animation.bind(this);
         this.noteOn = this.noteOn.bind(this);
         this.noteOff = this.noteOff.bind(this);
     }
 
+    static get observedAttributes() { return ['harmonic']; }
+
     connectedCallback() {
-        this.setAttribute('harmonic', 1);
+        !this.hasAttribute('harmonic') && this.setAttribute('harmonic', '1');
 
         const keyboardElement = this.shadowRoot.querySelector('machine-keyboard');
         keyboardElement.addEventListener('start', this.noteOn);
         keyboardElement.addEventListener('stop', this.noteOff);
-
-        this.shadowRoot.querySelector('[data-preset-1]').addEventListener('click', () => this.setAttribute('harmonic', 1));
-        this.shadowRoot.querySelector('[data-preset-2]').addEventListener('click', () => this.setAttribute('harmonic', 2));
-        this.shadowRoot.querySelector('[data-preset-3]').addEventListener('click', () => this.setAttribute('harmonic', 3));
     }
 
     disconnectedCallback() {
@@ -88,7 +83,7 @@ export default class AdditiveAdsrSynth extends HTMLElement {
         const gainSymbols = this.shadowRoot.querySelectorAll('symbol-gain');
 
         this.masterMachines = Array.from({ length: 5 }).map((_, i, c) => {
-            const harmonicType = this.getAttribute('harmonic');
+            const harmonicType = Number(this.getAttribute('harmonic'));
             const frequency = this.harmonicFunctions[harmonicType](i, event.detail);
             oscillatorSymbols[i].setAttribute('frequency', frequency);
             const amplitude = 1 / (i + 2);
@@ -129,7 +124,7 @@ export default class AdditiveAdsrSynth extends HTMLElement {
 
         this.masterElement = this.shadowRoot.querySelector('machine-master');
         cancelAnimationFrame(this.animationFrame);
-        this.draw();
+        this.animation();
     }
 
     noteOff() {
@@ -140,7 +135,7 @@ export default class AdditiveAdsrSynth extends HTMLElement {
         });
     }
 
-    draw() {
+    animation() {
         this.masterAnalyze.fftSize = 2048;
         const masterMonitorDataArray = new Uint8Array(this.masterAnalyze.frequencyBinCount);
         this.masterAnalyze.getByteTimeDomainData(masterMonitorDataArray);
@@ -154,7 +149,7 @@ export default class AdditiveAdsrSynth extends HTMLElement {
         this.masterElement.frequencyData = masterMonitorDataArray;
         this.masterElement.byteData = amMasterMonitorByteArray;
 
-        this.animationFrame = requestAnimationFrame(this.draw);
+        this.animationFrame = requestAnimationFrame(this.animation);
     }
 
     transposeNote(noteOffset, baseFrequency = 440) {

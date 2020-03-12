@@ -27,7 +27,8 @@ export default class Toggle extends HTMLElement {
     connectedCallback() {
         this.shadowRoot.querySelector('button').addEventListener('click', event => {
             this.dispatchEvent(new CustomEvent('toggle', {
-                detail: !(this.hasAttribute('toggle') && this.getAttribute('toggle') === 'on')
+                detail: !(this.hasAttribute('toggle') && this.getAttribute('toggle') === 'on'),
+                composed: true,
             }));
             this.setAttribute(
                 'toggle',

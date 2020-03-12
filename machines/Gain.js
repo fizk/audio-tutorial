@@ -65,7 +65,10 @@ export default class Gain extends HTMLElement {
         rangeElement.setAttribute('value', this.getAttribute('amount'));
 
         rangeElement.addEventListener('input', (event) => {
-            this.dispatchEvent(new CustomEvent('amount-change', {detail: Number(event.target.value)}));
+            this.dispatchEvent(new CustomEvent('amount-change', {
+                detail: Number(event.target.value),
+                composed: true,
+            }));
             this.setAttribute('amount', event.target.value);
         });
     }

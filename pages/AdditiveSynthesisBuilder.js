@@ -1,7 +1,10 @@
-import '../elements/Series.js';
+import '../elements/WaveBuilder.js';
 import '../elements/Article.js';
+import validator, { record } from '../database/db.js';
 
 export default class AdditiveSynthesisBuilder extends HTMLElement {
+    properties = {};
+
     constructor() {
         super();
 
@@ -53,7 +56,7 @@ export default class AdditiveSynthesisBuilder extends HTMLElement {
                 <button data-preset-sawtooth slot="aside">sawtooth</button>
                 <button data-preset-square slot="aside">square</button>
                 <button data-preset-tri slot="aside">tri</button>
-                <element-series slot="aside"></element-series>
+                <element-wave-builder slot="aside"></element-wave-builder>
 
                 <a href="/additive-synthesis" rel="prev" slot="footer">Additive Synthesis</a>
                 <a href="/additive-synthesis/harmonics" rel="next" slot="footer">Harmonics</a>
@@ -62,11 +65,54 @@ export default class AdditiveSynthesisBuilder extends HTMLElement {
     }
 
     connectedCallback() {
-        const series = this.shadowRoot.querySelector('element-series');
-        this.shadowRoot.querySelector('[data-preset-sine]').addEventListener('click', (event) => series.setAttribute('type', 'sine'));
-        this.shadowRoot.querySelector('[data-preset-sawtooth]').addEventListener('click', () => series.setAttribute('type', 'saw'));
-        this.shadowRoot.querySelector('[data-preset-square]').addEventListener('click', () => series.setAttribute('type', 'square'));
-        this.shadowRoot.querySelector('[data-preset-tri]').addEventListener('click', () => series.setAttribute('type', 'tri'));
+
+        this.addEventListener('change', () => this.properties.object.tweek = true);
+
+        const series = this.shadowRoot.querySelector('element-wave-builder');
+        this.shadowRoot.querySelector('[data-preset-sine]').addEventListener('click', () => {
+            series.setAttribute('type', 'sine');
+            this.properties.object.preset = true;
+        });
+        this.shadowRoot.querySelector('[data-preset-sawtooth]').addEventListener('click', () => {
+            series.setAttribute('type', 'saw');
+            this.properties.object.preset = true;
+        });
+        this.shadowRoot.querySelector('[data-preset-square]').addEventListener('click', () => {
+            series.setAttribute('type', 'square');
+            this.properties.object.preset = true;
+        });
+        this.shadowRoot.querySelector('[data-preset-tri]').addEventListener('click', () => {
+            series.setAttribute('type', 'tri');
+            this.properties.object.preset = true;
+        });
+    }
+
+    onAfterEnter(location) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+            object: {tweek: false, preset: false},
+        };
+    }
+
+    async onBeforeLeave(location, commands, router) {
+        try {
+            const result = await record({
+                ...this.properties,
+                to: Date.now(),
+            }, validator(location.route.parent.children.length - 1));
+
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
+
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 

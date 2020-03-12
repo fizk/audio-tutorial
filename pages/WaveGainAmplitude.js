@@ -2,8 +2,11 @@ import '../elements/SineWave.js';
 import '../elements/Workstation.js';
 import '../machines/Gain.js';
 import '../elements/Article.js';
+import validator, { record } from '../database/db.js';
 
 export default class WaveGainAmplitude extends HTMLElement {
+    properties = {};
+
     constructor() {
         super();
 
@@ -52,7 +55,38 @@ export default class WaveGainAmplitude extends HTMLElement {
     connectedCallback() {
         const gainElement = this.shadowRoot.querySelector('machine-gain');
         const sineWaveElement = this.shadowRoot.querySelector('[data-sine]');
-        gainElement.addEventListener('amount-change', (event) => sineWaveElement.setAttribute('amplitude', String(event.detail) * 20));
+        gainElement.addEventListener('amount-change', (event) => {
+            sineWaveElement.setAttribute('amplitude', String(event.detail) * 20);
+            this.properties.object.gain = true;
+        });
+    }
+
+    onAfterEnter(location) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+            object: {gain: false}
+        };
+    }
+
+    async onBeforeLeave(location, commands, router) {
+        try {
+            const result = await record({
+                ...this.properties,
+                to: Date.now(),
+            }, validator(location.route.parent.children.length - 1));
+
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
+
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 

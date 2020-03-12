@@ -1,26 +1,12 @@
-import '../elements/Workstation.js';
-import '../machines/ADSR.js';
-import '../machines/Trigger.js';
+import '../pads/EnvelopeFrequency.js';
 import '../elements/Article.js';
-
-// function lerp(min, max, fraction) {  return (max — min) * fraction + min;}
+import validator, { record } from '../database/db.js';
 
 export default class Envelope extends HTMLElement {
-
-    context;
-    osc;
-    gain;
-    animationFrame;
-    animationTime;
-    envelopeToAnimate;
+    properties = {};
 
     constructor() {
         super();
-
-        this.handleStart = this.handleStart.bind(this);
-        this.handleStop = this.handleStop.bind(this);
-        this.attackAnimation = this.attackAnimation.bind(this);
-        this.releaseAnimation = this.releaseAnimation.bind(this);
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
@@ -90,12 +76,8 @@ export default class Envelope extends HTMLElement {
                 <p slot="aside">
                     Change the sliders to see how different configuration will produce different effects.
                 </p>
-                <element-workstation slot="aside">
-                    <machine-trigger></machine-trigger>
-                    <machine-adsr width="400" height="100"></machine-adsr>
-                </element-workstation>
 
-
+                <pad-envelope-frequency slot="aside"></pad-envelope-frequency>
 
                 <figure>
                     <svg class="diagram" viewBox="0 0 403 105" xmlns="http://www.w3.org/2000/svg">
@@ -156,116 +138,38 @@ export default class Envelope extends HTMLElement {
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector('machine-trigger').addEventListener('start', this.handleStart);
-        this.shadowRoot.querySelector('machine-trigger').addEventListener('stop', this.handleStop);
+        this.addEventListener('a-change', () => this.properties.object.tweek = true);
+        this.addEventListener('d-change', () => this.properties.object.tweek = true);
+        this.addEventListener('s-change', () => this.properties.object.tweek = true);
+        this.addEventListener('r-change', () => this.properties.object.tweek = true);
+        this.addEventListener('start', () => this.properties.object.toggle = true);
     }
 
-    disconnectedCallback() {
-        cancelAnimationFrame(this.animationFrame);
-    }
-
-    handleStart() {
-        const envelopeElement = this.shadowRoot.querySelector('machine-adsr');
-        const a = Number(envelopeElement.getAttribute('a')) / 100;
-        const d = Number(envelopeElement.getAttribute('d')) / 100;
-        const s = Number(envelopeElement.getAttribute('s')) / 100;
-        const sustainFrequency = (880 - 220) * s + 220;
-
-        this.context = new AudioContext();
-        this.osc = this.context.createOscillator();
-        this.osc.frequency.value = 220;
-        this.osc.frequency.linearRampToValueAtTime(880, this.context.currentTime + a);
-        this.osc.frequency.linearRampToValueAtTime(sustainFrequency, this.context.currentTime + a + d);
-
-        const analyser = this.context.createAnalyser();
-        this.gain = this.context.createGain();
-        this.gain.gain.setValueAtTime(0, this.context.currentTime);
-        this.gain.gain.linearRampToValueAtTime(0.5, this.context.currentTime + .01);
-
-        this.osc.connect(this.gain)
-        this.gain.connect(analyser);
-        analyser.connect(this.context.destination);
-
-        this.osc.start(this.context.currentTime);
-
-        cancelAnimationFrame(this.animationFrame);
-        this.animationTime = undefined;
-        this.envelopeToAnimate = envelopeElement;
-        this.attackAnimation(0);
-    }
-
-    handleStop() {
-        const envelopeElement = this.shadowRoot.querySelector('machine-adsr');
-        const r = Number(envelopeElement.getAttribute('r')) / 100;
-        const s = Number(envelopeElement.getAttribute('s')) / 100;
-        const sustainFrequency = (880 - 220) * s + 220;
-
-        this.osc.frequency.cancelAndHoldAtTime(this.context.currentTime);
-        this.osc.frequency.linearRampToValueAtTime(sustainFrequency, this.context.currentTime);
-        this.osc.frequency.linearRampToValueAtTime(220, this.context.currentTime + r);
-        this.osc.stop(this.context.currentTime + r);
-
-        this.gain.gain.setValueAtTime(0.5, (this.context.currentTime + r) - .01);
-        this.gain.gain.linearRampToValueAtTime(0.01, this.context.currentTime + r);
-
-        cancelAnimationFrame(this.animationFrame);
-        this.animationTime = undefined;
-        this.envelopeToAnimate = envelopeElement;
-        this.releaseAnimation(0);
-    }
-
-    disconnectedCallback() {
-        this.osc && this.osc.stop(this.context.currentTime);
-        cancelAnimationFrame(this.animationFrame);
-    }
-
-    attackAnimation(time) {
-        if (!this.envelopeToAnimate) {
-            return;
-        }
-
-        if (!this.animationTime) {
-            this.animationTime = time
+    onAfterEnter(location) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+            object: { tweek: false, toggle: false },
         };
-        const progress = time - this.animationTime;
-
-        const envelopeElement = this.envelopeToAnimate;
-
-        const a = Number(envelopeElement.getAttribute('a'));
-        const d = Number(envelopeElement.getAttribute('d'));
-        const sumTime = (a + d) * 10;
-
-        const larp = (((a + d) / 4) - 0) * ((1 / sumTime) * progress) + 0;
-
-        if (progress < sumTime) {
-            envelopeElement.setAttribute('cursor', Number(larp));
-            this.animationFrame = requestAnimationFrame(this.attackAnimation)
-        }
     }
 
-    releaseAnimation(time) {
-        if (!this.envelopeToAnimate) {
-            return;
-        }
+    async onBeforeLeave(location, commands, router) {
+        try {
+            const result = await record({
+                ...this.properties,
+                to: Date.now(),
+            }, validator(location.route.parent.children.length - 1));
 
-        if (!this.animationTime) {
-            this.animationTime = time
-        };
-        const progress = time - this.animationTime;
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
 
-        const envelopeElement = this.envelopeToAnimate;
-        const r = Number(envelopeElement.getAttribute('r'));
-        const max = 100;
-        const min = max - (r / 4);
-
-        const larp = (max - min) * ((1 / (r * 10)) * progress) + min;
-
-        if (progress < (r * 100)) {
-            envelopeElement.setAttribute('cursor', Number(larp));
-            this.animationFrame = requestAnimationFrame(this.releaseAnimation)
-        } else {
-            cancelAnimationFrame(this.animationFrame);
-            this.animationTime = undefined;
+        } catch (e) {
+            console.warn(e);
         }
     }
 }

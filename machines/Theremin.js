@@ -67,7 +67,8 @@ export default class Theremin extends HTMLElement {
             element.style.top = `${y}px`;
             element.style.left = `${x}px`;
             this.dispatchEvent(new CustomEvent('move', {
-                detail: { frequency, amplitude }
+                detail: { frequency, amplitude },
+                composed: true
             }));
         }
     }
@@ -86,7 +87,8 @@ export default class Theremin extends HTMLElement {
         const amplitude = (x / containerRect.width) * 1;
 
         this.dispatchEvent(new CustomEvent('start', {
-            detail: { frequency, amplitude }
+            detail: { frequency, amplitude },
+            composed: true
         }));
     }
     handleMouseUp (event) {
@@ -98,7 +100,8 @@ export default class Theremin extends HTMLElement {
         window.removeEventListener('mouseup', this.handleMouseUp);
 
         this.dispatchEvent(new CustomEvent('stop', {
-            detail: { frequency: 0, amplitude: 0 }
+            detail: { frequency: 0, amplitude: 0 },
+            composed: true
         }));
     }
 }

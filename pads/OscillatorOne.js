@@ -21,7 +21,7 @@ export default class OscillatorOne extends HTMLElement {
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-            <element-workstation data-worstation-1 slot="aside">
+            <element-workstation>
                 <machine-toggle></machine-toggle>
                 <machine-oscillator></machine-oscillator>
                 <machine-gain></machine-gain>

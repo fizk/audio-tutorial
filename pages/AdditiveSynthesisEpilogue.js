@@ -1,14 +1,15 @@
 import '../elements/Article.js';
+import validator, { conclude } from '../database/db.js';
 
 export default class AdditiveSynthesisEpilogue extends HTMLElement {
+    properties = {};
+
     constructor() {
         super();
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-            <style>
-                @import "../styles/resources.css";
-            </style>
+            <link rel="stylesheet" href="../styles/resources.css" />
             <element-article>
                 <h2 slot="header">Additive Synthesis Epilogue</h2>
                 <p>
@@ -22,6 +23,7 @@ export default class AdditiveSynthesisEpilogue extends HTMLElement {
                     tutorial, our Oscillators will have a selector where you can select the different waveform.
                     But is is good to know that they are just different combinations of sine-waves.
                 </p>
+                <h4 slot="aside">Resources</h4>
                 <ol class="resources" slot="aside">
                     <li>
                         <a href="https://www.math24.net/fourier-series-definition-typical-examples/" target="_blank">Definition of Fourier Series</a>
@@ -35,6 +37,30 @@ export default class AdditiveSynthesisEpilogue extends HTMLElement {
                 <a href="/subtractive-synthesis" slot="footer" rel="next">Subtractive synthesis</a>
             </element-article>
         `;
+    }
+
+    async onAfterEnter(location, commands, router) {
+        this.properties = {
+            from: Date.now(),
+            path: location.pathname,
+            relm: location.pathname.split('/').filter(Boolean)[0],
+        };
+        try {
+            const result = await conclude(
+                validator(location.route.parent.children.length - 1),
+                this.properties.relm
+            );
+
+            if (result) {
+                this.dispatchEvent(new CustomEvent('update-score', {
+                    composed: true,
+                    detail: result,
+                }));
+            }
+
+        } catch (e) {
+            console.warn(e);
+        }
     }
 }
 

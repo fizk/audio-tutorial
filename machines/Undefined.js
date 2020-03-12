@@ -97,7 +97,8 @@ export default class Undefined extends HTMLElement {
 
         this.shadowRoot.querySelector('[data-index-range]').addEventListener('input', (event) => {
             this.dispatchEvent(new CustomEvent('index-change', {
-                detail: Number(event.target.value)
+                detail: Number(event.target.value),
+                composed: true,
             }));
             this.setAttribute('index', event.target.value);
         });
@@ -109,7 +110,8 @@ export default class Undefined extends HTMLElement {
 
         this.shadowRoot.querySelector('[data-amount-range]').addEventListener('input', (event) => {
             this.dispatchEvent(new CustomEvent('amount-change', {
-                detail: Number(event.target.value)
+                detail: Number(event.target.value),
+                composed: true
             }));
             this.setAttribute('amount', event.target.value);
         });
@@ -118,7 +120,8 @@ export default class Undefined extends HTMLElement {
         this.setAttribute('wave', this.hasAttribute('wave') ? this.getAttribute('wave') : 'none');
         this.shadowRoot.querySelector('[data-type]').addEventListener('change', (event) => {
             this.dispatchEvent(new CustomEvent('type-change', {
-                detail: event.target.value
+                detail: event.target.value,
+                composed: true
             }));
             this.setAttribute('wave', event.target.value);
         });
