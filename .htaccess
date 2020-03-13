@@ -14,4 +14,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !index
 RewriteRule (.*) index.html [L]
 
-Link: </elements/App.js>; rel=preload; as=script
+Header add Link "</elements/App.js>; rel=preload; as=script"
+Header add Link "<https://unpkg.com/@vaadin/router@1.6.0/dist/vaadin-router.js>; rel=preload; as=script"
+

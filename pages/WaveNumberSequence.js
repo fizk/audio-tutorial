@@ -1,5 +1,6 @@
 import "../elements/SineWaveSequence.js";
 import '../elements/Article.js';
+import '../elements/Bubble.js';
 import validator, { record } from '../database/db.js';
 
 export default class WaveNumberSequence extends HTMLElement {
@@ -12,6 +13,9 @@ export default class WaveNumberSequence extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <link rel="stylesheet" href="../styles/figure.css" />
             <style>
+                :host {
+                    position: relative;
+                }
                 input {
                     vertical-align: middle;
                 }
@@ -57,7 +61,6 @@ export default class WaveNumberSequence extends HTMLElement {
                     <code>0.7071066656470943</code>. At 120°, the value will be <code>0.8660229549706501</code>, to name just a few.
                 </p>
 
-
                 <a href="/wave" rel="prev" slot="footer">Wave</a>
                 <a href="/wave/measure-the-wave" rel="next" slot="footer">Measure the wave</a>
             </element-article>
@@ -84,6 +87,20 @@ export default class WaveNumberSequence extends HTMLElement {
     }
 
     async onBeforeLeave(location, commands, router) {
+        const diagramElement = this.shadowRoot.querySelector('element-sine-wave-sequence');
+        const diagramRect = diagramElement.getBoundingClientRect();
+        console.log(diagramRect, window.scrollX, window.scrollY);
+        diagramElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        })
+        const bubbleElement = document.createElement('element-bubble');
+        this.shadowRoot.querySelector('element-article').appendChild(bubbleElement);
+
+        bubbleElement.style.top = `${window.scrollY + diagramRect.top}px`;
+        bubbleElement.style.left = `${window.scrollX + diagramRect.left}px`;
+
+        return commands.prevent();
         try {
             const result = await record({
                 ...this.properties,
