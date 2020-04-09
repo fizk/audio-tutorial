@@ -79,7 +79,6 @@ window.customElements.define('pad-theremin', class extends HTMLElement {
     }
 
     animate() {
-
         // master monitor
         this.analyzer.fftSize = 2048;
         const amMasterMonitorDataArray = new Uint8Array(this.analyzer.frequencyBinCount);

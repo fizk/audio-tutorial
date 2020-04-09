@@ -6,50 +6,49 @@ window.customElements.define('machine-oscillator', class extends HTMLElement {
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-                <style>
-                    :host {
-                        display: inline-block;
-                        background-color: var(--machine-color);
-                        padding: 1rem;
+            <style>
+                :host {
+                    display: inline-block;
+                    background-color: var(--machine-color);
+                    padding: 1rem;
 
-                        --machine-color: #1DE9B6;
+                    --machine-color: #1DE9B6;
 
-                        --oscilloscope-background: var(--screen-background-color);
-                        --oscilloscope-stroke: var(--machine-color);
-                        --oscilloscope-width: var(--screen-line-width);
+                    --oscilloscope-background: var(--screen-background-color);
+                    --oscilloscope-stroke: var(--machine-color);
+                    --oscilloscope-width: var(--screen-line-width);
 
-                        --oscilloscope-marker-width: var(--screen-marker-line-width);
-                        --oscilloscope-marker-stroke: var(--machine-color);
-                        --oscilloscope-marker-dash: 2;
-                    }
-                    h4 {
-                        margin: 0;
-                    }
-                    ul {
-                        padding: 0;
-                        list-style: none;
-                    }
-                </style>
-                <h4>Oscillator</h4>
-                <ul>
-                    <li data-waves-container>
-                        <lable>type</label>
-                        <select data-type>
-                            <option value="sine">sine</option>
-                            <option value="square">square</option>
-                            <option value="sawtooth">sawtooth</option>
-                            <option value="triangle">triangle</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label>frequency</label>
-                        <input type="range" data-frequency-range min="0" max="880" />
-                        <output data-frequency-value></output>
-                    </li>
-                </ul>
-                <elements-oscilloscope></elements-oscilloscope>
-
-    `;
+                    --oscilloscope-marker-width: var(--screen-marker-line-width);
+                    --oscilloscope-marker-stroke: var(--machine-color);
+                    --oscilloscope-marker-dash: 2;
+                }
+                h4 {
+                    margin: 0;
+                }
+                ul {
+                    padding: 0;
+                    list-style: none;
+                }
+            </style>
+            <h4>Oscillator</h4>
+            <ul>
+                <li data-waves-container>
+                    <lable>type</label>
+                    <select data-type>
+                        <option value="sine">sine</option>
+                        <option value="square">square</option>
+                        <option value="sawtooth">sawtooth</option>
+                        <option value="triangle">triangle</option>
+                    </select>
+                </li>
+                <li>
+                    <label>frequency</label>
+                    <input type="range" data-frequency-range min="0" max="880" />
+                    <output data-frequency-value></output>
+                </li>
+            </ul>
+            <elements-oscilloscope></elements-oscilloscope>
+        `;
     }
 
     static get observedAttributes() { return ['frequency', 'wave']; }
@@ -69,10 +68,7 @@ window.customElements.define('machine-oscillator', class extends HTMLElement {
     }
 
     connectedCallback() {
-        //Frequency
-        if (!this.hasAttribute('frequency')) {
-            this.setAttribute('frequency', '440');
-        }
+        !this.hasAttribute('frequency') && this.setAttribute('frequency', '440');
 
         this.shadowRoot.querySelector('[data-frequency-range]').addEventListener('input', (event) => {
             this.dispatchEvent(new CustomEvent('frequency-change', {

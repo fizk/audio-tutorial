@@ -7,29 +7,30 @@ window.customElements.define('machine-adsr', class extends HTMLElement {
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-        <style>
-            :host {
-                display: inline-block;
-                padding: 1rem;
-                background-color: var(--machine-color);
+            <style>
+                :host {
+                    display: inline-block;
+                    padding: 1rem;
+                    background-color: var(--machine-color);
 
-                --machine-color: #9FA8DA;
+                    --machine-color: #9FA8DA;
 
-                --envelope-background: var(--screen-background-color);
-                --envelope-stroke-width: var(--screen-line-width);
-                --envelope-stroke: var(--machine-color);
-                --envelope-marker-stroke-width: var(--screen-marker-line-width);
-                --envelope-marker-stroke: var(--machine-color);
-                --envelope-marker-dash: 2;
-            }
-            h4 {
-                margin: 0;
-            }
-        </style>
-        <element-envelope data-envelope></element-envelope>
-        <elements-envelope-controlls data-envelope-controlls></elements-envelope-controlls>
-    `;
+                    --envelope-background: var(--screen-background-color);
+                    --envelope-stroke-width: var(--screen-line-width);
+                    --envelope-stroke: var(--machine-color);
+                    --envelope-marker-stroke-width: var(--screen-marker-line-width);
+                    --envelope-marker-stroke: var(--machine-color);
+                    --envelope-marker-dash: 2;
+                }
+                h4 {
+                    margin: 0;
+                }
+            </style>
+            <element-envelope data-envelope></element-envelope>
+            <elements-envelope-controlls data-envelope-controlls></elements-envelope-controlls>
+        `;
     }
+
     static get observedAttributes() {
         return ['a', 'd', 's', 'r', 'cursor', 'width', 'height'];
     }
@@ -68,27 +69,13 @@ window.customElements.define('machine-adsr', class extends HTMLElement {
     }
 
     connectedCallback() {
-        if (!this.hasAttribute('a')) {
-            this.setAttribute('a', '100');
-        }
-        if (!this.hasAttribute('d')) {
-            this.setAttribute('d', '100');
-        }
-        if (!this.hasAttribute('s')) {
-            this.setAttribute('s', '50');
-        }
-        if (!this.hasAttribute('r')) {
-            this.setAttribute('r', '100');
-        }
-        if (!this.hasAttribute('cursor')) {
-            this.setAttribute('cursor', '0');
-        }
-        if (!this.hasAttribute('width')) {
-            this.setAttribute('width', '200');
-        }
-        if (!this.hasAttribute('height')) {
-            this.setAttribute('height', '50');
-        }
+        !this.hasAttribute('a') && this.setAttribute('a', '100');
+        !this.hasAttribute('d') && this.setAttribute('d', '100');
+        !this.hasAttribute('s') && this.setAttribute('s', '50');
+        !this.hasAttribute('r') && this.setAttribute('r', '100');
+        !this.hasAttribute('cursor') && this.setAttribute('cursor', '0');
+        !this.hasAttribute('width') && this.setAttribute('width', '200');
+        !this.hasAttribute('height') && this.setAttribute('height', '50');
 
         const envelopeControllsElement = this.shadowRoot.querySelector('[data-envelope-controlls]');
         envelopeControllsElement.addEventListener('a-change', event => this.setAttribute('a', event.detail))

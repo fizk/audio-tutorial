@@ -4,57 +4,42 @@ window.customElements.define('element-envelope', class extends HTMLElement {
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-        <style>
-            :host {
-                display: inline-block;
-            }
-            svg {
-                background-color: var(--envelope-background, #0e0e1d);
-            }
-            path {
-                stroke-width: var(--envelope-stroke-width, 1px);
-                stroke: var(--envelope-stroke, #faebd7);
-                fill: none;
-            }
-            line {
-                stroke-width: var(--envelope-marker-stroke-width, 1px);
-                stroke: var(--envelope-marker-stroke, #faebd7);
-                fill: none;
-                stroke-dasharray: var(--envelope-marker-dash, 2);
-            }
-        </style>
-        <svg  viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" width="400" height="100">
-            <path />
-            <line />
-        </svg>
-
-    `;
+            <style>
+                :host {
+                    display: inline-block;
+                }
+                svg {
+                    background-color: var(--envelope-background, #0e0e1d);
+                }
+                path {
+                    stroke-width: var(--envelope-stroke-width, 1px);
+                    stroke: var(--envelope-stroke, #faebd7);
+                    fill: none;
+                }
+                line {
+                    stroke-width: var(--envelope-marker-stroke-width, 1px);
+                    stroke: var(--envelope-marker-stroke, #faebd7);
+                    fill: none;
+                    stroke-dasharray: var(--envelope-marker-dash, 2);
+                }
+            </style>
+            <svg  viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" width="400" height="100">
+                <path />
+                <line />
+            </svg>
+        `;
 
         this.updatePath = this.updatePath.bind(this);
     }
 
     connectedCallback() {
-        if (!this.hasAttribute('a')) {
-            this.setAttribute('a', '100');
-        }
-        if (!this.hasAttribute('d')) {
-            this.setAttribute('d', '100');
-        }
-        if (!this.hasAttribute('s')) {
-            this.setAttribute('s', '50');
-        }
-        if (!this.hasAttribute('r')) {
-            this.setAttribute('r', '50');
-        }
-        if (!this.hasAttribute('cursor')) {
-            this.setAttribute('cursor', '0');
-        }
-        if (!this.hasAttribute('width')) {
-            this.setAttribute('width', '400');
-        }
-        if (!this.hasAttribute('height')) {
-            this.setAttribute('height', '100');
-        }
+        !this.hasAttribute('a') && this.setAttribute('a', '100');
+        !this.hasAttribute('d') && this.setAttribute('d', '100');
+        !this.hasAttribute('s') && this.setAttribute('s', '50');
+        !this.hasAttribute('r') && this.setAttribute('r', '50');
+        !this.hasAttribute('cursor') && this.setAttribute('cursor', '0');
+        !this.hasAttribute('width') && this.setAttribute('width', '400');
+        !this.hasAttribute('height') && this.setAttribute('height', '100');
 
         const canvas = this.shadowRoot.querySelector('svg');
         canvas.setAttributeNS(null, 'viewBox', `0 0 ${this.getAttribute('width')} ${this.getAttribute('height')}`);
@@ -89,7 +74,6 @@ window.customElements.define('element-envelope', class extends HTMLElement {
                 canvas.setAttributeNS(null, 'viewBox', `0 0 ${this.getAttribute('width') || '400'} ${newValue}`);
                 canvas.setAttributeNS(null, 'height', newValue);
                 break;
-
         }
         this.updatePath();
     }

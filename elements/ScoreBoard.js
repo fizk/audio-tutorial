@@ -2,8 +2,6 @@ window.customElements.define('element-score-board', class extends HTMLElement {
     constructor() {
         super();
 
-        this.close = this.close.bind(this);
-
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
@@ -31,6 +29,7 @@ window.customElements.define('element-score-board', class extends HTMLElement {
                 <button>OK</button>
             </div>
         `;
+        this.close = this.close.bind(this);
     }
 
     static get observedAttributes() {

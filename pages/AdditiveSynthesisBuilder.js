@@ -63,7 +63,6 @@ window.customElements.define('page-additive-synthesis-builder', class extends HT
     }
 
     connectedCallback() {
-
         this.addEventListener('change', () => this.properties.object.tweek = true);
 
         const series = this.shadowRoot.querySelector('element-wave-builder');

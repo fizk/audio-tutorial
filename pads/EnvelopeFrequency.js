@@ -88,7 +88,6 @@ window.customElements.define('pad-envelope-frequency', class extends HTMLElement
     }
 
     attackAnimation(time) {
-
         if (!this.animationTime) {
             this.animationTime = time
         };
@@ -109,7 +108,6 @@ window.customElements.define('pad-envelope-frequency', class extends HTMLElement
     }
 
     releaseAnimation(time) {
-
         if (!this.animationTime) {
             this.animationTime = time
         };

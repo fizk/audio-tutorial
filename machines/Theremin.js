@@ -1,5 +1,4 @@
 window.customElements.define('machine-theremin', class extends HTMLElement {
-
     constructor() {
         super();
         this.isDown = false;
@@ -91,7 +90,6 @@ window.customElements.define('machine-theremin', class extends HTMLElement {
     handleMouseUp(event) {
         event.preventDefault();
         this.isDown = false;
-
 
         this.removeEventListener('mousemove', this.handleMouseMove);
         window.removeEventListener('mouseup', this.handleMouseUp);

@@ -45,7 +45,6 @@ window.customElements.define('page-modulation-fm-synth', class extends HTMLEleme
     }
 
     connectedCallback() {
-
         this.addEventListener('start', () => this.properties.object.toggle = true);
         this.addEventListener('amount-change', () => this.properties.object.tweek = true);
         this.addEventListener('index-change', () => this.properties.object.tweek = true);
@@ -105,9 +104,6 @@ window.customElements.define('page-modulation-fm-synth', class extends HTMLEleme
             padElement.setAttribute('index', '9');
             this.properties.object.preset = true;
         });
-
-
-
 
         this.shadowRoot.querySelector('[data-preset-1]').addEventListener('click', _ => {
             const padElement = this.shadowRoot.querySelector('pad-frequency-synth');

@@ -46,7 +46,7 @@ window.customElements.define('element-sine-wave-sequence', class extends HTMLEle
                         <circle cx="0" cy="0" r="40"/>
                     </g>
                 </svg>
-        `;
+            `;
 
         this.animation = this.animation.bind(this);
     }

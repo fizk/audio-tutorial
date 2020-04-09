@@ -50,8 +50,7 @@ window.customElements.define('machine-lfo', class extends HTMLElement {
                 </li>
             </ul>
             <elements-oscilloscope></elements-oscilloscope>
-
-`;
+        `;
     }
 
     static get observedAttributes() { return ['frequency', 'wave', 'amount', 'min', 'max']; }
@@ -81,10 +80,8 @@ window.customElements.define('machine-lfo', class extends HTMLElement {
     }
 
     connectedCallback() {
-        //Frequency
-        if (!this.hasAttribute('frequency')) {
-            this.setAttribute('frequency', '10');
-        }
+        !this.hasAttribute('frequency') && this.setAttribute('frequency', '10');
+
         this.shadowRoot.querySelector('[data-frequency-range]').addEventListener('input', (event) => {
             this.dispatchEvent(new CustomEvent('frequency-change', {
                 detail: Number(event.target.value),

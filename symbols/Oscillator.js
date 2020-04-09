@@ -23,9 +23,7 @@ window.customElements.define('symbol-oscillator', class extends HTMLElement {
     }
 
     connectedCallback() {
-        if (!this.hasAttribute('frequency')) {
-            this.setAttribute('frequency', '0');
-        }
+        !this.hasAttribute('frequency') && this.setAttribute('frequency', '0');
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

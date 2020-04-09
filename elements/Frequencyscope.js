@@ -12,8 +12,7 @@ window.customElements.define('elements-frequencyscope', class extends HTMLElemen
                     fill: var(--frequencyscope-stroke, black);
                 }
             </style>
-            <svg  viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg" width="300" height="50">
-            </svg>
+            <svg  viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg" width="300" height="50"></svg>
         `;
     }
 
@@ -23,7 +22,7 @@ window.customElements.define('elements-frequencyscope', class extends HTMLElemen
 
     dataToPoints(data) {
         const svgElement = this.shadowRoot.querySelector('svg');
-        svgElement.innerHTML = '';
+        svgElement.textContent = '';
 
         var barWidth = (Number(svgElement.getAttributeNS(null, 'width')) / data.length) * 2.5;
         var barHeight;

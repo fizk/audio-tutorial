@@ -1,6 +1,4 @@
 window.customElements.define('machine-trigger', class extends HTMLElement {
-
-
     constructor() {
         super();
         this.isPressed = false;

@@ -67,9 +67,7 @@ window.customElements.define('pad-frequency-synth', class extends HTMLElement {
                 carrierEnvelopeElement.setAttribute('r', newValue);
                 break;
             case 'index':
-
                 break;
-
         }
     }
 
@@ -146,7 +144,6 @@ window.customElements.define('pad-frequency-synth', class extends HTMLElement {
 
         cancelAnimationFrame(this.animationFrame);
         this.animation();
-
     }
 
     handleNoteOff() {
@@ -159,8 +156,6 @@ window.customElements.define('pad-frequency-synth', class extends HTMLElement {
 
         this.carrierOsc.stop(this.context.currentTime + rTime);
         this.lfoOsc.stop(this.context.currentTime + rTime);
-
-        // cancelAnimationFrame(this.animationFrame);
     }
 
     animation() {
@@ -183,7 +178,6 @@ window.customElements.define('pad-frequency-synth', class extends HTMLElement {
         this.shadowRoot.querySelector('machine-undefined').frequencyData = amLFOMonitorDataArray;
         this.shadowRoot.querySelector('machine-master').frequencyData = amMasterMonitorDataArray;
         this.shadowRoot.querySelector('machine-master').byteData = amMasterMonitorByteArray;
-
 
         this.animationFrame = requestAnimationFrame(this.animation);
     }

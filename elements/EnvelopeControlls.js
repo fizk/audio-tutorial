@@ -64,18 +64,10 @@ window.customElements.define('elements-envelope-controlls', class extends HTMLEl
         const sRange = this.shadowRoot.querySelector('[data-range-s]');
         const rRange = this.shadowRoot.querySelector('[data-range-r]');
 
-        if (!this.hasAttribute('a')) {
-            this.setAttribute('a', '100');
-        }
-        if (!this.hasAttribute('d')) {
-            this.setAttribute('d', '100');
-        }
-        if (!this.hasAttribute('s')) {
-            this.setAttribute('s', '50');
-        }
-        if (!this.hasAttribute('r')) {
-            this.setAttribute('r', '100');
-        }
+        !this.hasAttribute('a') && this.setAttribute('a', '100');
+        !this.hasAttribute('d') && this.setAttribute('d', '100');
+        !this.hasAttribute('s') && this.setAttribute('s', '50');
+        !this.hasAttribute('r') && this.setAttribute('r', '100');
 
         aRange.addEventListener('input', (event) => {
             this.dispatchEvent(new CustomEvent('a-change', {

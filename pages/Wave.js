@@ -85,7 +85,6 @@ window.customElements.define('page-wave', class extends HTMLElement {
                     0% 75%, 100% {
                         transform: scaleX(1);
                     }
-
                 }
             </style>
             <element-article>

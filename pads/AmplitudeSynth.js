@@ -62,7 +62,6 @@ window.customElements.define('pad-amplitude-synth', class extends HTMLElement {
     }
 
     handleNoteOn(event) {
-
         const undefinedElement = this.shadowRoot.querySelector('machine-undefined');
 
         this.carrierOsc = new OscillatorNode(this.context);

@@ -30,6 +30,7 @@ window.customElements.define('machine-gain', class extends HTMLElement {
             </ul>
         `;
     }
+
     static get observedAttributes() { return ['amount', 'min', 'max', 'step']; }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -41,19 +42,10 @@ window.customElements.define('machine-gain', class extends HTMLElement {
         }
     }
     connectedCallback() {
-        //Amount
-        if (!this.hasAttribute('amount')) {
-            this.setAttribute('amount', '0.5');
-        }
-        if (!this.hasAttribute('min')) {
-            this.setAttribute('min', '0');
-        }
-        if (!this.hasAttribute('max')) {
-            this.setAttribute('max', '1');
-        }
-        if (!this.hasAttribute('step')) {
-            this.setAttribute('step', '.1');
-        }
+        !this.hasAttribute('amount') && this.setAttribute('amount', '0.5');
+        !this.hasAttribute('min') && this.setAttribute('min', '0');
+        !this.hasAttribute('max') && this.setAttribute('max', '1');
+        !this.hasAttribute('step') && this.setAttribute('step', '.1');
 
         const rangeElement = this.shadowRoot.querySelector('[data-amount-range]');
         rangeElement.setAttribute('min', this.getAttribute('min'));

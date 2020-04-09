@@ -117,7 +117,6 @@ window.customElements.define('page-additive-synthesis', class extends HTMLElemen
                     detail: result,
                 }));
             }
-
         } catch (e) {
             console.warn(e);
         }

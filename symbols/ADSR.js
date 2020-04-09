@@ -30,18 +30,10 @@ window.customElements.define('symbol-adsr', class extends HTMLElement {
     }
 
     connectedCallback() {
-        if (!this.hasAttribute('a')) {
-            this.setAttribute('a', '100');
-        }
-        if (!this.hasAttribute('d')) {
-            this.setAttribute('d', '100');
-        }
-        if (!this.hasAttribute('s')) {
-            this.setAttribute('s', '50');
-        }
-        if (!this.hasAttribute('r')) {
-            this.setAttribute('r', '100');
-        }
+        !this.hasAttribute('a') && this.setAttribute('a', '100');
+        !this.hasAttribute('d') && this.setAttribute('d', '100');
+        !this.hasAttribute('s') && this.setAttribute('s', '50');
+        !this.hasAttribute('r') && this.setAttribute('r', '100');
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

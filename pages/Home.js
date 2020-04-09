@@ -173,13 +173,6 @@ window.customElements.define('page-home', class extends HTMLElement {
                 </svg>
                 <a href="/wave" slot="footer" rel="next">Wave</a>
             </element-article>
-
-
-
-
-
-
         `;
     }
-}
-);
+});

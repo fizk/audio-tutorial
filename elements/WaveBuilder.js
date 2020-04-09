@@ -15,7 +15,6 @@ template.innerHTML = `
     </tr>
 `;
 
-
 window.customElements.define('element-wave-builder', class extends HTMLElement {
 
     constructor() {

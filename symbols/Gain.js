@@ -21,9 +21,7 @@ window.customElements.define('symbol-gain', class extends HTMLElement {
     }
 
     connectedCallback() {
-        if (!this.hasAttribute('amount')) {
-            this.setAttribute('amount', '0');
-        }
+        !this.hasAttribute('amount') && this.setAttribute('amount', '0');
     }
 
     attributeChangedCallback(name, oldValue, newValue) {

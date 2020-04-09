@@ -85,7 +85,6 @@ window.customElements.define('pad-harmonic-synth', class extends HTMLElement {
 
     handleToggle(event) {
         if (event.detail) {
-
             const workstationElement = this.shadowRoot.querySelector('element-workstation');
             const listElements = workstationElement.querySelectorAll('li');
 

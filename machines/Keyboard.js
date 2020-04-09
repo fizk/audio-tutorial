@@ -28,8 +28,8 @@ window.customElements.define('machine-keyboard', class extends HTMLElement {
             'Digit7': 466.16,   // A#4/Bb4
             'KeyU': 493.88,     // B4
         };
-        this.attachShadow({ mode: 'open' });
 
+        this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
                 :host {

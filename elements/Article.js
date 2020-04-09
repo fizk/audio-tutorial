@@ -5,7 +5,6 @@ window.customElements.define('element-article', class extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
-
                 :host {
                     display: block;
                 }

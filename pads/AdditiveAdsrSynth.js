@@ -152,5 +152,4 @@ window.customElements.define('pad-additive-adsr-synth', class extends HTMLElemen
     transposeNote(noteOffset, baseFrequency = 440) {
         return baseFrequency * Math.pow(2, noteOffset / 12);
     }
-
 });

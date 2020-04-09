@@ -37,21 +37,11 @@ window.customElements.define('sine-wave', class extends HTMLElement {
     static get observedAttributes() { return ['width', 'height', 'phase', 'amplitude', 'frequency', 'points']; }
 
     connectedCallback() {
-        if (!this.hasAttribute('width')) {
-            this.setAttribute('width', '400');
-        }
-        if (!this.hasAttribute('height')) {
-            this.setAttribute('height', '100');
-        }
-        if (!this.hasAttribute('amplitude')) {
-            this.setAttribute('amplitude', '40');
-        }
-        if (!this.hasAttribute('frequency')) {
-            this.setAttribute('frequency', '440');
-        }
-        if (!this.hasAttribute('phase')) {
-            this.setAttribute('phase', '0');
-        }
+        !this.hasAttribute('width') && this.setAttribute('width', '400');
+        !this.hasAttribute('height') && this.setAttribute('height', '100');
+        !this.hasAttribute('amplitude') && this.setAttribute('amplitude', '40');
+        !this.hasAttribute('frequency') && this.setAttribute('frequency', '440');
+        !this.hasAttribute('phase') && this.setAttribute('phase', '0');
 
         const svg = this.shadowRoot.querySelector('svg');
         svg.setAttributeNS(null, 'viewBox', `0 0 ${this.getAttribute('width')} ${this.getAttribute('height')}`)
@@ -93,23 +83,12 @@ window.customElements.define('sine-wave', class extends HTMLElement {
         }
     }
 
-    calculateSineCurve(
-        frequency,
-        amplitude,
-        offset = 0,
-        sampleCount = 650,
-        sampleRate = 44100
-    ) {
+    calculateSineCurve(frequency, amplitude, offset = 0, sampleCount = 650, sampleRate = 44100) {
         return Array.from({ length: sampleCount })
             .map((_, sampleNumber) => this.calculateSample(frequency, amplitude, sampleNumber - offset, sampleRate));
     }
 
-    calculateSample(
-        frequency,
-        amplitude,
-        sampleNumber,
-        sampleRate
-    ) {
+    calculateSample(frequency, amplitude, sampleNumber, sampleRate) {
         // How many radians per second does the oscillator go?
         const angularFrequency = frequency * 2 * Math.PI;
         // What's the "time" of this sample in our curves?

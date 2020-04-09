@@ -46,7 +46,6 @@ window.customElements.define('page-wave-gain-amplitude', class extends HTMLEleme
                 <a href="/wave/measure-the-wave" rel="prev" slot="footer">Measure the wave</a>
                 <a href="/wave/epilogue" rel="next" slot="footer">Epilogue</a>
             </element-article>
-
         `;
     }
 

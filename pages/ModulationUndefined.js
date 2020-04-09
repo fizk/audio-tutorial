@@ -75,8 +75,6 @@ window.customElements.define('page-modulation-undefined', class extends HTMLElem
                     <path class="diagram__path--fill" d="M122.5,17v42h10l-12,24l-12-24h10V17H122.5z"/>
                 </svg>
 
-
-
                 <a href="/modulation/am" rel="prev" slot="footer">Amplitude modulation</a>
                 <a href="/modulation/am-synth" rel="next" slot="footer">AM Synth</a>
             </element-article>

@@ -1,6 +1,7 @@
 window.customElements.define('elements-oscilloscope', class extends HTMLElement {
     constructor() {
         super();
+
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
