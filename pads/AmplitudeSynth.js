@@ -8,19 +8,19 @@ import '../symbols/Gain.js';
 import gainToAudioWorklet from '../worklets/GainToAudioWorklet.js'
 
 export default class AmplitudeSynth extends HTMLElement {
-    context;
-    carrierOsc;
-    lfoOsc;
-    lfoGain;
-    carrierGain;
-    masterGain;
-    lfoAnalyser;
-    masterAnalyser;
-    animationFrame
+
 
     constructor() {
         super();
-
+        this.context;
+        this.carrierOsc;
+        this.lfoOsc;
+        this.lfoGain;
+        this.carrierGain;
+        this.masterGain;
+        this.lfoAnalyser;
+        this.masterAnalyser;
+        this.animationFrame
         this.handleNoteOn = this.handleNoteOn.bind(this);
         this.handleNoteOff = this.handleNoteOff.bind(this);
         this.animation = this.animation.bind(this);

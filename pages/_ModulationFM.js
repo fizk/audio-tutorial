@@ -140,23 +140,23 @@ template.innerHTML = `
 `;
 
 export default class ModulationFM extends HTMLElement {
-    context;
-    carrier;
-    modulator;
-    mainGain;
-    masterGain;
-    lfoGain;
 
-    masterMonitor;
-    lfoMonitor;
-    carrierMonitor;
-
-    animationFrame;
 
     constructor() {
         super();
 
+        this.context;
+        this.carrier;
+        this.modulator;
+        this.mainGain;
+        this.masterGain;
+        this.lfoGain;
 
+        this.masterMonitor;
+        this.lfoMonitor;
+        this.carrierMonitor;
+
+        this.animationFrame;
         this.fmDraw = this.fmDraw.bind(this);
 
         this.initFM = this.initFM.bind(this);

@@ -4,16 +4,16 @@ import '../machines/Theremin.js';
 import '../elements/Article.js';
 
 export default class OscillatorTheremin extends HTMLElement {
-    context;
-    osc;
-    gain;
-    analyzer;
-    masterGain;
-    animationFrame;
+
 
     constructor() {
         super();
-
+        this.context;
+        this.osc;
+        this.gain;
+        this.analyzer;
+        this.masterGain;
+        this.animationFrame;
         this.handleStart = this.handleStart.bind(this);
         this.handleStop = this.handleStop.bind(this);
         this.handlePlay = this.handlePlay.bind(this);

@@ -4,15 +4,15 @@ import '../machines/ADSR.js';
 
 export default class EnvelopeFrequency extends HTMLElement {
 
-    context;
-    osc;
-    gain;
-    animationFrame;
-    animationTime;
 
     constructor() {
         super();
 
+        this.context;
+        this.osc;
+        this.gain;
+        this.animationFrame;
+        this.animationTime;
         this.handleStart = this.handleStart.bind(this);
         this.handleStop = this.handleStop.bind(this);
         this.attackAnimation = this.attackAnimation.bind(this);

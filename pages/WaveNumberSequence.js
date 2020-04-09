@@ -4,11 +4,11 @@ import '../elements/Bubble.js';
 import validator, { record } from '../database/db.js';
 
 export default class WaveNumberSequence extends HTMLElement {
-    properties = {};
+
 
     constructor() {
         super();
-
+        this.properties = {};
         this.attachShadow({mode: 'open'});
         this.shadowRoot.innerHTML = `
             <link rel="stylesheet" href="../styles/figure.css" />
@@ -87,20 +87,20 @@ export default class WaveNumberSequence extends HTMLElement {
     }
 
     async onBeforeLeave(location, commands, router) {
-        const diagramElement = this.shadowRoot.querySelector('element-sine-wave-sequence');
-        const diagramRect = diagramElement.getBoundingClientRect();
-        console.log(diagramRect, window.scrollX, window.scrollY);
-        diagramElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-        })
-        const bubbleElement = document.createElement('element-bubble');
-        this.shadowRoot.querySelector('element-article').appendChild(bubbleElement);
+        // const diagramElement = this.shadowRoot.querySelector('element-sine-wave-sequence');
+        // const diagramRect = diagramElement.getBoundingClientRect();
+        // console.log(diagramRect, window.scrollX, window.scrollY);
+        // diagramElement.scrollIntoView({
+        //     behavior: 'smooth',
+        //     block: 'start',
+        // })
+        // const bubbleElement = document.createElement('element-bubble');
+        // this.shadowRoot.querySelector('element-article').appendChild(bubbleElement);
 
-        bubbleElement.style.top = `${window.scrollY + diagramRect.top}px`;
-        bubbleElement.style.left = `${window.scrollX + diagramRect.left}px`;
+        // bubbleElement.style.top = `${window.scrollY + diagramRect.top}px`;
+        // bubbleElement.style.left = `${window.scrollX + diagramRect.left}px`;
 
-        return commands.prevent();
+        // return commands.prevent();
         try {
             const result = await record({
                 ...this.properties,

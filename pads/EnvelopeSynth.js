@@ -7,18 +7,18 @@ import '../machines/ADSR.js';
 // function lerp(min, max, fraction) {  return (max — min) * fraction + min;}
 
 export default class EnvelopeSynth extends HTMLElement {
-    isKeyDown = false;
-    animationFrame;
-    animationTime;
 
-    oscillator;
-    gain;
-    audioContext;
-    masterGain;
 
     constructor() {
         super();
+        this.isKeyDown = false;
+        this.animationFrame;
+        this.animationTime;
 
+        this.oscillator;
+        this.gain;
+        this.audioContext;
+        this.masterGain;
         this.attackAnimation = this.attackAnimation.bind(this);
         this.releaseAnimation = this.releaseAnimation.bind(this);
         this.startKeyboardNote = this.startKeyboardNote.bind(this);

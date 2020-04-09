@@ -6,14 +6,14 @@ import '../machines/Keyboard.js';
 import '../machines/ADSR.js';
 
 export default class FrequencySynth extends HTMLElement {
-    context;
-    animationFrame;
-    adsrTime = 1;
-    sustainValue = .5;
+
 
     constructor() {
         super();
-
+        this.context;
+        this.animationFrame;
+        this.adsrTime = 1;
+        this.sustainValue = .5;
         this.handleNoteOn = this.handleNoteOn.bind(this);
         this.handleNoteOff = this.handleNoteOff.bind(this);
         this.animation = this.animation.bind(this);

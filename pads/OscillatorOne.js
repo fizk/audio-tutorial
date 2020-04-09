@@ -5,17 +5,17 @@ import '../machines/Master.js'
 import '../machines/Toggle.js'
 
 export default class OscillatorOne extends HTMLElement {
-    context;
-    osc;
-    gain;
-    masterAnalyze;
-    oscillatorElement;
-    oscAnalyze;
-    animationFrame
+
 
     constructor() {
         super();
-
+        this.context;
+        this.osc;
+        this.gain;
+        this.masterAnalyze;
+        this.oscillatorElement;
+        this.oscAnalyze;
+        this.animationFrame
         this.handleToggle = this.handleToggle.bind(this);
         this.animation = this.animation.bind(this);
 

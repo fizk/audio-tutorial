@@ -7,21 +7,21 @@ import '../symbols/Gain.js';
 
 export default class AdditiveAdsrSynth extends HTMLElement {
 
-    masterElement;
-    masterContext
-    masterAnalyze;
-    masterMachines;
-    masterGain;
 
-    harmonicFunctions = {
-        1: (i, note) => this.transposeNote(i * 12, (note / 2)),
-        2: (i, note) => note * Math.pow(2, i),
-        3: (i, note) => note * (i + 1),
-    };
 
     constructor() {
         super();
+        this.masterElement;
+        this.masterContext
+        this.masterAnalyze;
+        this.masterMachines;
+        this.masterGain;
 
+        this.harmonicFunctions = {
+            1: (i, note) => this.transposeNote(i * 12, (note / 2)),
+            2: (i, note) => note * Math.pow(2, i),
+            3: (i, note) => note * (i + 1),
+        };
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <element-workstation slot="aside">

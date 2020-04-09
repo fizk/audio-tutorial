@@ -4,11 +4,11 @@ template.innerHTML = `
 `;
 
 export default class Trigger extends HTMLElement {
-    isPressed = false;
+
 
     constructor() {
         super();
-
+        this.isPressed = false;
         this.attachShadow({mode: 'open'});
         this.shadowRoot.appendChild(template.content.cloneNode(true));
         this.handleMouseDown = this.handleMouseDown.bind(this);

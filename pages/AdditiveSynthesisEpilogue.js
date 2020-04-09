@@ -2,11 +2,11 @@ import '../elements/Article.js';
 import validator, { conclude } from '../database/db.js';
 
 export default class AdditiveSynthesisEpilogue extends HTMLElement {
-    properties = {};
+
 
     constructor() {
         super();
-
+        this.properties = {};
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <link rel="stylesheet" href="../styles/resources.css" />
@@ -34,7 +34,6 @@ export default class AdditiveSynthesisEpilogue extends HTMLElement {
                 </ol>
 
                 <a href="/additive-synthesis/adsr" slot="footer" rel="prev">ADRS</a>
-                <a href="/subtractive-synthesis" slot="footer" rel="next">Subtractive synthesis</a>
             </element-article>
         `;
     }

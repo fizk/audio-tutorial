@@ -2,11 +2,11 @@ import '../elements/Article.js';
 import validator, { conclude } from '../database/db.js';
 
 export default class OscillatorEpilogue extends HTMLElement {
-    properties = {};
+
 
     constructor() {
         super();
-
+        this.properties = {};
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <link rel="stylesheet" href="../styles/resources.css" />

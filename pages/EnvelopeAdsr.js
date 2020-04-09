@@ -3,11 +3,11 @@ import '../pads/EnvelopeSynth.js'
 import validator, { record } from '../database/db.js';
 
 export default class EnvelopeAdsr extends HTMLElement {
-    properties = {};
+
 
     constructor() {
         super();
-
+        this.properties = {};
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <element-article>

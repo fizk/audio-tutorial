@@ -6,30 +6,30 @@ import '../machines/Toggle.js';
 
 export default class HarmonicSynth extends HTMLElement {
 
-    masterElement;
-    masterContext
-    masterAnalyze;
-    masterMachines;
-    masterGain;
 
-    amplitudeFunctions = {
-        // In a pure sine wave we only play the fundamental frequency.
-        sine: (index) => index === 0 ? 1 : 0,
-        // In a sawtooth wave we play all frequencies with descending amplitudes.
-        saw: (index) => 1 / (index + 1),
-        // In a square wave we only play odd harmonics with descending amplitudes.
-        // (Here we check if the number is even, not odd, because 0 is the fundamental.)
-        square: (index) => index % 2 === 0 ? 1 / (index + 1) : 0,
-        // 1/Harmonic Number Squared
-        //The ratio 1/harmonic number squared means that the first harmonic has an amplitude of 1/1,
-        // or 1; that the third harmonic will have an amplitude of 1/9 (one ninth the strength of the fundamental);
-        // the fifth harmonic will have an amplitude of 1/25 (one twenty-fifth the strength of the fundamental), and so on.
-        tri: (index) => (index % 2 === 0) ? 1 / Math.pow(2, index) : 0,
-    }
 
     constructor() {
         super();
+        this.masterElement;
+        this.masterContext
+        this.masterAnalyze;
+        this.masterMachines;
+        this.masterGain;
 
+        this.amplitudeFunctions = {
+            // In a pure sine wave we only play the fundamental frequency.
+            sine: (index) => index === 0 ? 1 : 0,
+            // In a sawtooth wave we play all frequencies with descending amplitudes.
+            saw: (index) => 1 / (index + 1),
+            // In a square wave we only play odd harmonics with descending amplitudes.
+            // (Here we check if the number is even, not odd, because 0 is the fundamental.)
+            square: (index) => index % 2 === 0 ? 1 / (index + 1) : 0,
+            // 1/Harmonic Number Squared
+            //The ratio 1/harmonic number squared means that the first harmonic has an amplitude of 1/1,
+            // or 1; that the third harmonic will have an amplitude of 1/9 (one ninth the strength of the fundamental);
+            // the fifth harmonic will have an amplitude of 1/25 (one twenty-fifth the strength of the fundamental), and so on.
+            tri: (index) => (index % 2 === 0) ? 1 / Math.pow(2, index) : 0,
+        }
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <element-workstation>

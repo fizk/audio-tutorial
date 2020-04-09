@@ -3,10 +3,11 @@ import '../pads/FrequencySynth.js';
 import validator, { record } from '../database/db.js';
 
 export default class ModulationFMSynth extends HTMLElement {
-    properties = {};
+
 
     constructor() {
         super();
+        this.properties = {};
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <element-article>

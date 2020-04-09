@@ -8,22 +8,22 @@ import '../symbols/Gain.js';
 import '../elements/Article.js';
 
 export default class AmplitudeModulation extends HTMLElement {
-    context;
-    carrier;
-    modulator;
-    mainGain;
-    masterGain;
-    lfoGain;
 
-    masterMonitor;
-    lfoMonitor;
-    carrierMonitor;
-
-    animationFrame;
 
     constructor() {
         super();
+        this.context;
+        this.carrier;
+        this.modulator;
+        this.mainGain;
+        this.masterGain;
+        this.lfoGain;
 
+        this.masterMonitor;
+        this.lfoMonitor;
+        this.carrierMonitor;
+
+        this.animationFrame;
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <element-workstation data-worstation-am slot="aside">

@@ -27,10 +27,10 @@ template.innerHTML = `
 `;
 
 export default class Theremin extends HTMLElement {
-    isDown = false;
+
     constructor() {
         super();
-
+        this.isDown = false;
         this.attachShadow({mode: 'open'});
         this.shadowRoot.appendChild(template.content.cloneNode(true));
         this.handleMouseMove = this.handleMouseMove.bind(this);

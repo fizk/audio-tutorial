@@ -53,36 +53,37 @@ template.innerHTML = `
 `;
 
 export default class Keyboard extends HTMLElement {
-    isKeyDown = false;
-    map = {
-        'KeyZ': 130.81,     // C3
-        'KeyS': 138.59,     // C#3/Db3
-        'KeyX': 146.83,     // D3
-        'KeyD': 155.56,     // D#3/Eb3
-        'KeyC': 164.81,     // E3
-        'KeyV': 174.61,     // F3
-        'KeyG': 185.00,     // F#3/Gb3
-        'KeyB': 196.00,     // G3
-        'KeyH': 207.65,     // G#3/Ab3
-        'KeyN': 220.00,     // A3
-        'KeyJ': 233.08,     // A#3/Bb3
-        'KeyM': 246.94,     // B3
-        'KeyQ': 261.63,     // C4
-        'Digit2': 277.18,   // C#4/Db4
-        'KeyW': 293.66,     // D4
-        'Digit3': 311.13,   // D#4/Eb4
-        'KeyE': 329.63,     // E4
-        'KeyR': 349.23,     // F4
-        'Digit5': 369.99,   // F#4/Gb4
-        'KeyT': 392.00,     // G4
-        'Digit6': 415.30,   // G#4/Ab4
-        'KeyY': 440.00,     // A4
-        'Digit7': 466.16,   // A#4/Bb4
-        'KeyU': 493.88,     // B4
-    };
+
 
     constructor() {
         super();
+        this.isKeyDown = false;
+        this.map = {
+            'KeyZ': 130.81,     // C3
+            'KeyS': 138.59,     // C#3/Db3
+            'KeyX': 146.83,     // D3
+            'KeyD': 155.56,     // D#3/Eb3
+            'KeyC': 164.81,     // E3
+            'KeyV': 174.61,     // F3
+            'KeyG': 185.00,     // F#3/Gb3
+            'KeyB': 196.00,     // G3
+            'KeyH': 207.65,     // G#3/Ab3
+            'KeyN': 220.00,     // A3
+            'KeyJ': 233.08,     // A#3/Bb3
+            'KeyM': 246.94,     // B3
+            'KeyQ': 261.63,     // C4
+            'Digit2': 277.18,   // C#4/Db4
+            'KeyW': 293.66,     // D4
+            'Digit3': 311.13,   // D#4/Eb4
+            'KeyE': 329.63,     // E4
+            'KeyR': 349.23,     // F4
+            'Digit5': 369.99,   // F#4/Gb4
+            'KeyT': 392.00,     // G4
+            'Digit6': 415.30,   // G#4/Ab4
+            'KeyY': 440.00,     // A4
+            'Digit7': 466.16,   // A#4/Bb4
+            'KeyU': 493.88,     // B4
+        };
         this.attachShadow({mode: 'open'});
 
         this.shadowRoot.appendChild(template.content.cloneNode(true));

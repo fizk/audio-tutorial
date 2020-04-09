@@ -6,11 +6,11 @@ import '../pads/Theremin.js'
 import validator, { record } from '../database/db.js';
 
 export default class OscillatorTheremin extends HTMLElement {
-    properties = {};
+
 
     constructor() {
         super();
-
+        this.properties = {};
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <link rel="stylesheet" href="../styles/figure.css" />
