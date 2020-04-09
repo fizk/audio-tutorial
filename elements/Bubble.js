@@ -1,7 +1,7 @@
-export default class Bubble extends HTMLElement {
+window.customElements.define('element-bubble', class extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
 
         this.shadowRoot.innerHTML = `
             <style>
@@ -16,6 +16,4 @@ export default class Bubble extends HTMLElement {
             <slot>hello</slot>
         `;
     }
-}
-
-window.customElements.define('element-bubble', Bubble);
+});

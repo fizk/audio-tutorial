@@ -2,9 +2,7 @@ import '../elements/Workstation.js';
 import '../machines/Trigger.js';
 import '../machines/ADSR.js';
 
-export default class EnvelopeFrequency extends HTMLElement {
-
-
+window.customElements.define('pad-envelope-frequency', class extends HTMLElement {
     constructor() {
         super();
 
@@ -132,6 +130,4 @@ export default class EnvelopeFrequency extends HTMLElement {
             this.animationTime = undefined;
         }
     }
-}
-
-window.customElements.define('pad-envelope-frequency', EnvelopeFrequency);
+});

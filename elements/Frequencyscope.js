@@ -1,7 +1,7 @@
-export default class Frequencyscope extends HTMLElement {
+window.customElements.define('elements-frequencyscope', class extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
 
         this.shadowRoot.innerHTML = `
             <style>
@@ -42,6 +42,4 @@ export default class Frequencyscope extends HTMLElement {
             x += barWidth + 1;
         }
     }
-}
-
-window.customElements.define('elements-frequencyscope', Frequencyscope);
+});

@@ -1,15 +1,11 @@
-
-const template = document.createElement('template');
-template.innerHTML = `
-    <button>On</button>
-`;
-
-export default class Toggle extends HTMLElement {
+window.customElements.define('machine-toggle', class extends HTMLElement {
 
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.innerHTML = `
+            <button>On</button>
+        `;
     }
 
     static get observedAttributes() {
@@ -20,7 +16,7 @@ export default class Toggle extends HTMLElement {
         switch (name) {
             case 'toggle':
                 this.shadowRoot.querySelector('button').innerHTML = newValue === 'off' ? 'On' : 'Off';
-            break;
+                break;
         }
     }
 
@@ -37,6 +33,4 @@ export default class Toggle extends HTMLElement {
         });
     }
 
-}
-
-window.customElements.define('machine-toggle', Toggle);
+});

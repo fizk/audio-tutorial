@@ -1,58 +1,55 @@
 import '../elements/Oscilloscope.js';
 
-const template = document.createElement('template');
-template.innerHTML = `
-            <style>
-                :host {
-                    display: inline-block;
-                    background-color: var(--machine-color);
-                    padding: 1rem;
-
-                    --machine-color: #1DE9B6;
-
-                    --oscilloscope-background: var(--screen-background-color);
-                    --oscilloscope-stroke: var(--machine-color);
-                    --oscilloscope-width: var(--screen-line-width);
-
-                    --oscilloscope-marker-width: var(--screen-marker-line-width);
-                    --oscilloscope-marker-stroke: var(--machine-color);
-                    --oscilloscope-marker-dash: 2;
-                }
-                h4 {
-                    margin: 0;
-                }
-                ul {
-                    padding: 0;
-                    list-style: none;
-                }
-            </style>
-            <h4>Oscillator</h4>
-            <ul>
-                <li data-waves-container>
-                    <lable>type</label>
-                    <select data-type>
-                        <option value="sine">sine</option>
-                        <option value="square">square</option>
-                        <option value="sawtooth">sawtooth</option>
-                        <option value="triangle">triangle</option>
-                    </select>
-                </li>
-                <li>
-                    <label>frequency</label>
-                    <input type="range" data-frequency-range min="0" max="880" />
-                    <output data-frequency-value></output>
-                </li>
-            </ul>
-            <elements-oscilloscope></elements-oscilloscope>
-
-`;
-
-export default class Oscillator extends HTMLElement {
+window.customElements.define('machine-oscillator', class extends HTMLElement {
     constructor() {
         super();
 
-        this.attachShadow({mode: 'open'});
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+                <style>
+                    :host {
+                        display: inline-block;
+                        background-color: var(--machine-color);
+                        padding: 1rem;
+
+                        --machine-color: #1DE9B6;
+
+                        --oscilloscope-background: var(--screen-background-color);
+                        --oscilloscope-stroke: var(--machine-color);
+                        --oscilloscope-width: var(--screen-line-width);
+
+                        --oscilloscope-marker-width: var(--screen-marker-line-width);
+                        --oscilloscope-marker-stroke: var(--machine-color);
+                        --oscilloscope-marker-dash: 2;
+                    }
+                    h4 {
+                        margin: 0;
+                    }
+                    ul {
+                        padding: 0;
+                        list-style: none;
+                    }
+                </style>
+                <h4>Oscillator</h4>
+                <ul>
+                    <li data-waves-container>
+                        <lable>type</label>
+                        <select data-type>
+                            <option value="sine">sine</option>
+                            <option value="square">square</option>
+                            <option value="sawtooth">sawtooth</option>
+                            <option value="triangle">triangle</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label>frequency</label>
+                        <input type="range" data-frequency-range min="0" max="880" />
+                        <output data-frequency-value></output>
+                    </li>
+                </ul>
+                <elements-oscilloscope></elements-oscilloscope>
+
+    `;
     }
 
     static get observedAttributes() { return ['frequency', 'wave']; }
@@ -73,7 +70,7 @@ export default class Oscillator extends HTMLElement {
 
     connectedCallback() {
         //Frequency
-        if (!this.hasAttribute('frequency') ) {
+        if (!this.hasAttribute('frequency')) {
             this.setAttribute('frequency', '440');
         }
 
@@ -99,6 +96,4 @@ export default class Oscillator extends HTMLElement {
     set frequencyData(data) {
         this.shadowRoot.querySelector('elements-oscilloscope').data = data;
     }
-};
-
-window.customElements.define('machine-oscillator', Oscillator);
+});

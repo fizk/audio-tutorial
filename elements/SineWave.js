@@ -1,40 +1,37 @@
-const template = document.createElement('template');
-template.innerHTML = `
-    <style>
-        :host {
-                display: inline-block;
-            }
-            svg {
-                width: 100%;
-                height: auto;
-                background-color: var(--screen-background-color, #0e0e1d);
-            }
-            polyline {
-                stroke-width: var(--screen-line-width, 1px);
-                stroke: var(--screen-line-color, #faebd7);
-                fill: none;
-                stroke-dasharray: var(--resolution, 0);
-            }
-            line {
-                stroke-width: var(--screen-marker-line-width, 1px);
-                stroke: var(--screen-marker-line-color, #faebd7);
-                stroke-dasharray: 2;
-            }
-    </style>
-    <svg  viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" width="400" height="100">
-        <line />
-        <g data-wave-container>
-            <polyline />
-        </g>
-    </svg>
-`;
-
-export default class SinWave extends HTMLElement {
+window.customElements.define('sine-wave', class extends HTMLElement {
     constructor() {
         super();
 
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                        display: inline-block;
+                    }
+                    svg {
+                        width: 100%;
+                        height: auto;
+                        background-color: var(--screen-background-color, #0e0e1d);
+                    }
+                    polyline {
+                        stroke-width: var(--screen-line-width, 1px);
+                        stroke: var(--screen-line-color, #faebd7);
+                        fill: none;
+                        stroke-dasharray: var(--resolution, 0);
+                    }
+                    line {
+                        stroke-width: var(--screen-marker-line-width, 1px);
+                        stroke: var(--screen-marker-line-color, #faebd7);
+                        stroke-dasharray: 2;
+                    }
+            </style>
+            <svg  viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" width="400" height="100">
+                <line />
+                <g data-wave-container>
+                    <polyline />
+                </g>
+            </svg>
+        `;
     }
 
     static get observedAttributes() { return ['width', 'height', 'phase', 'amplitude', 'frequency', 'points']; }
@@ -122,7 +119,4 @@ export default class SinWave extends HTMLElement {
         // What's the value of the sinusoid for this angle?
         return amplitude * Math.sin(sampleAngle);
     }
-}
-
-
-window.customElements.define('sine-wave', SinWave);
+});

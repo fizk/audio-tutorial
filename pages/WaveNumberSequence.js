@@ -3,13 +3,11 @@ import '../elements/Article.js';
 import '../elements/Bubble.js';
 import validator, { record } from '../database/db.js';
 
-export default class WaveNumberSequence extends HTMLElement {
-
-
+window.customElements.define('page-wave-number-sequence', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <link rel="stylesheet" href="../styles/figure.css" />
             <style>
@@ -82,7 +80,7 @@ export default class WaveNumberSequence extends HTMLElement {
             from: Date.now(),
             path: location.pathname,
             relm: location.pathname.split('/').filter(Boolean)[0],
-            object: {speed: false}
+            object: { speed: false }
         };
     }
 
@@ -118,6 +116,4 @@ export default class WaveNumberSequence extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-wave-number-sequence', WaveNumberSequence);
+});

@@ -1,9 +1,7 @@
 import '../elements/Article.js';
 import validator, { conclude } from '../database/db.js';
 
-export default class EnvelopeEpilogue extends HTMLElement {
-
-
+window.customElements.define('page-envelope-epilogue', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -101,6 +99,4 @@ export default class EnvelopeEpilogue extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-envelope-epilogue', EnvelopeEpilogue);
+});

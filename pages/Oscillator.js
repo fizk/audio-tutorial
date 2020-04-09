@@ -2,9 +2,7 @@ import '../elements/Article.js';
 import '../pads/OscillatorOne.js'
 import validator, { record } from '../database/db.js';
 
-export default class Oscillator extends HTMLElement {
-
-
+window.customElements.define('page-oscillator', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -48,7 +46,7 @@ export default class Oscillator extends HTMLElement {
             from: Date.now(),
             path: location.pathname,
             relm: location.pathname.split('/').filter(Boolean)[0],
-            object: {tweek: false, toggle: false},
+            object: { tweek: false, toggle: false },
         };
     }
 
@@ -70,6 +68,4 @@ export default class Oscillator extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-oscillator', Oscillator);
+});

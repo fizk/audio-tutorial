@@ -2,9 +2,7 @@ import '../machines/Master.js';
 import '../elements/Article.js';
 import validator, { conclude } from '../database/db.js';
 
-export default class WaveEpilogue extends HTMLElement {
-
-
+window.customElements.define('page-wave-epilogue', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -79,6 +77,4 @@ export default class WaveEpilogue extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-wave-epilogue', WaveEpilogue);
+});

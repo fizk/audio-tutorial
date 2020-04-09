@@ -7,9 +7,8 @@ import '../machines/Keyboard.js';
 import '../symbols/Gain.js';
 import gainToAudioWorklet from '../worklets/GainToAudioWorklet.js'
 
-export default class AmplitudeSynth extends HTMLElement {
 
-
+window.customElements.define('pad-amplitude-synth', class extends HTMLElement {
     constructor() {
         super();
         this.context;
@@ -25,7 +24,7 @@ export default class AmplitudeSynth extends HTMLElement {
         this.handleNoteOff = this.handleNoteOff.bind(this);
         this.animation = this.animation.bind(this);
 
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
              <element-workstation >
                 <machine-keyboard keys></machine-keyboard>
@@ -50,7 +49,7 @@ export default class AmplitudeSynth extends HTMLElement {
         }
     }
 
-    async connectedCallback () {
+    async connectedCallback() {
         !this.hasAttribute('index') && this.setAttribute('index', '0.8');
         !this.hasAttribute('amount') && this.setAttribute('amount', '1');
 
@@ -62,7 +61,7 @@ export default class AmplitudeSynth extends HTMLElement {
         await gainToAudioWorklet(this.context)
     }
 
-    handleNoteOn (event) {
+    handleNoteOn(event) {
 
         const undefinedElement = this.shadowRoot.querySelector('machine-undefined');
 
@@ -101,7 +100,7 @@ export default class AmplitudeSynth extends HTMLElement {
         this.animation();
     }
 
-    handleNoteOff () {
+    handleNoteOff() {
         this.masterGain.gain.setValueAtTime(0.5, this.context.currentTime);
         this.masterGain.gain.linearRampToValueAtTime(0.001, this.context.currentTime + 0.01);
 
@@ -109,7 +108,7 @@ export default class AmplitudeSynth extends HTMLElement {
         this.lfoOsc.stop(this.context.currentTime + 0.01);
     }
 
-    animation () {
+    animation() {
         // master monitor
         this.masterAnalyser.fftSize = 2048;
         const amMasterMonitorDataArray = new Uint8Array(this.masterAnalyser.frequencyBinCount);
@@ -133,6 +132,4 @@ export default class AmplitudeSynth extends HTMLElement {
 
         this.animationFrame = requestAnimationFrame(this.animation);
     }
-}
-
-window.customElements.define('pad-amplitude-synth', AmplitudeSynth);
+});

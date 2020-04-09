@@ -1,34 +1,34 @@
-export default class Envelope extends HTMLElement {
+window.customElements.define('element-envelope', class extends HTMLElement {
     constructor() {
         super();
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-            <style>
-                :host {
-                    display: inline-block;
-                }
-                svg {
-                    background-color: var(--envelope-background, #0e0e1d);
-                }
-                path {
-                    stroke-width: var(--envelope-stroke-width, 1px);
-                    stroke: var(--envelope-stroke, #faebd7);
-                    fill: none;
-                }
-                line {
-                    stroke-width: var(--envelope-marker-stroke-width, 1px);
-                    stroke: var(--envelope-marker-stroke, #faebd7);
-                    fill: none;
-                    stroke-dasharray: var(--envelope-marker-dash, 2);
-                }
-            </style>
-            <svg  viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" width="400" height="100">
-                <path />
-                <line />
-            </svg>
+        <style>
+            :host {
+                display: inline-block;
+            }
+            svg {
+                background-color: var(--envelope-background, #0e0e1d);
+            }
+            path {
+                stroke-width: var(--envelope-stroke-width, 1px);
+                stroke: var(--envelope-stroke, #faebd7);
+                fill: none;
+            }
+            line {
+                stroke-width: var(--envelope-marker-stroke-width, 1px);
+                stroke: var(--envelope-marker-stroke, #faebd7);
+                fill: none;
+                stroke-dasharray: var(--envelope-marker-dash, 2);
+            }
+        </style>
+        <svg  viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" width="400" height="100">
+            <path />
+            <line />
+        </svg>
 
-        `;
+    `;
 
         this.updatePath = this.updatePath.bind(this);
     }
@@ -71,7 +71,7 @@ export default class Envelope extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         const canvas = this.shadowRoot.querySelector('svg');
 
-        switch(name) {
+        switch (name) {
             case 'a':
             case 'd':
             case 's':
@@ -112,12 +112,12 @@ export default class Envelope extends HTMLElement {
         const cursorElement = this.shadowRoot.querySelector('line');
 
         pathElement.setAttributeNS(null, 'd', `
-            M 0,${height}
-            L ${aRatio}, 0
-            L ${aRatio + dRatio}, ${sRatio}
-            L ${width - rRatio}, ${sRatio}
-            L ${width}, ${height}
-        `);
+        M 0,${height}
+        L ${aRatio}, 0
+        L ${aRatio + dRatio}, ${sRatio}
+        L ${width - rRatio}, ${sRatio}
+        L ${width}, ${height}
+    `);
 
         const position = (width / 100) * cursor;
         cursorElement.setAttributeNS(null, 'x1', position);
@@ -125,6 +125,4 @@ export default class Envelope extends HTMLElement {
         cursorElement.setAttributeNS(null, 'x2', position);
         cursorElement.setAttributeNS(null, 'y2', height);
     }
-}
-
-window.customElements.define('element-envelope', Envelope);
+});

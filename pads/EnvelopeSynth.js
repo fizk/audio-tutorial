@@ -6,9 +6,7 @@ import '../symbols/Gain.js';
 import '../machines/ADSR.js';
 // function lerp(min, max, fraction) {  return (max — min) * fraction + min;}
 
-export default class EnvelopeSynth extends HTMLElement {
-
-
+window.customElements.define('pad-envelope-synth', class extends HTMLElement {
     constructor() {
         super();
         this.isKeyDown = false;
@@ -157,6 +155,4 @@ export default class EnvelopeSynth extends HTMLElement {
         }
     }
 
-}
-
-window.customElements.define('pad-envelope-synth', EnvelopeSynth);
+});

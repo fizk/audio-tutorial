@@ -5,9 +5,7 @@ import '../machines/Master.js';
 import '../machines/Keyboard.js';
 import '../machines/ADSR.js';
 
-export default class FrequencySynth extends HTMLElement {
-
-
+window.customElements.define('pad-frequency-synth', class extends HTMLElement {
     constructor() {
         super();
         this.context;
@@ -18,7 +16,7 @@ export default class FrequencySynth extends HTMLElement {
         this.handleNoteOff = this.handleNoteOff.bind(this);
         this.animation = this.animation.bind(this);
 
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <element-workstation>
                 <machine-keyboard keys></machine-keyboard>
@@ -31,11 +29,13 @@ export default class FrequencySynth extends HTMLElement {
         `;
     }
 
-    static get observedAttributes() { return [
-        'carrier-a', 'carrier-d', 'carrier-s', 'carrier-r',
-        'modulator-a', 'modulator-d', 'modulator-s', 'modulator-r',
-        'index', 'amplitude',
-    ]; }
+    static get observedAttributes() {
+        return [
+            'carrier-a', 'carrier-d', 'carrier-s', 'carrier-r',
+            'modulator-a', 'modulator-d', 'modulator-s', 'modulator-r',
+            'index', 'amplitude',
+        ];
+    }
 
     attributeChangedCallback(name, oldValue, newValue) {
         const adsrElement = this.shadowRoot.querySelector('[data-carrier-adsr]');
@@ -44,31 +44,31 @@ export default class FrequencySynth extends HTMLElement {
         switch (name) {
             case 'carrier-a':
                 adsrElement.setAttribute('a', newValue);
-            break;
+                break;
             case 'carrier-d':
                 adsrElement.setAttribute('d', newValue);
-            break;
+                break;
             case 'carrier-s':
                 adsrElement.setAttribute('s', newValue);
-            break;
+                break;
             case 'carrier-r':
                 adsrElement.setAttribute('r', newValue);
-            break;
+                break;
             case 'modulator-a':
                 carrierEnvelopeElement.setAttribute('a', newValue);
-            break;
+                break;
             case 'modulator-d':
                 carrierEnvelopeElement.setAttribute('d', newValue);
-            break;
+                break;
             case 'modulator-s':
                 carrierEnvelopeElement.setAttribute('s', newValue);
-            break;
+                break;
             case 'modulator-r':
                 carrierEnvelopeElement.setAttribute('r', newValue);
-            break;
+                break;
             case 'index':
 
-            break;
+                break;
 
         }
     }
@@ -81,7 +81,7 @@ export default class FrequencySynth extends HTMLElement {
         keyboardElement.addEventListener('stop', this.handleNoteOff);
     }
 
-    handleNoteOn (event) {
+    handleNoteOn(event) {
         const adsrElement = this.shadowRoot.querySelector('[data-carrier-adsr]');
         const carrierEnvelopeElement = this.shadowRoot.querySelector('[data-lfo-adsr]');
 
@@ -149,7 +149,7 @@ export default class FrequencySynth extends HTMLElement {
 
     }
 
-    handleNoteOff () {
+    handleNoteOff() {
         const adsrElement = this.shadowRoot.querySelector('[data-carrier-adsr]');
         const r = Number(adsrElement.getAttribute('r')) / 100;
         const rTime = this.adsrTime * r;
@@ -187,6 +187,4 @@ export default class FrequencySynth extends HTMLElement {
 
         this.animationFrame = requestAnimationFrame(this.animation);
     }
-}
-
-window.customElements.define('pad-frequency-synth', FrequencySynth);
+});

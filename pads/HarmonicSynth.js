@@ -4,10 +4,7 @@ import '../machines/Master.js';
 import '../machines/Keyboard.js';
 import '../machines/Toggle.js';
 
-export default class HarmonicSynth extends HTMLElement {
-
-
-
+window.customElements.define('pad-harmonic-synth', class extends HTMLElement {
     constructor() {
         super();
         this.masterElement;
@@ -162,6 +159,4 @@ export default class HarmonicSynth extends HTMLElement {
         return baseFrequency * Math.pow(2, noteOffset / 12);
     }
 
-}
-
-window.customElements.define('pad-harmonic-synth', HarmonicSynth);
+});

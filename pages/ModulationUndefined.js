@@ -1,9 +1,7 @@
 import '../elements/Article.js'
 import validator, { record } from '../database/db.js';
 
-export default class ModulationUndefined extends HTMLElement {
-
-
+window.customElements.define('page-modulation-undefined', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -112,6 +110,4 @@ export default class ModulationUndefined extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-modulation-undefined', ModulationUndefined);
+});

@@ -1,4 +1,4 @@
-export default class Gain extends HTMLElement {
+window.customElements.define('symbol-gain', class extends HTMLElement {
     constructor() {
         super();
 
@@ -33,6 +33,4 @@ export default class Gain extends HTMLElement {
                 envelopeDisplayElement.innerHTML = `${Number(newValue).toFixed(2)}`;
         }
     }
-}
-
-window.customElements.define('symbol-gain', Gain);
+});

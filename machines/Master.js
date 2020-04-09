@@ -1,11 +1,11 @@
 import '../elements/Oscilloscope.js';
 import '../elements/Frequencyscope.js';
 
-export default class Master extends HTMLElement {
+window.customElements.define('machine-master', class extends HTMLElement {
     constructor() {
         super();
 
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
@@ -43,6 +43,4 @@ export default class Master extends HTMLElement {
     set byteData(data) {
         this.shadowRoot.querySelector('elements-frequencyscope').data = data;
     }
-};
-
-window.customElements.define('machine-master', Master);
+});

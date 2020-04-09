@@ -1,57 +1,52 @@
-const template = document.createElement('template');
-template.innerHTML = `
-    <style>
-        :host {
-            display: inline-block;
-        }
-        svg {
-            width: 100%;
-            height: auto;
-            background-color: var(--screen-background-color, #0e0e1d);
-        }
-        circle {
-            stroke-width: var(--line-width, 1px);
-            stroke: var(--line-color, #faebd7);
-            fill: none;
-        }
-        polyline {
-            stroke-width: var(--line-width, 1px);
-            stroke: var(--line-color, #faebd7);
-            fill: none;
-        }
-        [data-hand] {
-            stroke-dasharray: none;
-            stroke-width: var(--line-width, 1px);
-        }
-        line {
-            stroke-width: 1px; /*var(--line-width, 1px)*/
-            stroke: var(--line-color, #faebd7);
-            stroke-dasharray: 2;
-        }
-    </style>
-    <svg  viewBox="0 0 500 100" xmlns="http://www.w3.org/2000/svg">
-            <line x1="0" y1="50" x2="500" y2="50" />
-            <line x1="50" y1="0" x2="50" y2="100" />
-            <g data-wave-container transform="translate(100, 50)">
-                <polyline />
-            </g>
-            <g data-circle-container transform="translate(50, 50)">
-                <line data-hand x1="0" y1="0" x2="0" y2="0" />
-                <line data-bar x1="0" y1="0" x2="0" y2="0" />
-                <circle cx="0" cy="0" r="40"/>
-            </g>
-        </svg>
-`;
-
-export default class SineWaveSequence extends HTMLElement {
-    animationTime;
-    i = 0;
-
+window.customElements.define('element-sine-wave-sequence', class extends HTMLElement {
     constructor() {
         super();
-
-        this.attachShadow({mode: 'open'});
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.animationTime;
+        this.i = 0;
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: inline-block;
+                }
+                svg {
+                    width: 100%;
+                    height: auto;
+                    background-color: var(--screen-background-color, #0e0e1d);
+                }
+                circle {
+                    stroke-width: var(--line-width, 1px);
+                    stroke: var(--line-color, #faebd7);
+                    fill: none;
+                }
+                polyline {
+                    stroke-width: var(--line-width, 1px);
+                    stroke: var(--line-color, #faebd7);
+                    fill: none;
+                }
+                [data-hand] {
+                    stroke-dasharray: none;
+                    stroke-width: var(--line-width, 1px);
+                }
+                line {
+                    stroke-width: 1px; /*var(--line-width, 1px)*/
+                    stroke: var(--line-color, #faebd7);
+                    stroke-dasharray: 2;
+                }
+            </style>
+            <svg  viewBox="0 0 500 100" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" y1="50" x2="500" y2="50" />
+                    <line x1="50" y1="0" x2="50" y2="100" />
+                    <g data-wave-container transform="translate(100, 50)">
+                        <polyline />
+                    </g>
+                    <g data-circle-container transform="translate(50, 50)">
+                        <line data-hand x1="0" y1="0" x2="0" y2="0" />
+                        <line data-bar x1="0" y1="0" x2="0" y2="0" />
+                        <circle cx="0" cy="0" r="40"/>
+                    </g>
+                </svg>
+        `;
 
         this.animation = this.animation.bind(this);
     }
@@ -81,7 +76,7 @@ export default class SineWaveSequence extends HTMLElement {
         return Array.from({ length: sampleCount })
             .map((_, sampleNumber) => (
                 this.calculateSample(frequency, amplitude, sampleNumber - offset, sampleRate
-            )));
+                )));
     }
 
     calculateSample(frequency, amplitude, sampleNumber, sampleRate) {
@@ -147,6 +142,4 @@ export default class SineWaveSequence extends HTMLElement {
         this.setAttribute('phase', this.i);
         this.i++
     }
-}
-
-window.customElements.define('element-sine-wave-sequence', SineWaveSequence);
+});

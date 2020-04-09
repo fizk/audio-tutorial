@@ -5,10 +5,7 @@ import '../symbols/ADSR.js';
 import '../symbols/Oscillator.js';
 import '../symbols/Gain.js';
 
-export default class AdditiveAdsrSynth extends HTMLElement {
-
-
-
+window.customElements.define('pad-additive-adsr-synth', class extends HTMLElement {
     constructor() {
         super();
         this.masterElement;
@@ -156,6 +153,4 @@ export default class AdditiveAdsrSynth extends HTMLElement {
         return baseFrequency * Math.pow(2, noteOffset / 12);
     }
 
-}
-
-window.customElements.define('pad-additive-adsr-synth', AdditiveAdsrSynth);
+});

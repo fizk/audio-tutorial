@@ -1,60 +1,4 @@
-const template = document.createElement('template');
-template.innerHTML = `
-    <style>
-        :host {
-            display: inline-block;
-            padding: 1rem;
-            background-color: #F0F4C3;
-        }
-        .whole-tone {
-            fill: var(--whole-tone-fill-color, white);
-            stroke: var(--whole-tone-stroke-color, #979797);
-        }
-        .half-tone {
-            fill: var(--half-tone-color, black);
-            stroke: var(--half-tone-stroke-color, none);
-        }
-    </style>
-    <select>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-    </select>
-    <svg width="248px" height="65px" viewBox="0 0 248 65" xmlns="http://www.w3.org/2000/svg">
-        <g id="Group" transform="translate(-1, 0)">
-            <rect class="whole-tone" id="KeyU" x="231.5" y="0.5" width="17" height="64"></rect>
-            <rect class="whole-tone" id="KeyY" x="214.5" y="0.5" width="16" height="64"></rect>
-            <rect class="whole-tone" id="KeyT" x="196.5" y="0.5" width="17" height="64"></rect>
-            <rect class="whole-tone" id="KeyR" x="178.5" y="0.5" width="17" height="64"></rect>
-            <rect class="whole-tone" id="KeyE" x="160.5" y="0.5" width="17" height="64"></rect>
-            <rect class="whole-tone" id="KeyW" x="143.5" y="0.5" width="16" height="64"></rect>
-            <rect class="whole-tone" id="KeyQ" x="125.5" y="0.5" width="17" height="64"></rect>
-            <rect class="whole-tone" id="KeyM" x="107.5" y="0.5" width="17" height="64"></rect>
-            <rect class="whole-tone" id="KeyN" x="90.5" y="0.5" width="16" height="64"></rect>
-            <rect class="whole-tone" id="KeyB"  x="72.5" y="0.5" width="17" height="64"></rect>
-            <rect class="whole-tone" id="KeyV"  x="54.5" y="0.5" width="17" height="64"></rect>
-            <rect class="whole-tone" id="KeyC"  x="36.5" y="0.5" width="17" height="64"></rect>
-            <rect class="whole-tone" id="KeyX"  x="19.5" y="0.5" width="16" height="64"></rect>
-            <rect class="whole-tone" id="KeyZ"  x="2.5" y="0.5" width="16" height="64"></rect>
-
-
-            <rect class="half-tone" id="Digit7" x="225" y="0" width="13" height="43"></rect>
-            <rect class="half-tone" id="Digit6" x="207" y="0" width="13" height="43"></rect>
-            <rect class="half-tone" id="Digit5" x="189" y="0" width="14" height="43"></rect>
-            <rect class="half-tone" id="Digit3" x="154" y="0" width="13" height="43"></rect>
-            <rect class="half-tone" id="Digit2" x="136" y="0" width="14" height="43"></rect>
-            <rect class="half-tone" id="KeyJ" x="101" y="0" width="13" height="43"></rect>
-            <rect class="half-tone" id="KeyH"  x="83" y="0" width="13" height="43"></rect>
-            <rect class="half-tone" id="KeyG"  x="65" y="0" width="14" height="43"></rect>
-            <rect class="half-tone" id="KeyD"  x="30" y="0" width="13" height="43"></rect>
-            <rect class="half-tone" id="KeyS"  x="12" y="0" width="13" height="43"></rect>
-        </g>
-    </svg>
-`;
-
-export default class Keyboard extends HTMLElement {
-
-
+window.customElements.define('machine-keyboard', class extends HTMLElement {
     constructor() {
         super();
         this.isKeyDown = false;
@@ -84,9 +28,60 @@ export default class Keyboard extends HTMLElement {
             'Digit7': 466.16,   // A#4/Bb4
             'KeyU': 493.88,     // B4
         };
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
 
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: inline-block;
+                    padding: 1rem;
+                    background-color: #F0F4C3;
+                }
+                .whole-tone {
+                    fill: var(--whole-tone-fill-color, white);
+                    stroke: var(--whole-tone-stroke-color, #979797);
+                }
+                .half-tone {
+                    fill: var(--half-tone-color, black);
+                    stroke: var(--half-tone-stroke-color, none);
+                }
+            </style>
+            <select>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <svg width="248px" height="65px" viewBox="0 0 248 65" xmlns="http://www.w3.org/2000/svg">
+                <g id="Group" transform="translate(-1, 0)">
+                    <rect class="whole-tone" id="KeyU" x="231.5" y="0.5" width="17" height="64"></rect>
+                    <rect class="whole-tone" id="KeyY" x="214.5" y="0.5" width="16" height="64"></rect>
+                    <rect class="whole-tone" id="KeyT" x="196.5" y="0.5" width="17" height="64"></rect>
+                    <rect class="whole-tone" id="KeyR" x="178.5" y="0.5" width="17" height="64"></rect>
+                    <rect class="whole-tone" id="KeyE" x="160.5" y="0.5" width="17" height="64"></rect>
+                    <rect class="whole-tone" id="KeyW" x="143.5" y="0.5" width="16" height="64"></rect>
+                    <rect class="whole-tone" id="KeyQ" x="125.5" y="0.5" width="17" height="64"></rect>
+                    <rect class="whole-tone" id="KeyM" x="107.5" y="0.5" width="17" height="64"></rect>
+                    <rect class="whole-tone" id="KeyN" x="90.5" y="0.5" width="16" height="64"></rect>
+                    <rect class="whole-tone" id="KeyB"  x="72.5" y="0.5" width="17" height="64"></rect>
+                    <rect class="whole-tone" id="KeyV"  x="54.5" y="0.5" width="17" height="64"></rect>
+                    <rect class="whole-tone" id="KeyC"  x="36.5" y="0.5" width="17" height="64"></rect>
+                    <rect class="whole-tone" id="KeyX"  x="19.5" y="0.5" width="16" height="64"></rect>
+                    <rect class="whole-tone" id="KeyZ"  x="2.5" y="0.5" width="16" height="64"></rect>
+
+
+                    <rect class="half-tone" id="Digit7" x="225" y="0" width="13" height="43"></rect>
+                    <rect class="half-tone" id="Digit6" x="207" y="0" width="13" height="43"></rect>
+                    <rect class="half-tone" id="Digit5" x="189" y="0" width="14" height="43"></rect>
+                    <rect class="half-tone" id="Digit3" x="154" y="0" width="13" height="43"></rect>
+                    <rect class="half-tone" id="Digit2" x="136" y="0" width="14" height="43"></rect>
+                    <rect class="half-tone" id="KeyJ" x="101" y="0" width="13" height="43"></rect>
+                    <rect class="half-tone" id="KeyH"  x="83" y="0" width="13" height="43"></rect>
+                    <rect class="half-tone" id="KeyG"  x="65" y="0" width="14" height="43"></rect>
+                    <rect class="half-tone" id="KeyD"  x="30" y="0" width="13" height="43"></rect>
+                    <rect class="half-tone" id="KeyS"  x="12" y="0" width="13" height="43"></rect>
+                </g>
+            </svg>
+        `;
         this.onMouseDown = this.onMouseDown.bind(this);
         this.onMouseUp = this.onMouseUp.bind(this);
         this.setupKeypad = this.setupKeypad.bind(this);
@@ -195,6 +190,4 @@ export default class Keyboard extends HTMLElement {
     noteToFrequency(note) {
         return this.map[note] * Number(this.getAttribute('octave'));
     }
-}
-
-window.customElements.define('machine-keyboard', Keyboard);
+});

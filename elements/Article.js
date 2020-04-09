@@ -1,8 +1,8 @@
-export default class Article extends HTMLElement {
+window.customElements.define('element-article', class extends HTMLElement {
     constructor() {
         super();
 
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
 
@@ -68,6 +68,4 @@ export default class Article extends HTMLElement {
             </article>
         `;
     }
-}
-
-window.customElements.define('element-article', Article);
+});

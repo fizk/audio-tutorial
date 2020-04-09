@@ -1,62 +1,60 @@
-const template = document.createElement('template');
-template.innerHTML = `
-    <style>
-        ul {
-            padding: 0;
-            list-style: none;
-        }
-    </style>
-    <ul>
-        <li>
-            <label>A</label>
-            <input data-range-a type="range" min="0" max="100" value="100" />
-            <output data-value-a></output>
-        </li>
-        <li>
-            <label>D</label>
-            <input data-range-d type="range" min="0" max="100" value="100" />
-            <output data-value-d></output>
-        </li>
-        <li>
-            <label>S</label>
-            <input data-range-s type="range" min="0" max="100" value="50" />
-            <output data-value-s></output>
-        </li>
-        <li>
-            <label>R</label>
-            <input data-range-r type="range" min="0" max="100" value="100" />
-            <output data-value-r></output>
-        </li>
-    </ul>
-`;
-export default class EnvelopeControlls extends HTMLElement {
+window.customElements.define('elements-envelope-controlls', class extends HTMLElement {
     constructor() {
         super();
 
-        this.attachShadow({mode: 'open'});
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+            <style>
+                ul {
+                    padding: 0;
+                    list-style: none;
+                }
+            </style>
+            <ul>
+                <li>
+                    <label>A</label>
+                    <input data-range-a type="range" min="0" max="100" value="100" />
+                    <output data-value-a></output>
+                </li>
+                <li>
+                    <label>D</label>
+                    <input data-range-d type="range" min="0" max="100" value="100" />
+                    <output data-value-d></output>
+                </li>
+                <li>
+                    <label>S</label>
+                    <input data-range-s type="range" min="0" max="100" value="50" />
+                    <output data-value-s></output>
+                </li>
+                <li>
+                    <label>R</label>
+                    <input data-range-r type="range" min="0" max="100" value="100" />
+                    <output data-value-r></output>
+                </li>
+            </ul>
+        `;
     }
 
     static get observedAttributes() { return ['a', 'd', 's', 'r']; }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        switch(name) {
+        switch (name) {
             case 'a':
                 this.shadowRoot.querySelector('[data-range-a]').value = newValue;
                 this.shadowRoot.querySelector('[data-value-a]').innerHTML = newValue;
-            break;
+                break;
             case 'd':
                 this.shadowRoot.querySelector('[data-range-d]').value = newValue;
                 this.shadowRoot.querySelector('[data-value-d]').innerHTML = newValue;
-            break;
+                break;
             case 's':
                 this.shadowRoot.querySelector('[data-range-s]').value = newValue;
                 this.shadowRoot.querySelector('[data-value-s]').innerHTML = newValue;
-            break;
+                break;
             case 'r':
                 this.shadowRoot.querySelector('[data-range-r]').value = newValue;
                 this.shadowRoot.querySelector('[data-value-r]').innerHTML = newValue;
-            break;
+                break;
         }
     }
 
@@ -108,6 +106,4 @@ export default class EnvelopeControlls extends HTMLElement {
             this.setAttribute('r', event.target.value);
         });
     }
-}
-
-window.customElements.define('elements-envelope-controlls', EnvelopeControlls);
+});

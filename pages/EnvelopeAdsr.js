@@ -2,9 +2,7 @@ import '../elements/Article.js';
 import '../pads/EnvelopeSynth.js'
 import validator, { record } from '../database/db.js';
 
-export default class EnvelopeAdsr extends HTMLElement {
-
-
+window.customElements.define('page-envelope-adsr', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -77,7 +75,7 @@ export default class EnvelopeAdsr extends HTMLElement {
             from: Date.now(),
             path: location.pathname,
             relm: location.pathname.split('/').filter(Boolean)[0],
-            object: {tweek: false, toggle: false, preset: false},
+            object: { tweek: false, toggle: false, preset: false },
         };
     }
 
@@ -99,6 +97,4 @@ export default class EnvelopeAdsr extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-envelope-adsr', EnvelopeAdsr);
+});

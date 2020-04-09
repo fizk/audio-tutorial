@@ -1,5 +1,6 @@
 import '../elements/Article.js'
-export default class Home extends HTMLElement {
+
+window.customElements.define('page-home', class extends HTMLElement {
     constructor() {
         super();
 
@@ -181,5 +182,4 @@ export default class Home extends HTMLElement {
         `;
     }
 }
-
-window.customElements.define('page-home', Home);
+);

@@ -4,9 +4,7 @@ import '../machines/Gain.js'
 import '../machines/Master.js'
 import '../machines/Toggle.js'
 
-export default class OscillatorOne extends HTMLElement {
-
-
+window.customElements.define('pad-oscillator-one', class extends HTMLElement {
     constructor() {
         super();
         this.context;
@@ -103,6 +101,4 @@ export default class OscillatorOne extends HTMLElement {
 
         this.animationFrame = requestAnimationFrame(this.animation);
     }
-}
-
-window.customElements.define('pad-oscillator-one', OscillatorOne);
+});

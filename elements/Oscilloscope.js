@@ -1,7 +1,7 @@
-export default class Oscilloscope extends HTMLElement {
+window.customElements.define('elements-oscilloscope', class extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
                 svg {
@@ -33,7 +33,7 @@ export default class Oscilloscope extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        switch(name) {
+        switch (name) {
             case 'points':
                 this.shadowRoot.querySelector('polyline').setAttribute('points', newValue);
                 break;
@@ -60,6 +60,4 @@ export default class Oscilloscope extends HTMLElement {
 
         return points;
     }
-}
-
-window.customElements.define('elements-oscilloscope', Oscilloscope);
+});

@@ -2,9 +2,7 @@ import '../elements/Article.js';
 import '../pads/FrequencySynth.js';
 import validator, { record } from '../database/db.js';
 
-export default class ModulationFMSynth extends HTMLElement {
-
-
+window.customElements.define('page-modulation-fm-synth', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -168,6 +166,4 @@ export default class ModulationFMSynth extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-modulation-fm-synth', ModulationFMSynth);
+});

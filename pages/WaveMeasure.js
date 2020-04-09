@@ -2,13 +2,11 @@ import '../elements/SineWave.js';
 import '../elements/Article.js';
 import validator, { record } from '../database/db.js';
 
-export default class WaveMeasure extends HTMLElement {
-
-
+window.customElements.define('page-wave-measure', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <link rel="stylesheet" href="../styles/figure.css" />
             <style>
@@ -190,6 +188,4 @@ export default class WaveMeasure extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-wave-measure', WaveMeasure);
+});

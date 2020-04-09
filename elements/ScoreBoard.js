@@ -1,10 +1,10 @@
-export default class ScoreBoard extends HTMLElement {
+window.customElements.define('element-score-board', class extends HTMLElement {
     constructor() {
         super();
 
         this.close = this.close.bind(this);
 
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
@@ -61,6 +61,4 @@ export default class ScoreBoard extends HTMLElement {
     close() {
         this.parentNode.removeChild(this);
     }
-}
-
-window.customElements.define('element-score-board', ScoreBoard);
+});

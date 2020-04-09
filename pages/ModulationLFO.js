@@ -7,9 +7,7 @@ import '../machines/Keyboard.js';
 import '../elements/Article.js';
 import validator, { record } from '../database/db.js';
 
-export default class ModulationLFO extends HTMLElement {
-
-
+window.customElements.define('page-modulation-lfo', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -121,6 +119,4 @@ export default class ModulationLFO extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-modulation-lfo', ModulationLFO);
+});

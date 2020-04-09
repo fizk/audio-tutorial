@@ -1,16 +1,13 @@
-const template = document.createElement('template');
-template.innerHTML = `
-    <button>[Space key]</button>
-`;
-
-export default class Trigger extends HTMLElement {
+window.customElements.define('machine-trigger', class extends HTMLElement {
 
 
     constructor() {
         super();
         this.isPressed = false;
-        this.attachShadow({mode: 'open'});
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+            <button>[Space key]</button>
+        `;
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -68,6 +65,4 @@ export default class Trigger extends HTMLElement {
             }));
         }
     }
-}
-
-window.customElements.define('machine-trigger', Trigger);
+});

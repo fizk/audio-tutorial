@@ -4,9 +4,7 @@ import '../machines/Gain.js';
 import '../elements/Article.js';
 import validator, { record } from '../database/db.js';
 
-export default class WaveGainAmplitude extends HTMLElement {
-
-
+window.customElements.define('page-wave-gain-amplitude', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -66,7 +64,7 @@ export default class WaveGainAmplitude extends HTMLElement {
             from: Date.now(),
             path: location.pathname,
             relm: location.pathname.split('/').filter(Boolean)[0],
-            object: {gain: false}
+            object: { gain: false }
         };
     }
 
@@ -88,6 +86,4 @@ export default class WaveGainAmplitude extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-wave-gain-amplitude', WaveGainAmplitude);
+});

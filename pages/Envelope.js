@@ -2,9 +2,7 @@ import '../pads/EnvelopeFrequency.js';
 import '../elements/Article.js';
 import validator, { record } from '../database/db.js';
 
-export default class Envelope extends HTMLElement {
-
-
+window.customElements.define('page-envelope', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -172,6 +170,4 @@ export default class Envelope extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-envelope', Envelope);
+});

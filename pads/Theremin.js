@@ -3,9 +3,7 @@ import '../machines/Master.js';
 import '../machines/Theremin.js';
 import '../elements/Article.js';
 
-export default class OscillatorTheremin extends HTMLElement {
-
-
+window.customElements.define('pad-theremin', class extends HTMLElement {
     constructor() {
         super();
         this.context;
@@ -101,6 +99,4 @@ export default class OscillatorTheremin extends HTMLElement {
         this.animationFrame = requestAnimationFrame(this.animate);
     }
 
-}
-
-window.customElements.define('pad-theremin', OscillatorTheremin);
+});

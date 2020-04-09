@@ -2,9 +2,7 @@ import '../elements/Article.js';
 import '../pads/AmplitudeModulation.js';
 import validator, { record } from '../database/db.js';
 
-export default class ModulationAM extends HTMLElement {
-
-
+window.customElements.define('page-modulation-am', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -103,6 +101,4 @@ export default class ModulationAM extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-modulation-am', ModulationAM);
+});

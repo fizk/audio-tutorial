@@ -1,38 +1,35 @@
-const template = document.createElement('template');
-template.innerHTML = `
-    <style>
-        :host {
-            display: block;
-        }
-        div {
-            width: 100%;
-            height: 300px;
-            position: relative;
-            background-color: var(--theremin-background, black);
-        }
-        span {
-            display: block;
-            position: absolute;
-            background-color: var(--theremin-object, white);
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-        }
-    </style>
-    <div>
-        <span></span>
-    </div>
-`;
-
-export default class Theremin extends HTMLElement {
+window.customElements.define('machine-theremin', class extends HTMLElement {
 
     constructor() {
         super();
         this.isDown = false;
-        this.attachShadow({mode: 'open'});
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: block;
+                }
+                div {
+                    width: 100%;
+                    height: 300px;
+                    position: relative;
+                    background-color: var(--theremin-background, black);
+                }
+                span {
+                    display: block;
+                    position: absolute;
+                    background-color: var(--theremin-object, white);
+                    height: 20px;
+                    width: 20px;
+                    border-radius: 50%;
+                    top: 50%;
+                    left: 50%;
+                }
+            </style>
+            <div>
+                <span></span>
+            </div>
+        `;
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
@@ -48,7 +45,7 @@ export default class Theremin extends HTMLElement {
         window.removeEventListener('mouseup', this.handleMouseUp);
     }
 
-    handleMouseMove (event) {
+    handleMouseMove(event) {
         if (this.isDown) {
             event.preventDefault();
 
@@ -72,7 +69,7 @@ export default class Theremin extends HTMLElement {
             }));
         }
     }
-    handleMouseDown (event) {
+    handleMouseDown(event) {
         event.preventDefault();
 
         this.addEventListener('mousemove', this.handleMouseMove);
@@ -91,7 +88,7 @@ export default class Theremin extends HTMLElement {
             composed: true
         }));
     }
-    handleMouseUp (event) {
+    handleMouseUp(event) {
         event.preventDefault();
         this.isDown = false;
 
@@ -104,6 +101,4 @@ export default class Theremin extends HTMLElement {
             composed: true
         }));
     }
-}
-
-window.customElements.define('machine-theremin', Theremin)
+})

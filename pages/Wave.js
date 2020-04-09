@@ -1,13 +1,11 @@
 import '../elements/Article.js';
 import validator, {record} from '../database/db.js';
 
-export default class Wave extends HTMLElement {
-
-
+window.customElements.define('page-wave', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <style>
                 #speaker {
@@ -168,10 +166,8 @@ export default class Wave extends HTMLElement {
                 }));
             }
 
-        } catch(e) {
+        } catch (e) {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-wave', Wave);
+});

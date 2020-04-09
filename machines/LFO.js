@@ -1,7 +1,11 @@
 import '../elements/Oscilloscope.js';
 
-const template = document.createElement('template');
-template.innerHTML = `
+window.customElements.define('machine-lfo', class extends HTMLElement {
+    constructor() {
+        super();
+
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
             <style>
                 :host {
                     display: inline-block;
@@ -48,13 +52,6 @@ template.innerHTML = `
             <elements-oscilloscope></elements-oscilloscope>
 
 `;
-
-export default class LFO extends HTMLElement {
-    constructor() {
-        super();
-
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
     }
 
     static get observedAttributes() { return ['frequency', 'wave', 'amount', 'min', 'max']; }
@@ -130,5 +127,4 @@ export default class LFO extends HTMLElement {
     set frequencyData(data) {
         this.shadowRoot.querySelector('elements-oscilloscope').data = data;
     }
-};
-window.customElements.define('machine-lfo', LFO);
+});

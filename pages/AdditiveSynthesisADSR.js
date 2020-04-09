@@ -2,9 +2,7 @@ import '../elements/Article.js';
 import '../pads/AdditiveAdsrSynth.js';
 import validator, { record } from '../database/db.js';
 
-export default class AdditiveSynthesisADSR extends HTMLElement {
-
-
+window.customElements.define('page-additive-synthesis-adsr', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -62,7 +60,7 @@ export default class AdditiveSynthesisADSR extends HTMLElement {
             from: Date.now(),
             path: location.pathname,
             relm: location.pathname.split('/').filter(Boolean)[0],
-            object: {toggle: false, preset: false},
+            object: { toggle: false, preset: false },
         };
     }
 
@@ -84,6 +82,4 @@ export default class AdditiveSynthesisADSR extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-additive-synthesis-adsr', AdditiveSynthesisADSR);
+});

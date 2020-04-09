@@ -2,9 +2,7 @@ import '../elements/Article.js';
 import '../pads/AmplitudeSynth.js';
 import validator, { record } from '../database/db.js';
 
-export default class ModulationAmSynth extends HTMLElement {
-
-
+window.customElements.define('page-modulation-am-synth', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -61,7 +59,7 @@ export default class ModulationAmSynth extends HTMLElement {
         `;
     }
 
-    connectedCallback () {
+    connectedCallback() {
         this.addEventListener('index-change', () => this.properties.object.tweek = true);
         this.addEventListener('amount-change', () => this.properties.object.tweek = true);
         this.addEventListener('frequency-change', () => this.properties.object.tweek = true);
@@ -114,6 +112,4 @@ export default class ModulationAmSynth extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-modulation-am-synth', ModulationAmSynth);
+});

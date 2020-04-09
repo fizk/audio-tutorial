@@ -5,9 +5,7 @@ import '../elements/Article.js';
 import '../pads/Theremin.js'
 import validator, { record } from '../database/db.js';
 
-export default class OscillatorTheremin extends HTMLElement {
-
-
+window.customElements.define('page-oscillator-theremin', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -99,6 +97,4 @@ export default class OscillatorTheremin extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-oscillator-theremin', OscillatorTheremin);
+});

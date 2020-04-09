@@ -1,6 +1,6 @@
 import '../elements/Envelope.js';
 
-export default class ADSR extends HTMLElement {
+window.customElements.define('symbol-adsr', class extends HTMLElement {
     constructor() {
         super();
 
@@ -30,16 +30,16 @@ export default class ADSR extends HTMLElement {
     }
 
     connectedCallback() {
-        if(!this.hasAttribute('a')) {
+        if (!this.hasAttribute('a')) {
             this.setAttribute('a', '100');
         }
-        if(!this.hasAttribute('d')) {
+        if (!this.hasAttribute('d')) {
             this.setAttribute('d', '100');
         }
-        if(!this.hasAttribute('s')) {
+        if (!this.hasAttribute('s')) {
             this.setAttribute('s', '50');
         }
-        if(!this.hasAttribute('r')) {
+        if (!this.hasAttribute('r')) {
             this.setAttribute('r', '100');
         }
     }
@@ -67,6 +67,4 @@ export default class ADSR extends HTMLElement {
                 break;
         }
     }
-}
-
-window.customElements.define('symbol-adsr', ADSR);
+});

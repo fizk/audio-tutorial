@@ -1,6 +1,6 @@
 import '../elements/Envelope.js';
 
-export default class Oscillator extends HTMLElement {
+window.customElements.define('symbol-oscillator', class extends HTMLElement {
     constructor() {
         super();
 
@@ -35,6 +35,4 @@ export default class Oscillator extends HTMLElement {
                 envelopeDisplayElement.innerHTML = `${Number(newValue).toFixed(2)} Hz`;
         }
     }
-}
-
-window.customElements.define('symbol-oscillator', Oscillator);
+});

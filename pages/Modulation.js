@@ -1,9 +1,7 @@
 import '../elements/Article.js';
 import validator, { record } from '../database/db.js';
 
-export default class Modulation extends HTMLElement {
-
-
+window.customElements.define('page-modulation', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -123,6 +121,4 @@ export default class Modulation extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-modulation', Modulation);
+});

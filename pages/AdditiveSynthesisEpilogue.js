@@ -1,9 +1,7 @@
 import '../elements/Article.js';
 import validator, { conclude } from '../database/db.js';
 
-export default class AdditiveSynthesisEpilogue extends HTMLElement {
-
-
+window.customElements.define('page-additive-synthesis-epilogue', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -61,6 +59,4 @@ export default class AdditiveSynthesisEpilogue extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-additive-synthesis-epilogue', AdditiveSynthesisEpilogue);
+});

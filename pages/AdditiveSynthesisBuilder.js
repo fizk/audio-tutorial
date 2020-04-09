@@ -2,13 +2,11 @@ import '../elements/WaveBuilder.js';
 import '../elements/Article.js';
 import validator, { record } from '../database/db.js';
 
-export default class AdditiveSynthesisBuilder extends HTMLElement {
-
-
+window.customElements.define('page-additive-synthesis-builder', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <element-article>
                 <h2 slot="header">Wave builder</h2>
@@ -92,7 +90,7 @@ export default class AdditiveSynthesisBuilder extends HTMLElement {
             from: Date.now(),
             path: location.pathname,
             relm: location.pathname.split('/').filter(Boolean)[0],
-            object: {tweek: false, preset: false},
+            object: { tweek: false, preset: false },
         };
     }
 
@@ -114,6 +112,4 @@ export default class AdditiveSynthesisBuilder extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-additive-synthesis-builder', AdditiveSynthesisBuilder);
+});

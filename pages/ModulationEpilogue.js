@@ -1,9 +1,7 @@
 import '../elements/Article.js';
 import validator, { conclude } from '../database/db.js';
 
-export default class ModulationEpilogue extends HTMLElement {
-
-
+window.customElements.define('page-modulation-epilogue', class extends HTMLElement {
     constructor() {
         super();
         this.properties = {};
@@ -49,6 +47,4 @@ export default class ModulationEpilogue extends HTMLElement {
             console.warn(e);
         }
     }
-}
-
-window.customElements.define('page-modulation-epilogue', ModulationEpilogue);
+});

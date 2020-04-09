@@ -1,76 +1,72 @@
-const template = document.createElement('template');
-template.innerHTML = `
-            <style>
-                :host {
-                    display: inline-block;
-                    background-color: var(--machine-color);
-                    padding: 1rem;
-
-                    --machine-color: #BCAAA4;
-                }
-                h4 {
-                    margin: 0;
-                }
-                svg {
-                    background-color: var(--screen-background-color);
-                }
-                polyline {
-                    stroke: var(--machine-color);
-                    stroke-width: var(--screen-line-width);
-                    fill: none;
-                }
-
-                line {
-                    stroke: var(--machine-color);
-                    stroke-width: var(--screen-marker-line-width);
-                    fill: none;
-                }
-                text {
-                    fill: var(--machine-color);
-                    font: 10px sans-serif;
-                }
-
-                ul {
-                    padding: 0;
-                    list-style: none;
-                }
-            </style>
-            <h4>Filter</h4>
-            <div>
-                <ul>
-                    <li>
-                        <label>type</label>
-                        <select data-type>
-                            <option value="lowpass">lowpass</option>
-                            <option value="highpass">highpass</option>
-                            <option value="bandpass">bandpass</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label>frequency</label>
-                        <input type="range" data-frequency-range min="10" max="2000" />
-                        <output data-frequency-value></output>
-                    </li>
-                    <li>
-                        <label>q</label>
-                        <input type="range" data-q-range min="0.0001" max="50" />
-                        <output data-q-value></output>
-                    </li>
-                </ul>
-            </div>
-            <svg  viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg" width="300" height="100">
-                <g></g>
-                <polyline />
-            </svg>
-
-`;
-
-export default class Filter extends HTMLElement {
+window.customElements.define('machine-filter', class extends HTMLElement {
     constructor() {
         super();
 
-        this.attachShadow({mode: 'open'});
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+                <style>
+                    :host {
+                        display: inline-block;
+                        background-color: var(--machine-color);
+                        padding: 1rem;
+
+                        --machine-color: #BCAAA4;
+                    }
+                    h4 {
+                        margin: 0;
+                    }
+                    svg {
+                        background-color: var(--screen-background-color);
+                    }
+                    polyline {
+                        stroke: var(--machine-color);
+                        stroke-width: var(--screen-line-width);
+                        fill: none;
+                    }
+
+                    line {
+                        stroke: var(--machine-color);
+                        stroke-width: var(--screen-marker-line-width);
+                        fill: none;
+                    }
+                    text {
+                        fill: var(--machine-color);
+                        font: 10px sans-serif;
+                    }
+
+                    ul {
+                        padding: 0;
+                        list-style: none;
+                    }
+                </style>
+                <h4>Filter</h4>
+                <div>
+                    <ul>
+                        <li>
+                            <label>type</label>
+                            <select data-type>
+                                <option value="lowpass">lowpass</option>
+                                <option value="highpass">highpass</option>
+                                <option value="bandpass">bandpass</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label>frequency</label>
+                            <input type="range" data-frequency-range min="10" max="2000" />
+                            <output data-frequency-value></output>
+                        </li>
+                        <li>
+                            <label>q</label>
+                            <input type="range" data-q-range min="0.0001" max="50" />
+                            <output data-q-value></output>
+                        </li>
+                    </ul>
+                </div>
+                <svg  viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg" width="300" height="100">
+                    <g></g>
+                    <polyline />
+                </svg>
+        `;
     }
 
     static get observedAttributes() { return ['frequency', 'type', 'q']; }
@@ -183,7 +179,7 @@ export default class Filter extends HTMLElement {
     }
 
 
-    set frequencyData (data) {
+    set frequencyData(data) {
 
         var scale = 60;
         const svgElement = this.shadowRoot.querySelector('svg');
@@ -277,6 +273,4 @@ export default class Filter extends HTMLElement {
         // // }
         // // ctx.stroke();
     }
-};
-
-window.customElements.define('machine-filter', Filter);
+});

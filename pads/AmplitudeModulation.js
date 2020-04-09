@@ -7,9 +7,7 @@ import '../machines/Toggle.js';
 import '../symbols/Gain.js';
 import '../elements/Article.js';
 
-export default class AmplitudeModulation extends HTMLElement {
-
-
+window.customElements.define('pad-amplitude-modulation', class extends HTMLElement {
     constructor() {
         super();
         this.context;
@@ -184,6 +182,4 @@ export default class AmplitudeModulation extends HTMLElement {
         this.animationFrame = requestAnimationFrame(this.animate);
     }
 
-}
-
-window.customElements.define('pad-amplitude-modulation', AmplitudeModulation);
+});
