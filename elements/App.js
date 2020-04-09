@@ -245,10 +245,6 @@ window.customElements.define('element-app', class extends HTMLElement {
             }, {
                 path: '/wave',
                 action: this.setNav,
-                animate: {
-                    enter: 'users-entering',
-                    leave: 'users-leaving'
-                },
                 children: [
                     {
                         path: '/',
