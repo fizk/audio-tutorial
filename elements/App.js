@@ -1,4 +1,4 @@
-import { Router } from '/vaadin-router.js';
+import { Router } from '../vaadin-router.js';
 import { getScore} from '../database/db.js';
 import '../pages/Home.js';
 import '../pages/Wave.js'
